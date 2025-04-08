@@ -39,13 +39,13 @@ A web-based solution for managing shared sports facilities in local communities.
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React.js / Vue.js / (TBD by team)
+- **Frontend**: Javascript(vanilla)
 - **Backend**: Node.js (Express)
-- **Database**: MongoDB / PostgreSQL
+- **Database**: MongoDB
 - **Authentication**: OAuth 2.0 with Google or GitHub
 - **CI/CD**: GitHub Actions / GitLab CI
 - **Testing**: Jest, Mocha, Chai (unit + integration tests)
-
+- **Deployment**: (Azure)
 ---
 
 ## 🔐 Authentication & User Roles
@@ -80,7 +80,7 @@ Development is broken into sprints with frequent standups, retrospectives, and c
 ## 📈 Deployment & CI/CD
 
 - Continuous Integration: Automated testing on pull requests
-- Continuous Deployment: Auto-deploy to cloud host (e.g., Vercel, Netlify, or Heroku)
+- Continuous Deployment: Auto-deploy to cloud host
 - Environments: Dev, Staging, and Production
 
 ---
