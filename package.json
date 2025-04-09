@@ -1,0 +1,23 @@
+{
+  "name": "facilitymanagement",
+  "version": "1.0.0",
+  "description": "A web-based solution for managing shared sports facilities in local communities. This platform streamlines **facility booking**, **user management**, **maintenance reporting**, **event organization**, and **real-time reporting** using Agile, CI/CD, and Test-Driven Development principles.",
+  "main": "math.test.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amigostranger/FacilityManagement.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Amigostranger/FacilityManagement/issues"
+  },
+  "homepage": "https://github.com/Amigostranger/FacilityManagement#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
