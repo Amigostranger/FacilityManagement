@@ -1,8 +1,0 @@
-.login-section-id {
-    display: flex;
-    flex-direction: column;
-    border-style: solid;
-    border-radius: 12px;
-    justify-content: center; /* vertically center content */
-    align-items: center;    /* horizontally center content */
-}
