@@ -16,6 +16,25 @@ html,body{
     padding: 0;
 }
 
+input[type="email"],
+input[type="password"],
+input[type="name"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  outline: none;
+}
+
 .login-section-id{
     background-color: rgba(255, 255, 255, 0.8);
     display: flex;
@@ -42,6 +61,10 @@ button{
     cursor: pointer;
     font-size: 16px;
     display: flex;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     align-items: center;
     
 }
