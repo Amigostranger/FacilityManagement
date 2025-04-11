@@ -23,22 +23,33 @@
 
 
 //   </script> 
-
+//verification.js
 const provider = new firebase.auth.GoogleAuthProvider();
+const db=firebase.firestore();
 
 document.getElementById('googleSignIn').addEventListener('click', () => {
       firebase.auth().signInWithPopup(provider)
-        .then((result) => {
+        .then(async(result) => {
           const user = result.user;
           console.log("User info:", user);
-          console.log(user.displayName); // Name
-console.log(user.email);       // Email
-console.log(user.uid);         // Unique ID
-console.log(user.photoURL);    // Profile picture
-window.location.href = 'homepage.html';
-//document.body.innerHTML += `<h2>Welcome, ${user.displayName}!</h2>`;
-
+          const userRef = db.collection("users").doc(user.uid);
+          const docSnap = await userRef.get();
+          
+      if (!docSnap.exists) {
+        await userRef.set({
+          name: user.displayName,
+          email: user.email,
+          uid: user.uid,
+          photoURL: user.photoURL,
+          createdAt: new Date().toISOString(),
+        });
+        console.log("User saved to Firestore.");
+      } else {
+        console.log("User already exists in Firestore.");
+      }
+          
           alert(`Signed in as ${user.displayName} (${user.email})`);
+          window.location.href='homepage.html';
         })
         .catch((error) => {
           console.error("Google Sign-In Error:", error);
