@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
       const user = result.user;
       const token = await user.getIdToken();
       console.log('Token:', token);
-
+      window.location.href="admin_home.html";
       // Send token to backend
       const response = await fetch("http://localhost:3000/api/authenticate", {
         method: "POST",
