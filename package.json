@@ -19,10 +19,12 @@
   "homepage": "https://github.com/Amigostranger/FacilityManagement#readme",
   "devDependencies": {
     "jest": "^29.7.0"
+
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "firebase-admin": "^13.2.0"
+
   }
 }
