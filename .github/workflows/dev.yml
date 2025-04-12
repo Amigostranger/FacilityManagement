@@ -29,9 +29,7 @@ jobs:
             - name: Run Tests
               run: npm test
         
-            - name: Build Project
-              run: npm run build   
-              
+          
               
             - name: Deploy to Azure Staging
               uses: Azure/static-web-apps-deploy@v1
