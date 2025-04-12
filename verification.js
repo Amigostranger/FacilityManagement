@@ -1,58 +1,29 @@
-// <!-- Firebase Auth SDK -->
 
-//   <script>
-//     // document.getElementById('contactForm').addEventListener('submit', (e) => {
-//     //   e.preventDefault();
-  
-//     //   const name = document.getElementById('name').value;
-//     //   const email = document.getElementById('email').value;
-//     //   const message = document.getElementById('message').value;
-  
-//     //   fetch('http://localhost:3000/add-message', {
-//     //     method: 'POST',
-//     //     headers: {
-//     //       'Content-Type': 'application/json'
-//     //     },
-//     //     body: JSON.stringify({ name, email, message })
-//     //   })
-//     //   .then(response => response.text())
-//     //   .then(data => alert(data))
-//     //   .catch(error => console.error('Error:', error));
-//     // });
+window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector(".googleSignIn");
 
+  btn.addEventListener("click", async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+      const result = await firebase.auth().signInWithPopup(provider);
+      const user = result.user;
+      const token = await user.getIdToken();
+      console.log('Token:', token);
 
+      // Send token to backend
+      const response = await fetch("http://localhost:3000/api/authenticate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      });
 
-//   </script> 
-//verification.js
-const provider = new firebase.auth.GoogleAuthProvider();
-const db=firebase.firestore();
-
-document.getElementById('googleSignIn').addEventListener('click', () => {
-      firebase.auth().signInWithPopup(provider)
-        .then(async(result) => {
-          const user = result.user;
-          console.log("User info:", user);
-          const userRef = db.collection("users").doc(user.uid);
-          const docSnap = await userRef.get();
-          
-      if (!docSnap.exists) {
-        await userRef.set({
-          name: user.displayName,
-          email: user.email,
-          uid: user.uid,
-          photoURL: user.photoURL,
-          createdAt: new Date().toISOString(),
-        });
-        console.log("User saved to Firestore.");
-      } else {
-        console.log("User already exists in Firestore.");
-      }
-          
-          alert(`Signed in as ${user.displayName} (${user.email})`);
-          window.location.href='homepage.html';
-        })
-        .catch((error) => {
-          console.error("Google Sign-In Error:", error);
-          alert("Sign-in failed. See console for details.");
-        });
-    });
+      const data = await response.json();
+      console.log("✅ Server response:", data);
+      
+    } catch (err) {
+      console.error("❌ Error during sign-in:", err);
+    }
+  });
+});
