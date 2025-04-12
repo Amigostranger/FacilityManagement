@@ -9,7 +9,7 @@
 <body class="main">
     <section>
         <section>
-            <section class="login-section-id">
+            <section class="googleSignIn">
                 <h1>Log in</h1>
                 <input type="email" id="email" placeholder="Email" required />
                 <input type="password" id="password" placeholder="Password" required />
@@ -22,5 +22,29 @@
             </section>
         </section>
     </section>
+
+
+    
+     <!-- Firebase App (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+
+<!-- Firebase Auth (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+
+<!-- Firebase Firestore (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
+    authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
+    projectId: "sportsmanagement-a0f0b",
+    storageBucket: "sportsmanagement-a0f0b.firebasestorage.app",
+    messagingSenderId: "674114167483",
+    appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
+  };
+firebase.initializeApp(firebaseConfig);
+</script>
+<script src="verification.js"></script>
 </body>
 </html>
