@@ -26,7 +26,7 @@ const googleSignIn = async () => {
     // Send user data to backend
    
    
-    const response = await fetch("https://my-node-backend-a6ccfgdybygadcfc.southafricanorth-01.azurewebsites.net/api/save-user", {
+    const response = await fetch("/api/save-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const emailSignUp = async (event) => {
     console.log("User signed up:", user);
 
     // Send user data to backend
-    const response = await fetch("http://localhost:3000/api/save-user", {
+    const response = await fetch("/api/save-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

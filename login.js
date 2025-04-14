@@ -30,7 +30,7 @@ loginForm.addEventListener("submit", async (e) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const token = await userCredential.user.getIdToken();
 
-    const response = await fetch("http://localhost:3000/api/get-user", {
+    const response = await fetch("/api/get-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ googleLoginBtn.addEventListener("click", async () => {
     const result = await signInWithPopup(auth, provider);
     const token = await result.user.getIdToken();
 
-    const response = await fetch('https://my-node-backend-a6ccfgdybygadcfc.southafricanorth-01.azurewebsites.net/api/get-user', {
+    const response = await fetch('/api/get-user', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

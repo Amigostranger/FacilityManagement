@@ -6,10 +6,10 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
-console.log('Server is starting')
+console.log('Server is starting...');
 dotenv.config();
 
-// Import service account key dynamically
+// Load Firebase service account key
 const serviceAccount = JSON.parse(fs.readFileSync(path.resolve('./serviceAccountKey.json'), 'utf8'));
 
 // Initialize Firebase Admin SDK
@@ -22,23 +22,23 @@ const auth = admin.auth();
 
 const app = express();
 
-// CORS middleware to allow specific origin (or all origins)
-// app.use(cors({
-//   origin: 'http://127.0.0.1:5501', // Allow requests from your front-end
-// }));
-// s
-// 
+// CORS Options
+const corsOptions = {
+  origin: '*', // or replace with your static site origin in production
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false
+};
 
- // Handle preflight requests globally
-app.options('*', cors(corsOptions));
-
-
+//Middleware Setup
+app.use(cors(corsOptions));              // Enable CORS
+app.options('*', cors(corsOptions));     // Preflight handling
 app.use(express.json());
 app.use(bodyParser.json());
 
-// Middleware to verify Firebase ID token
+//Firebase Token Verification Middleware
 const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+  const token = req.headers.authorization?.split(" ")[1]; // Bearer <token>
   if (!token) {
     return res.status(401).json({ error: "Token is required" });
   }
@@ -52,7 +52,7 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-// Endpoint to save user to Firestore
+//Save User Endpoint
 app.post("/api/save-user", verifyToken, async (req, res) => {
   const { email, username } = req.body;
 
@@ -62,43 +62,40 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
 
   try {
     const userRef = db.collection("users").doc(req.user.uid);
-    await userRef.set({
-      email,
-      username,
-    });
-
+    await userRef.set({ email, username });
     res.status(200).json({ message: "User saved successfully" });
   } catch (error) {
-    console.error("Error saving user to Firestore:", error);
+    console.error("Error saving user:", error);
     res.status(500).json({ error: "Failed to save user" });
   }
 });
 
-
-
+//Get User Endpoint
 app.post("/api/get-user", async (req, res) => {
   const authHeader = req.headers.authorization || "";
   const token = authHeader.split("Bearer ")[1];
 
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(token);
-    const uid = decodedToken.uid;
+  if (!token) {
+    return res.status(401).send({ error: "Authorization header missing" });
+  }
 
+  try {
+    const decodedToken = await auth.verifyIdToken(token);
+    const uid = decodedToken.uid;
     const userDoc = await db.collection("users").doc(uid).get();
 
     if (!userDoc.exists) {
       return res.status(404).send({ error: "Create an Account!" });
     }
 
-    const userData = userDoc.data();
-    res.status(200).send(userData);
+    res.status(200).send(userDoc.data());
   } catch (error) {
     console.error("Login error:", error);
     res.status(401).send({ error: "Unauthorized" });
   }
 });
 
-
+//Error Handling
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
 });
@@ -107,12 +104,14 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection:', reason);
 });
 
-// Start the server
+//Start Server (only in local dev)
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
-// setInterval(() => {
-//   console.log('Server is alive...');
-// }, 5000);
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+//Export for Azure Static Web Apps
+export default app;
