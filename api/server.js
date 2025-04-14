@@ -43,15 +43,24 @@ app.use(bodyParser.json());
 
 // Firebase Token Verification Middleware
 const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1]; // Extract token from Authorization header
-
+  //Extract token from Authorization header
+  
+  //const token = req.headers.authorization?.split(" ")[1]; 
+  const authHeader = req.headers.authorization || "";
+  const token = authHeader.startsWith("Bearer ") ? authHeader.split("Bearer ")[1] : null;
   if (!token) {
     return res.status(401).json({ error: "Token is required" });
+  }
+  
+
+  if (!token) {
+    return res.status(401).json({ error: "Authorization header missing or token invalid" });
   }
 
   try {
     const decodedToken = await auth.verifyIdToken(token);
-    req.user = decodedToken;  // Attach user info to request object
+    // Attach user info to request object
+    req.user = decodedToken; 
     next();
   } catch (error) {
     return res.status(401).json({ error: "Invalid or expired token" });
@@ -79,7 +88,8 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
 // Get User Endpoint
 app.post("/api/get-user", async (req, res) => {
   const authHeader = req.headers.authorization || "";
-  const token = authHeader.split("Bearer ")[1];  // Extract token from the Authorization header
+  //Extract token from the Authorization header
+  const token = authHeader.split("Bearer ")[1];  
 
   if (!token) {
     return res.status(401).json({ error: "Authorization header missing or token invalid" });
