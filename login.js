@@ -69,8 +69,17 @@ googleLoginBtn.addEventListener("click", async () => {
       },
     });
 
-    const data = await response.json();
-
+    //const data = await response.json();
+    const responseText = await response.text();
+    console.log("Raw response:", responseText);
+      // Try to parse JSON only if the response is not empty
+      let data;
+      if (responseText.trim() !== '') {
+        data = JSON.parse(responseText);
+      } else {
+        throw new Error("Empty response body");
+      }
+      
     if (response.ok) {
       message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
       setTimeout(() => {
