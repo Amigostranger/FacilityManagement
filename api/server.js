@@ -43,20 +43,12 @@ app.use(bodyParser.json());
 
 // Firebase Token Verification Middleware
 const verifyToken = async (req, res, next) => {
-  //Extract token from Authorization header
-  
-  //const token = req.headers.authorization?.split(" ")[1]; 
-  const authHeader = req.headers.authorization || "";
-  const token = authHeader.startsWith("Bearer ") ? authHeader.split("Bearer ")[1] : null;
+  // Extract token from Authorization header
+  const token = req.headers.authorization?.split(" ")[1]; 
   if (!token) {
     return res.status(401).json({ error: "Token is required" });
   }
   
-
-  if (!token) {
-    return res.status(401).json({ error: "Authorization header missing or token invalid" });
-  }
-
   try {
     const decodedToken = await auth.verifyIdToken(token);
     // Attach user info to request object
@@ -87,10 +79,11 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
 
 // Get User Endpoint
 app.post("/api/get-user", async (req, res) => {
-  const authHeader = req.headers.authorization || "";
+ // const authHeader = req.headers.authorization || "";
   //Extract token from the Authorization header
-  const token = authHeader.split("Bearer ")[1];  
-
+  const authHeader = req.headers.authorization || "";
+  // const token = authHeader.split("Bearer ")[1];  
+  const token = authHeader.startsWith("Bearer ") ? authHeader.split("Bearer ")[1] : null;
   if (!token) {
     return res.status(401).json({ error: "Authorization header missing or token invalid" });
   }
