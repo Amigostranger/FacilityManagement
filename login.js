@@ -14,13 +14,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const loginForm = document.getElementById("loginForm");
+const loginForm = document.getElementById("btnlog");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
 const message = document.getElementById("message");
 const signup=document.getElementById('sign-up');
 
 // Handle Email/Password login
-loginForm.addEventListener("submit", async (e) => {
+loginForm.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const email = document.getElementById("email").value;
@@ -61,7 +61,16 @@ googleLoginBtn.addEventListener("click", async () => {
     const result = await signInWithPopup(auth, provider);
     const token = await result.user.getIdToken();
 
-    const response = await fetch('https://my-node-backend-a6ccfgdybygadcfc.southafricanorth-01.azurewebsites.net/api/get-user', {
+    // const response = await fetch('https://my-node-backend-a6ccfgdybygadcfc.southafricanorth-01.azurewebsites.net/api/get-user', {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
+
+
+       const response = await fetch('http://localhost:3000/api/get-user', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

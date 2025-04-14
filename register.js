@@ -35,6 +35,7 @@ const googleSignIn = async () => {
       body: JSON.stringify({
         email: user.email,
         username: user.displayName || user.email, // Use email as default username
+        role:"resident",
       }),
     });
 
@@ -52,7 +53,7 @@ const emailSignUp = async (event) => {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-
+  const role="resident";
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
@@ -68,6 +69,7 @@ const emailSignUp = async (event) => {
       body: JSON.stringify({
         email: user.email,
         username: email, // Use email as default username
+        role:"resident",
       }),
     });
 
@@ -80,7 +82,7 @@ const emailSignUp = async (event) => {
 };
 
 // Attach event listener for email sign-up form
-document.getElementById("loginForm").addEventListener("submit", emailSignUp);
+document.getElementById("loginForm").addEventListener("click", emailSignUp);
 
 // Attach event listener for Google Sign-In button
 document.getElementById("googleSignInButton").addEventListener("click", googleSignIn);

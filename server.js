@@ -6,11 +6,21 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
-console.log('Server is starting')
 dotenv.config();
 
-// Import service account key dynamically
-const serviceAccount = JSON.parse(fs.readFileSync(path.resolve('./serviceAccountKey.json'), 'utf8'));
+console.log('Server is starting');
+
+// Resolve the path to the service account key
+const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+
+// Check if the service account key file exists
+if (!fs.existsSync(serviceAccountPath)) {
+  console.error(`❌ serviceAccountKey.json not found at ${serviceAccountPath}`);
+  process.exit(1);
+}
+
+// Read and parse the service account key
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
@@ -22,16 +32,22 @@ const auth = admin.auth();
 
 const app = express();
 
-// CORS middleware to allow specific origin (or all origins)
-// app.use(cors({
-//   origin: 'http://127.0.0.1:5501', // Allow requests from your front-end
-// }));
-// s
-// 
+// Define CORS options
+// Define CORS options
+const corsOptions = {
+  origin: [
+    'http://127.0.0.1:5500',
+    'http://127.0.0.1:5501'
+  ],
+  optionsSuccessStatus: 200,
+};
 
- // Handle preflight requests globally
-app.options('*', cors(corsOptions));
+// Apply CORS middleware
+app.use(cors());
 
+
+// Handle preflight requests globally
+//app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -54,7 +70,7 @@ const verifyToken = async (req, res, next) => {
 
 // Endpoint to save user to Firestore
 app.post("/api/save-user", verifyToken, async (req, res) => {
-  const { email, username } = req.body;
+  const { email, username ,role} = req.body;
 
   if (!email || !username) {
     return res.status(400).json({ error: "Email and username are required" });
@@ -65,6 +81,7 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
     await userRef.set({
       email,
       username,
+      role,
     });
 
     res.status(200).json({ message: "User saved successfully" });
@@ -74,8 +91,7 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
   }
 });
 
-
-
+// Endpoint to get user from Firestore
 app.post("/api/get-user", async (req, res) => {
   const authHeader = req.headers.authorization || "";
   const token = authHeader.split("Bearer ")[1];
@@ -98,7 +114,7 @@ app.post("/api/get-user", async (req, res) => {
   }
 });
 
-
+// Global error handlers
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
 });
@@ -111,8 +127,5 @@ process.on('unhandledRejection', (reason, promise) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`✅ Server running on http://localhost:${PORT}`);
 });
-// setInterval(() => {
-//   console.log('Server is alive...');
-// }, 5000);
