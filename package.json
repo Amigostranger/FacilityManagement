@@ -2,7 +2,7 @@
   "name": "facilitymanagement",
   "version": "1.0.0",
   "description": "A web-based solution for managing shared sports facilities in local communities. This platform streamlines **facility booking**, **user management**, **maintenance reporting**, **event organization**, and **real-time reporting** using Agile, CI/CD, and Test-Driven Development principles.",
-  "main": "math.test.js",
+  "main": "api/server.js",
   "scripts": {
     "test": "jest"
   },
