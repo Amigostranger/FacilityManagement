@@ -100,6 +100,32 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
 });
 
 
+// Endpoint to get user issues from Firestore
+app.get("/api/issues", verifyToken, async (req, res) => {
+  const uid = req.user.uid;
+
+  try {
+    const snapshot = await db
+      .collection("users")
+      .doc(uid)
+      .collection("issues")
+      .orderBy("createdAt", "desc")
+      .get();
+
+    const issues = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    res.status(200).json(issues);
+  } catch (error) {
+    console.error("Error fetching issues:", error);
+    res.status(500).json({ error: "Failed to get issues" });
+  }
+});
+
+
+
 app.get('/api/mana-users',async (req,res)=>{
 
 
@@ -167,3 +193,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
 });
+
+
+
