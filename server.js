@@ -76,7 +76,7 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-// Endpoint to save user to Firestore
+
 app.post("/api/save-user", verifyToken, async (req, res) => {
   const { email, username ,role} = req.body;
 

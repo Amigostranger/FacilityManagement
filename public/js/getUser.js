@@ -46,6 +46,14 @@ function userTable(data){
     actionTd.appendChild(editBtn);
     row.appendChild(actionTd);
     tbody.appendChild(row);
+
+    editBtn.addEventListener('click',async (e)=>{
+      e.preventDefault();
+
+      window.location.href='hy.html';
+
+
+    })
   });
 
   table.appendChild(tbody);
@@ -57,3 +65,5 @@ document.getElementById('tafula').appendChild(table);
 
 
 userTable(usersarr);
+
+
