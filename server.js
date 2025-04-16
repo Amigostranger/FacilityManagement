@@ -6,6 +6,9 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
+//import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+
 dotenv.config();
 
 console.log('Server is starting');
@@ -15,7 +18,7 @@ const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
 // Check if the service account key file exists
 if (!fs.existsSync(serviceAccountPath)) {
-  console.error(`❌ serviceAccountKey.json not found at ${serviceAccountPath}`);
+  console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
   process.exit(1);
 }
 
@@ -31,7 +34,11 @@ const db = admin.firestore();
 const auth = admin.auth();
 
 const app = express();
+import { fileURLToPath } from 'url';
 
+// Recreate __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // Define CORS options
 // Define CORS options
 const corsOptions = {
@@ -45,6 +52,7 @@ const corsOptions = {
 // Apply CORS middleware
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, 'public'))); // 
 
 // Handle preflight requests globally
 //app.options('*', cors(corsOptions));
@@ -91,6 +99,36 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
   }
 });
 
+
+app.get('/api/mana-users',async (req,res)=>{
+
+
+  try {
+    const getIt=await db.collection("users").get();
+    const users = getIt.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    res.status(200).send(users);
+  } catch (error) {
+    console.error(error);
+    
+  }
+})
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'register_page.html'));
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname,'public', 'login_page.html'));
+});
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname,'public', 'login_page.html'));
+});
+
+app.use(express.static(__dirname));
+
 // Endpoint to get user from Firestore
 app.post("/api/get-user", async (req, res) => {
   const authHeader = req.headers.authorization || "";
@@ -127,5 +165,5 @@ process.on('unhandledRejection', (reason, promise) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(` Server running on http://localhost:${PORT}`);
 });

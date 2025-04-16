@@ -1,7 +1,7 @@
 .main{
     height:100vh;
     width:100vw;
-    background-image: url(soccer.png);
+    background-image: url("../img/soccer.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

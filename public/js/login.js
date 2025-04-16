@@ -1,18 +1,20 @@
 // login.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+//import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+//import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import {  signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { auth } from './firebase.js';;
+//import {auth} from './firebase.js'
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
+//   authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
+//   projectId: "sportsmanagement-a0f0b",
+//   storageBucket: "sportsmanagement-a0f0b.firebasestorage.app",
+//   messagingSenderId: "674114167483",
+//   appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
+// };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
-  authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
-  projectId: "sportsmanagement-a0f0b",
-  storageBucket: "sportsmanagement-a0f0b.firebasestorage.app",
-  messagingSenderId: "674114167483",
-  appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// const app = initializeApp(firebaseConfig);
+// const auth = getAuth(app);
 
 const loginForm = document.getElementById("btnlog");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
@@ -43,7 +45,15 @@ loginForm.addEventListener("click", async (e) => {
     if (response.ok) {
       message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
       setTimeout(() => {
-        window.location.href = 'admin_home.html';
+        if(data.role=="resident"){
+          window.location.href = 'resident_home.html';
+        }
+        else if(data.role=="facility staff"){
+          window.location.href = 'staff_home.html';
+        }
+        else{
+          window.location.href = 'admin_home.html'
+        }
       }, 2000);
     } else {
       message.textContent = `Error: ${data.error}`;
