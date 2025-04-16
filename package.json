@@ -17,5 +17,16 @@
   },
   "devDependencies": {
     "jest": "^29.7.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sports-Facility-Management-Team1/FacilityManagement.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sports-Facility-Management-Team1/FacilityManagement/issues"
+  },
+  "homepage": "https://github.com/Sports-Facility-Management-Team1/FacilityManagement#readme"
 }
