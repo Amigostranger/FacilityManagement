@@ -1,20 +1,8 @@
-// login.js
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-//import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
 import {  signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { auth } from './firebase.js';;
-//import {auth} from './firebase.js'
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
-//   authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
-//   projectId: "sportsmanagement-a0f0b",
-//   storageBucket: "sportsmanagement-a0f0b.firebasestorage.app",
-//   messagingSenderId: "674114167483",
-//   appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
-// };
 
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
+
 
 const loginForm = document.getElementById("btnlog");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
@@ -32,7 +20,7 @@ loginForm.addEventListener("click", async (e) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const token = await userCredential.user.getIdToken();
 
-    const response = await fetch("http://localhost:3000/api/get-user", {
+    const response = await fetch("https://sports-facility-management-web-app.azurewebsites.net/api/get-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +68,7 @@ googleLoginBtn.addEventListener("click", async () => {
     // });
 
 
-       const response = await fetch('http://localhost:3000/api/get-user', {
+       const response = await fetch('https://sports-facility-management-web-app.azurewebsites.net/api/get-user', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
