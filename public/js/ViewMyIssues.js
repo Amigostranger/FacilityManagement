@@ -1,7 +1,7 @@
 // Fetch issues and update table
 async function loadIssues() {
     try {
-      const res = await fetch("http://localhost:3000/api/issues", {
+      const res = await fetch("https://sports-facility-management-web-app.azurewebsites.net/api/issues", {
         headers: {
           "Authorization": `Bearer ${token}`
         }
