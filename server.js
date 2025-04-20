@@ -6,17 +6,13 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
-//import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-
 dotenv.config();
 
 console.log('Server is starting');
 
-// Resolve the path to the service account key
+
 const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
-// Check if the service account key file exists
 if (!fs.existsSync(serviceAccountPath)) {
   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
   process.exit(1);
@@ -100,7 +96,7 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
 });
 
 
-app.get('/api/mana-users',async (req,res)=>{
+app.get('/api/get-users',async (req,res)=>{
 
 
   try {
@@ -112,6 +108,57 @@ app.get('/api/mana-users',async (req,res)=>{
     res.status(200).send(users);
   } catch (error) {
     console.error(error);
+    
+  }
+})
+
+
+
+app.delete('/api/user/:id',async (req,res)=>{
+  try {
+    const userId=req.params.id;
+
+    const user=db.collection('users').doc(userId);
+    await user.delete();
+
+    res.status(200).json({ 
+      success: true,
+      message: `User ${userId} deleted successfully`,
+      deletedUserId: userId
+    });
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).json({ 
+      error: "Failed to delete user",
+      details: error.message 
+    });
+    //res.status(200).json({ message: `User ${userId} deleted successfully` });
+  }
+})
+
+app.put('/api/user/:id',async (req,res)=>{
+  try {
+    
+    const id=req.params.id;
+    const { role, username, email } = req.body;
+    const getIt=  db.collection("users").doc(id);
+
+
+    if (role!=""){
+      await getIt.update({
+        role:role
+      })
+      res.status(200).json({ message: `User ${id} role updated to ${role}` });
+    }
+
+    else{
+      res.status(400).json({ error: "Role cannot be empty" });
+    }
+    
+  
+
+  } catch (e) {
+    console.error(e);
     
   }
 })
