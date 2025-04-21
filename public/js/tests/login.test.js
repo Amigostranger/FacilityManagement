@@ -1,9 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from '../firebase'; // mock this
-import '../login.js'; // assumes logic runs on import
+const { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } = require("firebase/auth");
+const { auth } = require("../firebase");
+require("../login.js"); 
+
+
 
 jest.mock('firebase/auth', () => ({
   signInWithEmailAndPassword: jest.fn(),
