@@ -28,7 +28,12 @@ jobs:
         
             - name: Run Tests
               run: npm test
-        
+            
+            - name: Upload coverage to Codecov
+              if: success()
+              run: npx codecov
+              env:
+                CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           
     
 
