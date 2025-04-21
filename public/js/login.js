@@ -3,7 +3,6 @@ import {  signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from
 import { auth } from './firebase.js';;
 
 
-
 const loginForm = document.getElementById("btnlog");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
 const message = document.getElementById("message");

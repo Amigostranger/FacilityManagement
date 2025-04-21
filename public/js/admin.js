@@ -11,7 +11,7 @@ managebtn.addEventListener('click',async(e)=>{
     e.preventDefault();
 
 
-    const sendIt=await fetch("http://localhost:3000/api/mana-users",{
+    const sendIt=await fetch("https://sports-facility-management-web-app.azurewebsites.net/api/mana-users",{
         method:"GET",
         headers:{
             "Content-Type":"application/json"
