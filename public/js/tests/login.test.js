@@ -1,6 +1,9 @@
 /**
  * @jest-environment jsdom
  */
+
+
+
 const { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } = require("firebase/auth");
 const { auth } = require("../firebase");
 require("../login.js"); 

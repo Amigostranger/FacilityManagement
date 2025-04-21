@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
+    "firebase": "^11.6.0",
     "firebase-admin": "^13.2.0"
   },
   "devDependencies": {
@@ -33,11 +34,10 @@
     "url": "https://github.com/Sports-Facility-Management-Team1/FacilityManagement/issues"
   },
   "homepage": "https://github.com/Sports-Facility-Management-Team1/FacilityManagement#readme",
-
   "jest": {
-  "testEnvironment": "jsdom",
-  "transform": {
-    "^.+\\.js$": "babel-jest"
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
   }
-}
 }
