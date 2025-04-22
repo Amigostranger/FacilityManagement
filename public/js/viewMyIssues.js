@@ -82,9 +82,11 @@ async function loadIssues(user) {
     });
 
     const issues = await res.json();
-    tableBody.innerHTML = "";
 
-    issues.forEach(issue => {
+    let arrayy=[];
+    tableBody.innerHTML = "";
+    arrayy=issues;
+    arrayy.forEach(issue => {
       const row = document.createElement("tr");
 
       const viewBtn = document.createElement("button");

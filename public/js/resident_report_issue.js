@@ -1,4 +1,3 @@
-
 import { auth } from './firebase.js';
 //  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
@@ -33,7 +32,16 @@ issueForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const title = document.getElementById("issueTitle").value.trim();
-  const description = document.getElementById("issueDescription").value.trim();
+
+  const description = document.getElementById("issueDescription");
+
+if (description) {
+    const description = document.getElementById("issueDescription").value.trim();
+    // continue your logic
+} else {
+    console.error("Element with ID 'issueDescription' not found.");
+}
+  
   const facility = document.getElementById("facilitySelect").value.trim();
 
   const user = auth.currentUser;
