@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage --coverageReporters=lcov"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
