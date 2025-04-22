@@ -39,6 +39,8 @@
       "public/js/**/*.js", 
       "!public/js/tests/**"
     ],
+    "coverageDirectory": "./coverage",
+    "coverageReporters": ["lcov", "text"],
     "testEnvironment": "jsdom",
 
     "transform": {
