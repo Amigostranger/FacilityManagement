@@ -35,7 +35,12 @@
   },
   "homepage": "https://github.com/Sports-Facility-Management-Team1/FacilityManagement#readme",
   "jest": {
+    "collectCoverageFrom": [
+      "public/js/**/*.js", 
+      "!public/js/tests/**"
+    ],
     "testEnvironment": "jsdom",
+
     "transform": {
       "^.+\\.js$": "babel-jest"
     }

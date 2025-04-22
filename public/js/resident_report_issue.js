@@ -44,7 +44,7 @@ issueForm.addEventListener('submit', async (e) => {
   try {
     const idToken = await user.getIdToken();
 
-    const res = await fetch("http://localhost:3000/api/report", {
+    const res = await fetch("https://sports-facility-management-web-app.azurewebsites.net/api/report", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
