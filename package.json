@@ -19,9 +19,12 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.3.2"
   },
   "repository": {
     "type": "git",
@@ -47,6 +50,15 @@
     "testEnvironment": "jsdom",
     "transform": {
       "^.+\\.js$": "babel-jest"
-    }
+    },
+    "globals": {
+      "jest/globals": true
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
