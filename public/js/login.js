@@ -20,7 +20,7 @@ loginForm.addEventListener("click", async (e) => {
     const token = await userCredential.user.getIdToken();
     hy=token;
 
-    const response = await fetch("http://localhost:3000/api/get-user", {
+    const response = await fetch("https://sports-facility-management-web-app.azurewebsites.net/api/get-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ googleLoginBtn.addEventListener("click", async () => {
     // });
 
 
-       const response = await fetch('http://localhost:3000/api/get-user', {
+       const response = await fetch('https://sports-facility-management-web-app.azurewebsites.net/api/get-user', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
