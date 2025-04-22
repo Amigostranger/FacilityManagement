@@ -1,4 +1,4 @@
-name: Development CI/CD
+name: Run tests and upload coverage
 
 on:
   push:
@@ -7,32 +7,27 @@ on:
     branches: [dev]
 
 jobs:
-  ci-cd:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Lint Code
-        run: npm run lint
-        continue-on-error: true
-
-      - name: Run Tests with Coverage
-        run: npm test -- --coverage --coverageReporters=lcov
+      - name: Run tests with coverage
+        run: npm test
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} 
-          files: ./coverage/lcov.info
-          flags: unittests
-          name: codecov-coverage
-          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}

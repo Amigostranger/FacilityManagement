@@ -68,15 +68,11 @@ TN:
 SF:public\js\firebase.js
 FNF:0
 FNH:0
-DA:6,0
-DA:7,0
-DA:8,0
 DA:10,0
 DA:19,0
 DA:20,0
 DA:21,0
-DA:23,0
-LF:8
+LF:4
 LH:0
 BRF:0
 BRH:0
@@ -135,7 +131,8 @@ TN:
 SF:public\js\jest.config.js
 FNF:0
 FNH:0
-LF:0
+DA:1,0
+LF:1
 LH:0
 BRF:0
 BRH:0

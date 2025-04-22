@@ -36,13 +36,15 @@
   "homepage": "https://github.com/Sports-Facility-Management-Team1/FacilityManagement#readme",
   "jest": {
     "collectCoverageFrom": [
-      "public/js/**/*.js", 
+      "public/js/**/*.js",
       "!public/js/tests/**"
     ],
     "coverageDirectory": "./coverage",
-    "coverageReporters": ["lcov", "text"],
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ],
     "testEnvironment": "jsdom",
-
     "transform": {
       "^.+\\.js$": "babel-jest"
     }
