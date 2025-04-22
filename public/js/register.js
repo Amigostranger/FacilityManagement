@@ -2,21 +2,7 @@
 //import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import{auth} from './firebase.js'
-// Firebase configuration
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
-//   authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
-//   projectId: "sportsmanagement-a0f0b",
-//   storageBucket: "sportsmanagement-a0f0b.firebasestorage.app",
-//   messagingSenderId: "674114167483",
-//   appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
-// };
 
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
-
-// Google Sign-In button handler
 const googleSignIn = async () => {
   const provider = new GoogleAuthProvider();
   try {

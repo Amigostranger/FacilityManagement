@@ -1,3 +1,4 @@
+
 import { auth } from './firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
@@ -7,10 +8,11 @@ const issueModal = document.getElementById('issueModal');
 const cancelBtn = document.getElementById('cancelBtn');
 const issueForm = document.getElementById('issueForm');
 
-// Show modal
+
 newIssueBtn.addEventListener('click', () => {
   issueModal.hidden = false;
 });
+
 
 // Hide modal
 cancelBtn.addEventListener('click', () => {
@@ -61,3 +63,4 @@ onAuthStateChanged(auth, (user) => {
     alert("Please sign in first.");
   }
 });
+

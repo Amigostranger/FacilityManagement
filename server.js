@@ -116,10 +116,7 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
   }
 });
 
-
-app.get('/api/get-users',async (req,res)=>{
-
-
+app.get('/api/get-users',async (req,res)=>
   try {
     const getIt=await db.collection("users").get();
     const users = getIt.docs.map(doc => ({
@@ -266,3 +263,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
 });
+
+
+
