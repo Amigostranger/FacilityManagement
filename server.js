@@ -93,6 +93,7 @@ app.get("/api/issues", verifyToken,async (req, res) => {
 
 
 
+
 app.post("/api/save-user", verifyToken, async (req, res) => {
   const { email, username ,role} = req.body;
 
@@ -158,32 +159,6 @@ app.delete('/api/user/:id',async (req,res)=>{
 
 
 
-app.get("/api/issues", verifyToken,async (req, res) => {
-  const uid = req.user.uid;
-
-  
-  try {
-
-    const snapshot = await db
-
-      .collection("Issues")
-      //.doc(hardcodedUid);
-      //.where("submittedBy", "==", hardcodedUid)
-      .where("submittedBy", "==", uid)//Used to filter a specific user 
-      //.orderBy("createdAt", "desc")
-      .get();
-
-    const issues = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    res.status(200).json(issues);
-  } catch (error) {
-    console.error("Error fetching issues:", error);
-    res.status(500).json({ error: "Failed to get issues" });
-  }
-});
 
 app.post("/api/report", verifyToken, async (req, res) => {
   const { title, description, facility } = req.body;

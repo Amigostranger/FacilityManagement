@@ -41,13 +41,14 @@ loginForm.addEventListener("click", async (e) => {
     if (response.ok) {
       message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
       setTimeout(() => {
-        if(data.role=="resident"){
+        const the=data.role.toUpperCase();
+        if(the==="RESIDENT"){
           window.location.href = 'resident_home.html';
         }
-        else if(data.role=="facility staff"){
+        else if(the=="STAFF"){
           window.location.href = 'staff_home.html';
         }
-        else{
+        else if(the==="ADMIN"){
           window.location.href = 'admin_home.html'
         }
       }, 2000);
@@ -93,13 +94,14 @@ googleLoginBtn.addEventListener("click", async () => {
     if (response.ok) {
       message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
       setTimeout(() => {
-        if(data.role=="resident" || data.role=="Resident"){
+        const the=data.role.toUpperCase();
+        if(the==="RESIDENT"){
           window.location.href = 'resident_home.html';
         }
-        else if(data.role=="facility staff"){
+        else if(the=="STAFF"){
           window.location.href = 'staff_home.html';
         }
-        else{
+        else if(the==="ADMIN"){
           window.location.href = 'admin_home.html'
         }
        
