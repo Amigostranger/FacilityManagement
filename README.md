@@ -100,3 +100,7 @@ cd backend && npm run dev
 
 # Run frontend
 cd ../frontend && npm run dev
+
+[![codecov](https://codecov.io/gh/basi743/-Sports-Facility-Management-App/branch/dev/graph/badge.svg)](https://codecov.io/gh/basi743/-Sports-Facility-Management-App)
+
+
