@@ -1,26 +1,13 @@
 // login.js
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-//import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import {  signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { auth } from './firebase.js';;
-//import {auth} from './firebase.js'
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
-//   authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
-//   projectId: "sportsmanagement-a0f0b",
-//   storageBucket: "sportsmanagement-a0f0b.firebasestorage.app",
-//   messagingSenderId: "674114167483",
-//   appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
-// };
 
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
+import {  signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { auth } from './firebase.js';
 
 const loginForm = document.getElementById("btnlog");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
 const message = document.getElementById("message");
 const signup=document.getElementById('sign-up');
-
+let hy=null;
 // Handle Email/Password login
 loginForm.addEventListener("click", async (e) => {
   e.preventDefault();
@@ -31,6 +18,7 @@ loginForm.addEventListener("click", async (e) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const token = await userCredential.user.getIdToken();
+    hy=token;
 
     const response = await fetch("http://localhost:3000/api/get-user", {
       method: "POST",
@@ -39,6 +27,14 @@ loginForm.addEventListener("click", async (e) => {
         Authorization: `Bearer ${token}`,
       },
     });
+
+  // const sendit=await fetch('http://localhost:3000/api/issues',{
+  //   method:"POST",
+  //   headers:{
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(token),
+  // })
 
     const data = await response.json();
 
@@ -63,6 +59,10 @@ loginForm.addEventListener("click", async (e) => {
     message.textContent = "Login failed: " + error.message;
   }
 });
+
+
+
+
 
 // Handle Google Sign-In
 googleLoginBtn.addEventListener("click", async () => {
@@ -93,7 +93,7 @@ googleLoginBtn.addEventListener("click", async () => {
     if (response.ok) {
       message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
       setTimeout(() => {
-        if(data.role=="resident"){
+        if(data.role=="resident" || data.role=="Resident"){
           window.location.href = 'resident_home.html';
         }
         else if(data.role=="facility staff"){

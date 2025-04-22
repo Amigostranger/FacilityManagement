@@ -69,7 +69,7 @@ const emailSignUp = async (event) => {
       },
       body: JSON.stringify({
         email: user.email,
-        username: email, // Use email as default username
+        username: email, 
         role:"resident",
       }),
     });

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Issues - Staff/Admin</title>
+  <link rel="stylesheet" href="css/staff_admin_issues.css">
+</head>
+<body>
+  <header>
+    <h1>Reported Issues</h1>
+  </header>
+
+  <main>
+    <section aria-label="Manage Reported Issues">
+      <table id="issuesTable">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Title</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamically populated rows from Firebase -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Modal for Viewing and Updating Issue -->
+    <section id="issueModal" hidden>
+      <article>
+        <header>
+          <h2>Update Issue</h2>
+        </header>
+        <form id="updateForm">
+          <p><strong>Description:</strong></p>
+          <p id="issueDescription"></p>
+
+          <label for="statusSelect">Status:</label>
+          <select id="statusSelect" required>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Solved">Solved</option>
+          </select>
+
+          <label for="feedback">Feedback to Resident:</label>
+          <textarea id="feedback" rows="4" placeholder="Enter feedback..." required></textarea>
+
+          <footer>
+            <button type="submit">Update</button>
+            <button type="button" id="cancelBtn">Cancel</button>
+          </footer>
+        </form>
+      </article>
+    </section>
+
+    <script type="module" src="js/staff_admin_issues.js"></script>
+</body>
+</html>

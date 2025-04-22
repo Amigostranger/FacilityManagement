@@ -31,7 +31,8 @@ async function loadUsers() {
   
     usersarr.forEach(users => {
       //const data = users.data();
-      const row = document.createElement("tr");
+      if(users.role!='admin' && users.role!="Admin"){
+              const row = document.createElement("tr");
   
       row.innerHTML = `
         <td>${users.email || "N/A"}</td>
@@ -48,10 +49,12 @@ async function loadUsers() {
 
         </td>
         <td>
-          <button class="deleteBtn" data-id="${users.id}">Delete</button>
+          <button class="deleteBtn" data-id="${users.id}">Revoke</button>
         </td>
       `;
       tbody.appendChild(row);
+      }
+
     });
   
     attachListeners();
@@ -125,7 +128,7 @@ async function loadUsers() {
  async function deleteIT(event) {
     const userId=event.target.getAttribute('data-id');
     
-    if (!confirm('Are you sure you want to delete this user?')) {
+    if (!confirm('Confirm to revoke access of user?')) {
       console.log("No");
       
       return;
@@ -138,7 +141,7 @@ async function loadUsers() {
         const result=await response.json();
         if(response.ok){
 
-          usersarr=usersarr.filter(user=>user.id!==userId);
+         // usersarr=usersarr.filter(user=>user.id!==userId);
           // localStorage.setItem('userData',JSON.stringify(usersarr));
             console.log(` User ${userId} deleted successfully`);
             loadUsers();

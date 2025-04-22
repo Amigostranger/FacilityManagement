@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report Issues - Resident</title>
+  <link rel="stylesheet" href="css/resident_report_issue.css">
+
+  <!-- Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js"></script>
+  <script type="module" src="js/resident_report_issue.js" defer></script>
+
+</head>
+<body>
+  <header>
+    <nav>
+      <button id="newIssueBtn">Report New Issue</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Issues Table -->
+    <section aria-label="Reported Issues">
+      <table id="issuesTable">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>View</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be inserted dynamically from Firebase -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- View Issue Modal -->
+    <section id="viewModal" hidden aria-modal="true" role="dialog">
+      <article>
+        <header>
+          <h2>Issue Details</h2>
+        </header>
+
+        <section>
+          <p><strong>Description:</strong></p>
+          <p id="issueDescription"></p>
+
+          <p><strong>Feedback:</strong></p>
+          <p id="feedback"></p>
+        </section>
+
+        <footer>
+          <button type="button" id="closeViewBtn">Close</button>
+        </footer>
+      </article>
+    </section>
+
+
+    <!-- Issue Form Popup (initially hidden) -->
+    <section id="issueModal" hidden>
+      <article>
+        <header>
+          <h2>Report New Issue</h2>
+        </header>
+        <form id="issueForm">
+          <label for="issueTitle">Title:</label>
+          <input type="text" id="issueTitle" name="issueTitle" required>
+
+          <label for="facilitySelect">Facility:</label>
+          <select id="facilitySelect" name="facilitySelect" required>
+            <option value="">--Select Facility--</option>
+            <option value="Sturrock Soccer Field">Sturrock Digs Soccer Field</option>
+            <option value="Matrix Basketball Court">Matrix Basketball Court</option>
+            <option value="Bozzoli Cricket Field">Bozzoli Cricket Field</option>
+            <option value="Digs Netball Court">Digs Netball Court</option>
+            <option value="Sturrock Esports Hall">Sturrock Esports Hall</option>
+            <option value="Solomon Mahlangu Chess Hall">Solomon Mahlangu Chess Hall</option>
+            <!-- Add more as needed -->
+          </select>
+
+          <label for="issueDescription">Description:</label>
+          <textarea id="issueDescription" name="issueDescription" rows="4" required></textarea>
+
+          <footer>
+            <button type="submit" id="submitBtn">Submit</button>
+            <button type="button" id="cancelBtn">Cancel</button>
+          </footer>
+        </form>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/resident_report_issue.js"></script>
+  <script type="module" src="js/ViewMyIssues.js" defer></script>
+</body>
+</html>
