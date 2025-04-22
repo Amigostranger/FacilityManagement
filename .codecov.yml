@@ -1,0 +1,17 @@
+codecov:
+  notify:
+    after_n_builds: 1
+
+coverage:
+  status:
+    project:
+      default:
+        target: 50%
+    patch:
+      default:
+        target: 50%
+
+comment:
+  layout: "reach,diff,flags,files"
+  behavior: default
+  require_changes: true
