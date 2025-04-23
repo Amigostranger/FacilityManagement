@@ -1,17 +1,10 @@
 import { auth } from './firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("User is signed in:", user.email);
-  } else {
-    console.log("No user signed in");
-  }
-}); 
+window.addEventListener('DOMContentLoaded', () => {
 
 
-
-// Elements
+// DOM Elements
 const newIssueBtn = document.getElementById('newIssueBtn');
 const issueModal = document.getElementById('issueModal');
 const cancelBtn = document.getElementById('cancelBtn');
@@ -27,43 +20,84 @@ cancelBtn.addEventListener('click', () => {
   issueModal.hidden = true;
 });
 
-// Submit form
-issueForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+// Wait for Firebase to confirm if user is signed in
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("User is signed in:", user.email);
 
-  const title = document.getElementById("issueTitle").value.trim();
-  const description = document.getElementById("issueDescription").value.trim();
-  const facility = document.getElementById("facilitySelect").value.trim();
+    issueForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-  const user = auth.currentUser;
-  if (!user) {
-    alert("Please log in first.");
-    return;
-  }
+      const title = document.getElementById("issueTitle").value.trim();
+      const description = document.getElementById("issueDisc").value.trim();
 
-  try {
-    const idToken = await user.getIdToken();
+      const facility = document.getElementById("facilitySelect").value.trim();
+      if (!facility) {
+        console.error("Could not find facilitySelect element!");
+        //return;
+      }
+      try {
+        const idToken = await user.getIdToken();
 
-    const res = await fetch("https://sports-facility-management-web-app.azurewebsites.net/api/report", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${idToken}`
-      },
-      body: JSON.stringify({ title, description, facility })
+        const res = await fetch("https://sports-facility-management-web-app.azurewebsites.net/api/report", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${idToken}`
+          },
+          body: JSON.stringify({ title, description, facility })
+        });
+
+        const data = await res.json();
+        loadIssues(user);
+        if (res.ok) {
+          alert("Issue submitted successfully!");
+          issueForm.reset();
+          issueModal.hidden = true;
+        } else {
+          alert("Error: " + data.error);
+        }
+      } catch (err) {
+        console.error("Failed to submit:", err);
+        alert("Something went wrong. Please try again.");
+      }
     });
 
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("Issue submitted successfully!");
-      issueForm.reset();
-      issueModal.hidden = true;
-    } else {
-      alert("Error: " + data.error);
-    }
-  } catch (err) {
-    console.error("Failed to submit:", err);
-    alert("Something went wrong. Please try again.");
+  } else {
+    console.log("No user signed in");
+    alert("Please sign in first.");
   }
 });
+});
+// resident_report_issue.js
+
+async function loadIssues(user) {
+  try {
+    const token = await user.getIdToken();
+
+    const res = await fetch("https://sports-facility-management-web-app.azurewebsites.net/api/issues", {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const data = await res.json();
+    const issues = data.issues;
+    //const issues = await res.json();
+    tableBody.innerHTML = "";
+    console.log(issues);
+    issues.forEach(issue => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${issue.title}</td>
+        <td>${issue.description}</td>
+        <td>${issue.status}</td>`;
+      tableBody.appendChild(row);
+    });
+  } catch (err) {
+    console.log("Something is wrong");
+    console.error("Error loading issues:", err);
+  }
+}
+
+
+window.addEventListener("DOMContentLoaded", loadIssues);

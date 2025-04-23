@@ -1,102 +1,101 @@
 /* Reset default margins/padding */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-    background-image: url('../img/background_light.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed; /* 👈 keeps background in place */
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 50px 20px;
-    gap: 30px;
-  }
-  
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.2));
-    z-index: -1;
-  }
-  
-  header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  h1 {
-    font-size: 32px;
-    color: white;
-    padding: 10px 20px;
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 2px solid white;
-    border-radius: 12px;
-    backdrop-filter: blur(6px);
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  table {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  }
-  
-  th, td {
-    padding: 16px;
-    text-align: left;
-    color: white;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  
-  th {
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  
-  tr:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .statusBtn {
-    padding: 8px 12px;
-    border: 1px solid white;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .statusBtn:hover {
-    background-color: #005fa3;
-  }
-  
-  select {
-    padding: 8px;
-    background-color: #333;
-    color: white;
-    border: 1px solid white;
-    border-radius: 8px;
-  }
-  
-  select option {
-    background-color: #333;
-    color: white;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background-image: url('../img/background_light.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed; /* 👈 keeps background in place */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 20px;
+  gap: 30px;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.2));
+  z-index: -1;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 32px;
+  color: white;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 2px solid white;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+table {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+th, td {
+  padding: 16px;
+  text-align: left;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+th {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.statusBtn {
+  padding: 8px 12px;
+  border: 1px solid white;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.statusBtn:hover {
+  background-color: #005fa3;
+}
+
+select {
+  padding: 8px;
+  background-color: #333;
+  color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+}
+
+select option {
+  background-color: #333;
+  color: white;
+}
