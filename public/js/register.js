@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } f
 import{auth} from './firebase.js'
 
 
+
 // Google Sign-In button handler
 const googleSignIn = async () => {
   const provider = new GoogleAuthProvider();
@@ -73,5 +74,4 @@ const googleSignIn = async () => {
 // Attach event listener for email sign-up form
 // document.getElementById("loginForm").addEventListener("click", emailSignUp);
 
-// Attach event listener for Google Sign-In button
 document.getElementById("googleSignInButton").addEventListener("click", googleSignIn);
