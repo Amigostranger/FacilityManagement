@@ -56,15 +56,25 @@ app.use(express.static(path.join(__dirname, 'public'))); //
 app.use(express.json());
 app.use(bodyParser.json());
 
-// Middleware to verify Firebase ID token
+
 const verifyToken = async (req, res, next) => {
+  // ✅ Skip auth in test mode
+  if (process.env.NODE_ENV === 'test') {
+    req.user = {
+      uid: 'test-user',
+      email: 'test@example.com',
+      role: 'Resident',
+    };
+    return next();
+  }
+
   const token = req.headers.authorization?.split(" ")[1]; // Bearer token
   if (!token) {
     return res.status(401).json({ error: "Token is required" });
   }
 
   try {
-    getIt=token;
+    getIt = token;
     const decodedToken = await auth.verifyIdToken(token);
     req.user = decodedToken;
     next();
@@ -72,6 +82,25 @@ const verifyToken = async (req, res, next) => {
     return res.status(401).json({ error: "Invalid or expired token" });
   }
 };
+
+
+
+// Middleware to verify Firebase ID token
+// const verifyToken = async (req, res, next) => {
+//   const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+//   if (!token) {
+//     return res.status(401).json({ error: "Token is required" });
+//   }
+
+//   try {
+//     getIt=token;
+//     const decodedToken = await auth.verifyIdToken(token);
+//     req.user = decodedToken;
+//     next();
+//   } catch (error) {
+//     return res.status(401).json({ error: "Invalid or expired token" });
+//   }
+// };
 
 app.get("/api/issues", verifyToken,async (req, res) => {
   const uid = req.user.uid; 
@@ -260,9 +289,21 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection:', reason);
 });
 
-// Start the server
-const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
-});
+export default app;
+
+// Only start server if not in test
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(` Server running on http://localhost:${PORT}`);
+  });
+}
+
+
+// // Start the server
+// const PORT = process.env.PORT || 3000;
+
+// app.listen(PORT, () => {
+//   console.log(` Server running on http://localhost:${PORT}`);
+// });
