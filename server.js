@@ -57,31 +57,34 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 
-const verifyToken = async (req, res, next) => {
-  // ✅ Skip auth in test mode
-  if (process.env.NODE_ENV === 'test') {
-    req.user = {
-      uid: 'test-user',
-      email: 'test@example.com',
-      role: 'Resident',
-    };
-    return next();
-  }
+import { verifyToken } from './middleware/auth.js';
 
-  const token = req.headers.authorization?.split(" ")[1]; // Bearer token
-  if (!token) {
-    return res.status(401).json({ error: "Token is required" });
-  }
+//artfi
+// const verifyToken = async (req, res, next) => {
+//   // ✅ Skip auth in test mode
+//   if (process.env.NODE_ENV === 'test') {
+//     req.user = {
+//       uid: 'test-user',
+//       email: 'test@example.com',
+//       role: 'Resident',
+//     };
+//     return next();
+//   }
 
-  try {
-    getIt = token;
-    const decodedToken = await auth.verifyIdToken(token);
-    req.user = decodedToken;
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: "Invalid or expired token" });
-  }
-};
+//   const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+//   if (!token) {
+//     return res.status(401).json({ error: "Token is required" });
+//   }
+
+//   try {
+//     getIt = token;
+//     const decodedToken = await auth.verifyIdToken(token);
+//     req.user = decodedToken;
+//     next();
+//   } catch (error) {
+//     return res.status(401).json({ error: "Invalid or expired token" });
+//   }
+// };
 
 
 
@@ -120,6 +123,36 @@ app.get("/api/issues", verifyToken,async (req, res) => {
   }
 });
 
+app.patch('/api/issues/:id', verifyToken, async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!status) {
+    return res.status(400).json({ error: "Status is required" });
+  }
+
+  try {
+    const issueRef = db.collection("Issues").doc(id);
+    const issueDoc = await issueRef.get();
+
+    if (!issueDoc.exists) {
+      return res.status(404).json({ error: "Issue not found" });
+    }
+
+    const issueData = issueDoc.data();
+
+    // Check role and authorization
+    if (req.user.role !== "Staff") {
+      return res.status(403).json({ error: "You are not authorized to update the issue status" });
+    }
+
+    await issueRef.update({ status });
+    res.status(200).json({ message: "Issue status updated" });
+  } catch (error) {
+    console.error("Error updating issue:", error);
+    res.status(500).json({ error: "Failed to update issue" });
+  }
+});
 
 
 
