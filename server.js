@@ -163,7 +163,7 @@ app.delete('/api/user/:id',async (req,res)=>{
 
 app.post("/api/report", verifyToken, async (req, res) => {
   const { title, description, facility } = req.body;
-  const uid = req.user.uid; // Authenticated UID
+  const uid = req.user.uid; 
 
   if (!title || !description || !facility) {
     return res.status(400).json({ error: "All fields required" });

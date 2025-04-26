@@ -1,7 +1,9 @@
+// viewMyIssues.js
+
 import { auth } from './firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-const tableBody = document.getElementById("issuesTable");
+const tableBody = document.getElementById("userTableBody");
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -42,4 +44,3 @@ async function loadIssues(user) {
 }
 
 
-window.addEventListener("DOMContentLoaded", loadIssues);
