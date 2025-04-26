@@ -1,3 +1,22 @@
+// Firebase setup
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+// Replace with your Firebase config:
+const firebaseConfig = {
+    apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
+    authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
+    projectId: "sportsmanagement-a0f0b",
+    storageBucket: "sportsmanagement-a0f0b.firebasestorage.app",
+    messagingSenderId: "674114167483",
+    appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
+  };
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
 // Elements
 const addBookingBtn = document.getElementById('addBookingBtn');
 const viewBookingsBtn = document.getElementById('viewBookingsBtn');
@@ -6,6 +25,7 @@ const viewModal = document.getElementById('viewModal');
 const cancelBookingBtn = document.getElementById('cancelBookingBtn');
 const closeViewBtn = document.getElementById('closeViewBtn');
 const bookingsTable = document.getElementById('bookingsTable');
+const bookingsTableBody = document.querySelector('#bookingsTable tbody');
 
 // Hide the table by default
 bookingsTable.hidden = true;
@@ -20,14 +40,52 @@ cancelBookingBtn.addEventListener('click', () => {
   addModal.hidden = true;
 });
 
-// Show "View My Bookings" modal + table
+// Show "View My Bookings" modal + table and fetch bookings
 viewBookingsBtn.addEventListener('click', () => {
   viewModal.hidden = false;
   bookingsTable.hidden = false;
+  fetchBookings();
 });
 
-// Hide "View My Bookings" modal
+// Hide "View My Bookings" modal + hide table
 closeViewBtn.addEventListener('click', () => {
   viewModal.hidden = true;
   bookingsTable.hidden = true;
 });
+
+// Fetch and display bookings
+async function fetchBookings() {
+  bookingsTableBody.innerHTML = ""; // Clear old bookings
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const submittedBy = user.email; // Assuming you use email to match
+
+      const bookingsRef = collection(db, "bookings"); // Collection is called 'bookings'
+      const q = query(bookingsRef, where("submittedBy", "==", submittedBy));
+
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+        const booking = doc.data();
+
+        const startDate = booking.start.toDate();
+        const endDate = booking.end.toDate();
+
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${booking.Title}</td>
+          <td>${booking.facility || '-'}</td>
+          <td>${startDate.toLocaleDateString()}</td>
+          <td>${startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+          <td>${endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+        `;
+
+        bookingsTableBody.appendChild(row);
+      });
+    } else {
+      console.log("No user signed in");
+    }
+  });
+}

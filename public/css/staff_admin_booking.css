@@ -1,9 +1,11 @@
+/* Reset default margins/padding */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
+  /* Background & Main Layout */
   body {
     font-family: Arial, sans-serif;
     height: 100vh;
@@ -11,35 +13,39 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 50px 20px;
     gap: 30px;
-    position: relative;
   }
   
+  /* Background gradient overlay */
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.2));
+    z-index: -1;
+  }
+  
+  /* Header */
   header {
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
   }
   
-  nav button {
-    font-size: 16px;
-    padding: 12px 20px;
-    background-color: transparent;
+  h1 {
+    font-size: 32px;
+    color: white;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.4);
     border: 2px solid white;
     border-radius: 12px;
-    color: white;
-    backdrop-filter: blur(4px);
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-  }
-  
-  nav button:hover {
-    background-color: #005fa3;
-    transform: scale(1.02);
+    backdrop-filter: blur(6px);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
   }
   
   /* Table */
@@ -70,8 +76,23 @@
     background-color: rgba(255, 255, 255, 0.1);
   }
   
-  /* Modals */
-  #viewModal, #addModal {
+  /* Status Button inside table */
+  .statusBtn {
+    padding: 8px 12px;
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .statusBtn:hover {
+    background-color: #005fa3;
+  }
+  
+  /* Modal (View/Update Booking Details) */
+  #bookingModal {
     position: fixed;
     top: 0;
     left: 0;
@@ -85,7 +106,7 @@
     z-index: 1000;
   }
   
-  #viewModal article, #addModal article {
+  #bookingModal article {
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 16px;
     padding: 30px;
@@ -96,7 +117,12 @@
     backdrop-filter: blur(10px);
   }
   
-  form {
+  #bookingModal[hidden] {
+    display: none;
+  }
+  
+  /* Form inside Modal */
+  form, section {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -115,10 +141,15 @@
     outline: none;
   }
   
+  input::placeholder, textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Modal Footer Buttons */
   footer {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 20px;
   }
   
   footer button {
@@ -136,16 +167,15 @@
     transform: scale(1.02);
   }
   
-  #viewModal[hidden], #addModal[hidden] {
-    display: none;
+  /* Dropdown (select) styles */
+  select {
+    background-color: #333;
+    color: white;
+    border: 1px solid white;
   }
   
-  /* Background overlay */
-  body::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.2));
-    z-index: -1;
+  select option {
+    background-color: #333;
+    color: white;
   }
   

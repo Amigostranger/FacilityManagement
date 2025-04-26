@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Facility Bookings - Resident</title>
   <link rel="stylesheet" href="css/resident_new_booking.css">
-
 </head>
 <body>
   <header>
@@ -28,7 +27,7 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Rows will be inserted dynamically -->
+          <!-- Rows inserted dynamically -->
         </tbody>
       </table>
     </section>
@@ -41,7 +40,7 @@
         </header>
 
         <section id="bookingDetails">
-          <!-- Booking details will be populated here dynamically -->
+          <!-- Booking details populated dynamically -->
         </section>
 
         <footer>
@@ -92,40 +91,12 @@
     </section>
   </main>
 
-  <script type="module">
-    // Elements
-    const addBookingBtn = document.getElementById('addBookingBtn');
-    const viewBookingsBtn = document.getElementById('viewBookingsBtn');
-    const addModal = document.getElementById('addModal');
-    const viewModal = document.getElementById('viewModal');
-    const cancelBookingBtn = document.getElementById('cancelBookingBtn');
-    const closeViewBtn = document.getElementById('closeViewBtn');
-    const bookingsTable = document.getElementById('bookingsTable');
+  <!-- Firebase SDKs (make sure you add your own config here) -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
 
-    // Hide the table by default
-    bookingsTable.hidden = true;
-
-    // Show "Add Booking" modal
-    addBookingBtn.addEventListener('click', () => {
-      addModal.hidden = false;
-    });
-
-    // Hide "Add Booking" modal
-    cancelBookingBtn.addEventListener('click', () => {
-      addModal.hidden = true;
-    });
-
-    // Show "View My Bookings" modal + table
-    viewBookingsBtn.addEventListener('click', () => {
-      viewModal.hidden = false;
-      bookingsTable.hidden = false;
-    });
-
-    // Hide "View My Bookings" modal + hide table
-    closeViewBtn.addEventListener('click', () => {
-      viewModal.hidden = true;
-      bookingsTable.hidden = true;
-    });
-  </script>
+  <!-- Your JS file -->
+  <script type="module" src="js/resident_new_booking.js"></script>
 </body>
 </html>
