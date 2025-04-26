@@ -3,7 +3,7 @@
 import { auth } from './firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-const tableBody = document.getElementById("userTableBody");
+const tableBody = document.getElementById("issuesTable");
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -27,7 +27,7 @@ async function loadIssues(user) {
     const data = await res.json();
     const issues = data.issues;
     //const issues = await res.json();
-    tableBody.innerHTML = "";
+    //tableBody.innerHTML = "";
     console.log(issues);
     issues.forEach(issue => {
       const row = document.createElement("tr");
