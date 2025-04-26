@@ -96,7 +96,7 @@ app.get("/api/issues", verifyToken,async (req, res) => {
 
 app.post("/api/save-user", verifyToken, async (req, res) => {
   const { email, username ,role} = req.body;
-
+  console.log("Decoded user:", req.user);
   if (!email || !username) {
     return res.status(400).json({ error: "Email and username are required" });
   }
@@ -138,6 +138,7 @@ app.get('/api/get-users',async (req,res)=>{
 app.delete('/api/user/:id',async (req,res)=>{
   try {
     const userId=req.params.id;
+   
 
     const user=db.collection('users').doc(userId);
     await user.delete();

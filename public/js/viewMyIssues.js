@@ -1,7 +1,7 @@
 import { auth } from './firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-const tableBody = document.getElementById("tableBody");
+const tableBody = document.getElementById("issuesTable");
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {

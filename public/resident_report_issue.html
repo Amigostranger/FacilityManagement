@@ -8,8 +8,8 @@
   <!-- Firebase scripts -->
   <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js"></script>
-  <!-- <script type="module" src="js/resident_report_issue.js" defer></script> -->
- 
+  
+
 </head>
 <body>
   <header>
@@ -29,7 +29,7 @@
             <th>Status</th>
           </tr>
         </thead>
-        <tbody id="tableBody">
+        <tbody>
           <!-- Rows will be inserted dynamically from Firebase -->
         </tbody>
       </table>
@@ -80,7 +80,7 @@
           </select>
 
           <label for="issueDescription">Description:</label>
-          <textarea id="issueDisc" name="issueDescription" rows="4" required></textarea>
+          <textarea id="issueDescInput" name="issueDescription" rows="4" required></textarea>
 
           <footer>
             <button type="submit" id="submitBtn">Submit</button>
@@ -91,8 +91,8 @@
     </section>
   </main>
 
-  <!-- <script type ="module" src="js/resident_report_issue.js"></script> -->
-  <script type="module" src="js/resident_report_issue.js" ></script>
+  <!-- <script src="js/resident_report_issue.js"></script> -->
   <script type="module" src="js/ViewMyIssues.js" ></script>
+  <script type="module" src="js/resident_report_issue.js"></script>
 </body>
 </html>

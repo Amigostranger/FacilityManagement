@@ -3,63 +3,63 @@
 import {  signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { auth } from './firebase.js';
 
-const loginForm = document.getElementById("btnlog");
+//const loginForm = document.getElementById("btnlog");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
 const message = document.getElementById("message");
 const signup=document.getElementById('sign-up');
 let hy=null;
 // Handle Email/Password login
-loginForm.addEventListener("click", async (e) => {
-  e.preventDefault();
+// loginForm.addEventListener("click", async (e) => {
+//   e.preventDefault();
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+//   const email = document.getElementById("email").value;
+//   const password = document.getElementById("password").value;
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const token = await userCredential.user.getIdToken();
-    hy=token;
+//   try {
+//     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+//     const token = await userCredential.user.getIdToken();
+//     hy=token;
 
-    const response = await fetch("http://localhost:3000/api/get-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+//     const response = await fetch("http://localhost:3000/api/get-user", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
 
-  // const sendit=await fetch('http://localhost:3000/api/issues',{
-  //   method:"POST",
-  //   headers:{
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(token),
-  // })
+//   // const sendit=await fetch('http://localhost:3000/api/issues',{
+//   //   method:"POST",
+//   //   headers:{
+//   //     "Content-Type": "application/json",
+//   //   },
+//   //   body: JSON.stringify(token),
+//   // })
 
-    const data = await response.json();
+//     const data = await response.json();
 
-    if (response.ok) {
-      message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
-      setTimeout(() => {
-        const the=data.role.toUpperCase();
-        if(the==="RESIDENT"){
-          window.location.href = 'resident_home.html';
-        }
-        else if(the=="STAFF"){
-          window.location.href = 'staff_home.html';
-        }
-        else if(the==="ADMIN"){
-          window.location.href = 'admin_home.html'
-        }
-      }, 2000);
-    } else {
-      message.textContent = `Error: ${data.error}`;
-      signup.textContent='Sign up';
-    }
-  } catch (error) {
-    message.textContent = "Login failed: " + error.message;
-  }
-});
+//     if (response.ok) {
+//       message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
+//       setTimeout(() => {
+//         const the=data.role.toUpperCase();
+//         if(the==="RESIDENT"){
+//           window.location.href = 'resident_home.html';
+//         }
+//         else if(the=="STAFF"){
+//           window.location.href = 'staff_home.html';
+//         }
+//         else if(the==="ADMIN"){
+//           window.location.href = 'admin_home.html'
+//         }
+//       }, 2000);
+//     } else {
+//       message.textContent = `Error: ${data.error}`;
+//       signup.textContent='Sign up';
+//     }
+//   } catch (error) {
+//     message.textContent = "Login failed: " + error.message;
+//   }
+// });
 
 
 
