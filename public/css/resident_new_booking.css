@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    background-image: url("../img/background_light.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 20px;
+    gap: 30px;
+    position: relative;
+  }
+  
+  header {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  
+  nav button {
+    font-size: 16px;
+    padding: 12px 20px;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 12px;
+    color: white;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  nav button:hover {
+    background-color: #005fa3;
+    transform: scale(1.02);
+  }
+  
+  /* Table Section */
+  table {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  }
+  
+  th, td {
+    padding: 16px;
+    text-align: left;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  th {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Modals */
+  #viewModal, #addModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  #viewModal article, #addModal article {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input, select, textarea {
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    outline: none;
+  }
+  
+  input::placeholder, textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  footer button {
+    padding: 10px 20px;
+    border: 2px solid white;
+    background-color: transparent;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  footer button:hover {
+    background-color: #005fa3;
+    transform: scale(1.02);
+  }
+  
+  #viewModal[hidden], #addModal[hidden] {
+    display: none;
+  }
+  
+  /* Background overlay */
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.2));
+    z-index: -1;
+  }
+  

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Facility Bookings - Resident</title>
+  <link rel="stylesheet" href="css/resident_new_booking.css">
+
+</head>
+<body>
+  <header>
+    <nav>
+      <button id="addBookingBtn">Add Booking</button>
+      <button id="viewBookingsBtn">View My Bookings</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Bookings Table (Hidden by default) -->
+    <section aria-label="My Bookings">
+      <table id="bookingsTable" hidden>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Facility</th>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be inserted dynamically -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- View Bookings Modal -->
+    <section id="viewModal" hidden aria-modal="true" role="dialog">
+      <article>
+        <header>
+          <h2>My Bookings</h2>
+        </header>
+
+        <section id="bookingDetails">
+          <!-- Booking details will be populated here dynamically -->
+        </section>
+
+        <footer>
+          <button type="button" id="closeViewBtn">Close</button>
+        </footer>
+      </article>
+    </section>
+
+    <!-- Add Booking Modal -->
+    <section id="addModal" hidden aria-modal="true" role="dialog">
+      <article>
+        <header>
+          <h2>New Booking</h2>
+        </header>
+        <form id="bookingForm">
+          <label for="bookingTitle">Title:</label>
+          <input type="text" id="bookingTitle" name="bookingTitle" required>
+
+          <label for="facilitySelect">Facility:</label>
+          <select id="facilitySelect" name="facilitySelect" required>
+            <option value="">--Select Facility--</option>
+            <option value="Sturrock Soccer Field">Sturrock Digs Soccer Field</option>
+            <option value="Matrix Basketball Court">Matrix Basketball Court</option>
+            <option value="Bozzoli Cricket Field">Bozzoli Cricket Field</option>
+            <option value="Digs Netball Court">Digs Netball Court</option>
+            <option value="Sturrock Esports Hall">Sturrock Esports Hall</option>
+            <option value="Solomon Mahlangu Chess Hall">Solomon Mahlangu Chess Hall</option>
+          </select>
+
+          <label for="bookingDescription">Description:</label>
+          <textarea id="bookingDescription" name="bookingDescription" rows="4" required></textarea>
+
+          <label for="bookingDate">Date:</label>
+          <input type="date" id="bookingDate" name="bookingDate" required>
+
+          <label for="startTime">Start Time:</label>
+          <input type="time" id="startTime" name="startTime" required>
+
+          <label for="endTime">End Time:</label>
+          <input type="time" id="endTime" name="endTime" required>
+
+          <footer>
+            <button type="submit" id="submitBookingBtn">Submit</button>
+            <button type="button" id="cancelBookingBtn">Cancel</button>
+          </footer>
+        </form>
+      </article>
+    </section>
+  </main>
+
+  <script type="module">
+    // Elements
+    const addBookingBtn = document.getElementById('addBookingBtn');
+    const viewBookingsBtn = document.getElementById('viewBookingsBtn');
+    const addModal = document.getElementById('addModal');
+    const viewModal = document.getElementById('viewModal');
+    const cancelBookingBtn = document.getElementById('cancelBookingBtn');
+    const closeViewBtn = document.getElementById('closeViewBtn');
+    const bookingsTable = document.getElementById('bookingsTable');
+
+    // Hide the table by default
+    bookingsTable.hidden = true;
+
+    // Show "Add Booking" modal
+    addBookingBtn.addEventListener('click', () => {
+      addModal.hidden = false;
+    });
+
+    // Hide "Add Booking" modal
+    cancelBookingBtn.addEventListener('click', () => {
+      addModal.hidden = true;
+    });
+
+    // Show "View My Bookings" modal + table
+    viewBookingsBtn.addEventListener('click', () => {
+      viewModal.hidden = false;
+      bookingsTable.hidden = false;
+    });
+
+    // Hide "View My Bookings" modal + hide table
+    closeViewBtn.addEventListener('click', () => {
+      viewModal.hidden = true;
+      bookingsTable.hidden = true;
+    });
+  </script>
+</body>
+</html>
