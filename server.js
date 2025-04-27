@@ -35,6 +35,7 @@ import { fileURLToPath } from 'url';
 // Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 // Define CORS options
 // Define CORS options
 const corsOptions = {
@@ -50,8 +51,7 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public'))); // 
 
-// Handle preflight requests globally
-//app.options('*', cors(corsOptions));
+
 
 app.use(express.json());
 app.use(bodyParser.json());
