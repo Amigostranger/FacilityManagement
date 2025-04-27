@@ -8,7 +8,7 @@
   body {
     font-family: Arial, sans-serif;
     height: 100vh;
-    background-image: url(background_light.png);
+    background-image: url(../img/background_light.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -365,5 +365,23 @@ select {
   /* Hide the modal by default */
   #viewModal[hidden] {
     display: none;
+  }
+
+
+  .actionBtn {
+    font-size: 16px;
+    padding: 12px 20px;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 12px;
+    color: white;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .actionBtn:hover {
+    background-color: #005fa3;
+    transform: scale(1.02);
   }
   

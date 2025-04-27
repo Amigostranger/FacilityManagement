@@ -1,5 +1,13 @@
 import { auth } from './firebase.js';
+//  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     console.log("User is signed in:", user.email);
+//   } else {
+//     console.log("No user signed in");
+//   }
+// }); 
 
 
 
@@ -46,6 +54,47 @@ issueForm.addEventListener('submit', async (e) => {
     });
 
     const data = await res.json();
+    
+    async function loadIssues(user) {
+      try {
+        const token = await user.getIdToken();
+    
+        const res = await fetch("http://localhost:3000/api/issues", {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
+        const issues = data.issues;
+        //const issues = await res.json();
+        //tableBody.innerHTML = "";
+        console.log(issues);
+        issues.forEach(issue => {
+          const row = document.createElement("tr");
+    
+          const viewBtn = document.createElement("button");
+          viewBtn.textContent = "View";
+          viewBtn.type = "button";
+          viewBtn.className = "actionBtn";
+          viewBtn.addEventListener("click", () => {
+            viewDescription.textContent = issue.description || "No description.";
+            viewFeedback.textContent = issue.feedback || "No feedback yet.";
+            viewModal.hidden = false;
+          });
+    
+          row.innerHTML = `
+            <td>${issue.title}</td>
+            <td></td>
+            <td>${issue.status}</td>`;
+          row.children[1].appendChild(viewBtn);
+    
+          tableBody.appendChild(row);
+        });
+      } catch (err) {
+        console.log("Something is wrong");
+        console.error("Error loading issues:", err);
+      }
+    }
 
     if (res.ok) {
       alert("Issue submitted successfully!");
