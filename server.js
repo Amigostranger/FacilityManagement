@@ -186,6 +186,34 @@ app.post("/api/report", verifyToken, async (req, res) => {
   }
 });
 
+app.post("/api/bookings", verifyToken, async (req, res) => {
+  const { title, description, facility, start, end, who } = req.body; // Add `who` to request body
+  const uid = req.user.uid; 
+
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  try {
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      status: "Pending",
+      start,
+      end,
+      who, // Store the "who" field in the database
+    });
+
+    res.status(200).json({ message: "Booking submitted" });
+  } catch (error) {
+    console.error("Booking save error:", error);
+    res.status(500).json({ error: "Failed to save Booking" });
+  }
+});
+
+
 app.put('/api/user/:id',async (req,res)=>{
   try {
     

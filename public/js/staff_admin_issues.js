@@ -1,29 +1,10 @@
-console.log("JS loaded successfully!");
+// console.log("JS loaded successfully!");
 
 
 // Firebase setup
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
-// Your Firebase config
-const firebaseConfig = {
-    apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
-    authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
-    projectId: "sportsmanagement-a0f0b",
-    storageBucket: "sportsmanagement-a0f0b.firebasestorage.app",
-    messagingSenderId: "674114167483",
-    appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import { db } from './firebase.js';
+// import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { collection, getDocs, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // DOM references
 const tableBody = document.querySelector("#issuesTable tbody");
@@ -33,14 +14,6 @@ const feedbackInput = document.getElementById("feedback");
 const cancelBtn = document.getElementById("cancelBtn");
 const updateForm = document.getElementById("updateForm");
 const descriptionPara = document.getElementById("issueDescription");
-
-
-/* Create and insert description paragraph dynamically
-let descriptionPara = document.createElement("p");
-descriptionPara.id = "issueDescription";
-descriptionPara.style.whiteSpace = "pre-line";
-descriptionPara.style.marginTop = "10px";
-updateForm.insertBefore(descriptionPara, statusSelect);*/
 
 let currentIssueId = null;
 
