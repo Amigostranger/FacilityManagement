@@ -133,7 +133,19 @@ app.get('/api/get-users',async (req,res)=>{
   }
 })
 
+app.get("/api/staff-bookings",async (req,res) => {
+  
+  try {
+    const getIt=await db.collection("bookings").get();
+    const bookings=getIt.docs.map(doc =>({
+      ...doc.data()
+    }))
+    res.status(200).send(bookings);
 
+  } catch (error) {
+    console.error(error);
+  }
+})
 
 app.delete('/api/user/:id',async (req,res)=>{
   try {
@@ -213,6 +225,8 @@ app.put('/api/user/:id',async (req,res)=>{
   }
 })
 
+
+
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'register_page.html'));
 });
@@ -267,3 +281,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
 });
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Bookings - Staff/Admin</title>
+  <link rel="stylesheet" href="css/staff_admin_booking.css">
+</head>
+<body>
+  <header>
+    <h1>Manage Facility Bookings</h1>
+  </header>
+
+  <main>
+    <section>
+      <table id="bookingsTable">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Title</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Bookings loaded here -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Booking Details Modal -->
+    <section id="bookingModal" hidden aria-modal="true" role="dialog">
+      <article>
+        <header>
+          <h2>Booking Details</h2>
+        </header>
+
+        <section>
+          <p><strong>Title:</strong> <span id="modalTitle"></span></p>
+          <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+          <p><strong>Facility:</strong> <span id="modalFacility"></span></p>
+          <p><strong>Start Time:</strong> <span id="modalStart"></span></p>
+          <p><strong>End Time:</strong> <span id="modalEnd"></span></p>
+
+          <label for="statusSelect">Status:</label>
+          <select id="statusSelect">
+            <option value="pending">Pending</option>
+            <option value="Accepted">Accept</option>
+            <option value="Rejected">Reject</option>
+          </select>
+        </section>
+
+        <footer>
+          <button id="saveStatusBtn">Save</button>
+          <button id="cancelBtn">Cancel</button>
+        </footer>
+      </article>
+    </section>
+  </main>
+
+  <!-- Firebase SDK -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
+
+  <!-- Your JS -->
+  <script type="module" src="js/staff_admin_booking.js"></script>
+</body>
+</html>
