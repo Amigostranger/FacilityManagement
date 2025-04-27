@@ -11,10 +11,33 @@
       <button id="addBookingBtn">Add Booking</button>
       <button id="viewBookingsBtn">View My Bookings</button>
     </nav>
+
+    <!-- Facility and Date Filters -->
+    <section id="filterSection" aria-label="Filter Bookings">
+      <form id="filterForm">
+        <label for="facilityFilter">Facility:</label>
+        <select id="facilityFilter" name="facilityFilter">
+          <option value="">--Select Facility--</option>
+          <option value="Sturrock Soccer Field">Sturrock Digs Soccer Field</option>
+          <option value="Matrix Basketball Court">Matrix Basketball Court</option>
+          <option value="Bozzoli Cricket Field">Bozzoli Cricket Field</option>
+          <option value="Digs Netball Court">Digs Netball Court</option>
+          <option value="Sturrock Esports Hall">Sturrock Esports Hall</option>
+          <option value="Solomon Mahlangu Chess Hall">Solomon Mahlangu Chess Hall</option>
+        </select>
+
+        <label for="dateFilter">Date:</label>
+        <input type="date" id="dateFilter" name="dateFilter">
+
+        <button type="button" id="viewFilteredBtn">View</button>
+      </form>
+    </section>
   </header>
 
   <main>
-    <!-- Bookings Table (Hidden by default) -->
+    <p id="noBookingsMessage" hidden>No bookings found for the selected facility and date.</p>
+
+    <!-- Bookings Table -->
     <section aria-label="My Bookings">
       <table id="bookingsTable" hidden>
         <thead>
@@ -27,12 +50,12 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Rows inserted dynamically -->
+          <!-- Dynamic rows -->
         </tbody>
       </table>
     </section>
 
-    <!-- View Bookings Modal -->
+    <!-- Modals -->
     <section id="viewModal" hidden aria-modal="true" role="dialog">
       <article>
         <header>
@@ -40,7 +63,7 @@
         </header>
 
         <section id="bookingDetails">
-          <!-- Booking details populated dynamically -->
+          <!-- Booking details inserted dynamically -->
         </section>
 
         <footer>
@@ -49,12 +72,12 @@
       </article>
     </section>
 
-    <!-- Add Booking Modal -->
     <section id="addModal" hidden aria-modal="true" role="dialog">
       <article>
         <header>
           <h2>New Booking</h2>
         </header>
+
         <form id="bookingForm">
           <label for="bookingTitle">Title:</label>
           <input type="text" id="bookingTitle" name="bookingTitle" required>
@@ -91,12 +114,12 @@
     </section>
   </main>
 
-  <!-- Firebase SDKs (make sure you add your own config here) -->
+  <!-- Firebase SDKs -->
   <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
 
-  <!-- Your JS file -->
+  <!-- Your JS -->
   <script type="module" src="js/resident_new_booking.js"></script>
 </body>
 </html>

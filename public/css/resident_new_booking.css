@@ -1,162 +1,240 @@
+/* Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    background-image: url("../img/background_light.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    display: flex;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  background-image: url("../img/background_light.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 20px;
+  gap: 30px;
+  position: relative;
+  color: white;
+}
+
+/* Background Overlay */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.2));
+  z-index: -1;
+}
+
+/* Header */
+header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav button {
+  font-size: 16px;
+  padding: 12px 20px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 12px;
+  color: white;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+nav button:hover {
+  background-color: #005fa3;
+  transform: scale(1.02);
+}
+
+/* Filter Section */
+#filterSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#filterSection select {
+  background-color: #333;
+  color: white;
+  border: 1px solid white;
+}
+
+#filterSection select option {
+  background-color: #333;
+  color: white;
+}
+
+#filterSection input,
+#filterSection button {
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 14px;
+  outline: none;
+}
+
+#filterSection button {
+  border: 2px solid white;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#filterSection button:hover {
+  background-color: #005fa3;
+}
+
+/* No Bookings Message */
+#noBookingsMessage {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  backdrop-filter: blur(4px);
+  padding: 15px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+th, td {
+  padding: 16px;
+  text-align: left;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+th {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Modal Styling */
+#addModal, #viewModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#addModal article, #viewModal article {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Form inside Modal */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form select {
+  background-color: #333;
+  color: white;
+  border: 1px solid white;
+}
+
+form select option {
+  background-color: #333;
+  color: white;
+}
+form input,
+form textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid white;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Footer inside Modal */
+footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+footer button {
+  padding: 10px 20px;
+  border: 2px solid white;
+  background-color: transparent;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+footer button:hover {
+  background-color: #005fa3;
+  transform: scale(1.02);
+}
+
+/* Hide Modal when Hidden */
+#addModal[hidden],
+#viewModal[hidden] {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
     flex-direction: column;
-    padding: 50px 20px;
-    gap: 30px;
-    position: relative;
-  }
-  
-  header {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
     align-items: center;
-  }
-  
-  nav button {
-    font-size: 16px;
-    padding: 12px 20px;
-    background-color: transparent;
-    border: 2px solid white;
-    border-radius: 12px;
-    color: white;
-    backdrop-filter: blur(4px);
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-  }
-  
-  nav button:hover {
-    background-color: #005fa3;
-    transform: scale(1.02);
-  }
-  
-  /* Table */
-  table {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  }
-  
-  th, td {
-    padding: 16px;
-    text-align: left;
-    color: white;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  
-  th {
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  
-  tr:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Modals */
-  #viewModal, #addModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(4px);
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  #viewModal article, #addModal article {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    padding: 30px;
-    width: 90%;
-    max-width: 500px;
-    color: white;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  input, select, textarea {
-    padding: 10px;
-    border: 1px solid white;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    outline: none;
-  }
-  
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-  
-  footer button {
-    padding: 10px 20px;
-    border: 2px solid white;
-    background-color: transparent;
-    border-radius: 10px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  footer button:hover {
-    background-color: #005fa3;
-    transform: scale(1.02);
-  }
-  
-  #viewModal[hidden], #addModal[hidden] {
-    display: none;
-  }
-  
-  /* Background overlay */
-  body::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.2));
-    z-index: -1;
   }
 
-  select {
-    background-color: #333;
-    color: white;
-    border: 1px solid white;
+  #filterSection {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  select option {
-    background-color: #333;
-    color: white;
+
+  table {
+    width: 95%;
   }
-  
+}
