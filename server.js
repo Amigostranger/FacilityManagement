@@ -11,20 +11,17 @@ dotenv.config();
 console.log('Server is starting');
 
 let getIt=null;
-const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
-if (!fs.existsSync(serviceAccountPath)) {
-  console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
-  process.exit(1);
-}
+// Retrieve the service account credentials from the environment variable
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);  // Read from environment variable
 
-// Read and parse the service account key
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-
-// Initialize Firebase Admin SDK
+// Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
+
+console.log("Firebase Admin SDK initialized");
+
 
 const db = admin.firestore();
 const auth = admin.auth();
@@ -35,6 +32,7 @@ import { fileURLToPath } from 'url';
 // Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 // Define CORS options
 // Define CORS options
 const corsOptions = {
@@ -50,8 +48,7 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public'))); // 
 
-// Handle preflight requests globally
-//app.options('*', cors(corsOptions));
+
 
 app.use(express.json());
 app.use(bodyParser.json());
