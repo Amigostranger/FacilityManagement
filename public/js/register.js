@@ -17,7 +17,7 @@ const googleSignIn = async () => {
     const role="Resident";
     // console.log("Sending:", { email, username, role });
 
-    const response = await fetch("http://localhost:3000/api/save-user", {
+    const response = await fetch("https://sports-management.azurewebsites.net/api/save-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,42 +38,6 @@ const googleSignIn = async () => {
   }
 };
 
-// Email and Password Sign-Up handler
-// const emailSignUp = async (event) => {
-//   event.preventDefault();
-
-//   const email = document.getElementById("email").value;
-//   const password = document.getElementById("password").value;
-//   const role="resident";
-//   try {
-//     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-//     const user = userCredential.user;
-//     console.log("User signed up:", user);
-
-//     // Send user data to backend
-//     const response = await fetch("http://localhost:3000/api/save-user", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${await user.getIdToken()}`,
-//       },
-//       body: JSON.stringify({
-//         email: user.email,
-//         username: email, 
-//         role:"resident",
-//       }),
-//     });
-
-//     const data = await response.json();
-//     console.log("Server response:", data);
-
-//   } catch (error) {
-//     console.error("Sign-up failed:", error);
-//   }
-// };
-
-// Attach event listener for email sign-up form
-// document.getElementById("loginForm").addEventListener("click", emailSignUp);
 
 // Attach event listener for Google Sign-In button
 document.getElementById("googleSignInButton").addEventListener("click", googleSignIn);
