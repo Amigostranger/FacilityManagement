@@ -12,8 +12,17 @@ console.log('Server is starting');
 
 let getIt=null;
 
-// Retrieve the service account credentials from the environment variable
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);  // Read from environment variable
+// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+
+// if (!fs.existsSync(serviceAccountPath)) {
+//   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
+//   process.exit(1);
+// }
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+
+
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 // Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
