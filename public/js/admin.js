@@ -11,6 +11,8 @@ managebtn.addEventListener('click',async(e)=>{
 });
 
 document.getElementById("reportBtn").addEventListener("click", () => {
-    window.location.href = "./staff_admin_issues.html"; // or any URL you want
+    window.location.href = "./staff_admin_issues.html"; 
   });
-
+  document.getElementById("bookingsBtn").addEventListener("click", () => {
+    window.location.href = "./staff_admin_booking.html"; 
+  });
