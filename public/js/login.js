@@ -10,7 +10,7 @@ const signup=document.getElementById('sign-up');
 let hy=null;
 
 
-
+//https://sports-management.azurewebsites.net
 
 // Handle Google Sign-In
 googleLoginBtn.addEventListener("click", async () => {

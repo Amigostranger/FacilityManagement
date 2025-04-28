@@ -15,8 +15,9 @@ const googleSignIn = async () => {
     const email=user.email;
     const username=user.displayName || user.email;
     const role="Resident";
-    // console.log("Sending:", { email, username, role });
-
+    
+    //http://localhost:3000
+    //https://sports-management.azurewebsites.net
     const response = await fetch("https://sports-management.azurewebsites.net/api/save-user", {
       method: "POST",
       headers: {
