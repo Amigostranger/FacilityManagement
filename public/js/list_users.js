@@ -1,6 +1,6 @@
 
 
-
+//https://sports-management.azurewebsites.net
 const response=await fetch('https://sports-management.azurewebsites.net/api/get-users',{
 
   method:"GET",
@@ -135,7 +135,7 @@ async function loadUsers() {
     }
     try {
         
-        const response=await fetch(`https://sports-management.azurewebsites.net/api/user/${userId}`,{
+        const response=await fetch(`/api/user/${userId}`,{
             method:"DELETE",
         });
         const result=await response.json();

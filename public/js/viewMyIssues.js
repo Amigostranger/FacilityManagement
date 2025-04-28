@@ -22,7 +22,7 @@ async function loadIssues(user) {
   try {
     const token = await user.getIdToken();
 
-    const res = await fetch("http://localhost:3000/api/issues", {
+    const res = await fetch("https://sports-management.azurewebsites.net/api/issues", {
       headers: {
         "Authorization": `Bearer ${token}`
       }
