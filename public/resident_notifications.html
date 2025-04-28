@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Notifications - Resident</title>
+  <link rel="stylesheet" href="css/resident_notifications.css">
+</head>
+<body>
+  <header>
+   
+  </header>
+
+  <main>
+    <!-- Issues Table -->
+    <section aria-label="Reported Issues">
+      <table id="notificationTable">
+        <thead>
+          <tr>
+            <th>Events</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be inserted dynamically from Firebase -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- View Issue Modal -->
+    <section id="viewModal" hidden aria-modal="true" role="dialog">
+      <article>
+        <header>
+          <h2>Event Details</h2>
+        </header>
+        <br>
+        <section>
+          <p><strong>Description:</strong></p>
+          <p id="describe"></p>
+        </section>
+        <br>
+        <section>
+          <p><strong>Date:</strong></p>
+          <p id="date"></p>
+        </section> 
+        <br>
+        <section>
+          <p><strong>Facility:</strong></p>
+          <p id="facility"></p>
+        </section>
+        <br>
+        <section style="display: flex; align-items: center; gap: 5px;">
+          <p><strong>Time:</strong></p>
+          <p id="start"></p>
+          <p>-</p>
+          <p id="end"></p>
+        </section>
+        <br>
+       
+
+        <footer>
+          <button type="button" id="closeViewBtn">Close</button>
+        </footer>
+      </article>
+    </section>
+
+
+  </main>
+
+  <!-- Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js"></script>
+  <script type="module" src="js/viewnotifications.js" defer></script>
+  
+</body>
+</html>

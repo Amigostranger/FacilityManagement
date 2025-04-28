@@ -12,15 +12,22 @@ console.log('Server is starting');
 
 let getIt=null;
 
-// Retrieve the service account credentials from the environment variable
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);  // Read from environment variable
+// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+
+// if (!fs.existsSync(serviceAccountPath)) {
+//   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
+//   process.exit(1);
+// }
+
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 // Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
-console.log("Firebase Admin SDK initialized");
 
 
 const db = admin.firestore();
@@ -32,7 +39,6 @@ import { fileURLToPath } from 'url';
 // Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 // Define CORS options
 // Define CORS options
 const corsOptions = {
@@ -48,14 +54,15 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public'))); // 
 
-
+// Handle preflight requests globally
+//app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(bodyParser.json());
 
 // Middleware to verify Firebase ID token
 const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+  const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     return res.status(401).json({ error: "Token is required" });
   }
@@ -70,12 +77,31 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+
+app.get("/api/notifications", verifyToken,async (req, res) => {
+  
+  try {
+    const snapshot = await db.collection("bookings").where("who", "==", "admin").get();
+    
+    const events= snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  
+    
+    res.status(200).json({events});
+
+  } catch (error) {
+    console.error("Error fetching Events:", error);
+    res.status(500).json({ error: "Failed to get Events" });
+  }
+});
+
 app.get("/api/issues", verifyToken,async (req, res) => {
   const uid = req.user.uid; 
   try {
     const snapshot = await db.collection("Issues").where("submittedBy", "==", uid).get();
-    
-    
+
     const issues = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
@@ -107,6 +133,7 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
     });
 
     res.status(200).json({ message: "User saved successfully" });
+
   } catch (error) {
     console.error("Error saving user to Firestore:", error);
     res.status(500).json({ error: "Failed to save user" });
@@ -115,7 +142,6 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
 
 
 app.get('/api/get-users',async (req,res)=>{
-
 
   try {
     const getIt=await db.collection("users").get();
@@ -130,7 +156,23 @@ app.get('/api/get-users',async (req,res)=>{
   }
 })
 
+app.get("/api/staff-bookings",async (req,res) => {
+  
+  try {
+    const getIt=await db.collection("bookings").get();
+    const bookings=getIt.docs.map(doc =>({
+      bookId:doc.id,
+      ...doc.data()
+    }))
+    //console.log(doc.data);
+    
+    res.status(200).send(bookings);
 
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+})
 
 app.delete('/api/user/:id',async (req,res)=>{
   try {
@@ -151,12 +193,23 @@ app.delete('/api/user/:id',async (req,res)=>{
       error: "Failed to delete user",
       details: error.message 
     });
-    //res.status(200).json({ message: `User ${userId} deleted successfully` });
+   
   }
 })
 
 
-
+app.get('/api/user/:id',async (req,res)=>{
+  try {
+    const userId=req.params.id;
+    const user=db.collection('users').doc(userId).get();
+    res.status(200).json({ 
+      userId: userId
+    });
+  } catch (error) {
+    console.error(error);
+    
+  }
+})
 
 app.post("/api/report", verifyToken, async (req, res) => {
   const { title, description, facility } = req.body;
@@ -182,6 +235,34 @@ app.post("/api/report", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to save report" });
   }
 });
+
+app.post("/api/bookings", verifyToken, async (req, res) => {
+  const { title, description, facility, start, end, who } = req.body; // Add `who` to request body
+  const uid = req.user.uid; 
+
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  try {
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      status: "Pending",
+      start,
+      end,
+      who, // Store the "who" field in the database
+    });
+
+    res.status(200).json({ message: "Booking submitted" });
+  } catch (error) {
+    console.error("Booking save error:", error);
+    res.status(500).json({ error: "Failed to save Booking" });
+  }
+});
+
 
 app.put('/api/user/:id',async (req,res)=>{
   try {
@@ -210,6 +291,24 @@ app.put('/api/user/:id',async (req,res)=>{
   }
 })
 
+app.put('/api/booking-status/:id',async (req,res)=>{
+  const bookId=req.params.id;
+
+try {
+  const {status}=req.body;
+  const getIt=  db.collection("bookings").doc(bookId);
+  if (status!=""){
+    await getIt.update({
+      status:status
+    })
+    res.status(200).json({ message: `booking ${bookId} role updated to ${status}` });
+  }
+} catch (error) {
+  console.error(error);
+  res.status(500).send("Server error");
+}
+})
+
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'register_page.html'));
 });
@@ -217,6 +316,9 @@ app.get('/register', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname,'public', 'login_page.html'));
 });
+
+
+
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname,'public', 'login_page.html'));
 });
@@ -264,3 +366,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
 });
+
