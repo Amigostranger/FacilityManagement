@@ -10,7 +10,7 @@ dotenv.config();
 
 console.log('Server is starting');
 
-let getIt=null;
+
 
 // const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
@@ -60,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public'))); //
 app.use(express.json());
 app.use(bodyParser.json());
 
+let getIt=null;
 // Middleware to verify Firebase ID token
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];

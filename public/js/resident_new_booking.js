@@ -123,7 +123,8 @@ bookingForm.addEventListener('submit', async (e) => {
     const who = "resident";  // or dynamically set based on user/role
     
     // Send booking details to server
-    const res = await fetch("http://localhost:3000/api/bookings", {
+    
+    const res = await fetch("https://sports-management.azurewebsites.net/api/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
