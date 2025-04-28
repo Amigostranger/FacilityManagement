@@ -35,13 +35,6 @@ const updateForm = document.getElementById("updateForm");
 const descriptionPara = document.getElementById("issueDescription");
 
 
-/* Create and insert description paragraph dynamically
-let descriptionPara = document.createElement("p");
-descriptionPara.id = "issueDescription";
-descriptionPara.style.whiteSpace = "pre-line";
-descriptionPara.style.marginTop = "10px";
-updateForm.insertBefore(descriptionPara, statusSelect);*/
-
 let currentIssueId = null;
 
 // Load issues and usernames

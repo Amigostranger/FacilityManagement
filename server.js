@@ -12,15 +12,22 @@ console.log('Server is starting');
 
 let getIt=null;
 
-// Retrieve the service account credentials from the environment variable
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);  // Read from environment variable
+// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+
+// if (!fs.existsSync(serviceAccountPath)) {
+//   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
+//   process.exit(1);
+// }
+
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 // Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
-console.log("Firebase Admin SDK initialized");
 
 
 const db = admin.firestore();
@@ -55,7 +62,7 @@ app.use(bodyParser.json());
 
 // Middleware to verify Firebase ID token
 const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+  const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     return res.status(401).json({ error: "Token is required" });
   }
@@ -70,12 +77,31 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+
+app.get("/api/notifications", verifyToken,async (req, res) => {
+  
+  try {
+    const snapshot = await db.collection("bookings").where("who", "==", "admin").get();
+    
+    const events= snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  
+    
+    res.status(200).json({events});
+
+  } catch (error) {
+    console.error("Error fetching Events:", error);
+    res.status(500).json({ error: "Failed to get Events" });
+  }
+});
+
 app.get("/api/issues", verifyToken,async (req, res) => {
   const uid = req.user.uid; 
   try {
     const snapshot = await db.collection("Issues").where("submittedBy", "==", uid).get();
-    
-    
+
     const issues = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
@@ -107,6 +133,7 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
     });
 
     res.status(200).json({ message: "User saved successfully" });
+
   } catch (error) {
     console.error("Error saving user to Firestore:", error);
     res.status(500).json({ error: "Failed to save user" });
@@ -115,7 +142,6 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
 
 
 app.get('/api/get-users',async (req,res)=>{
-
 
   try {
     const getIt=await db.collection("users").get();
@@ -167,7 +193,7 @@ app.delete('/api/user/:id',async (req,res)=>{
       error: "Failed to delete user",
       details: error.message 
     });
-    //res.status(200).json({ message: `User ${userId} deleted successfully` });
+   
   }
 })
 
