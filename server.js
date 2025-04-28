@@ -11,20 +11,17 @@ dotenv.config();
 console.log('Server is starting');
 
 let getIt=null;
-const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
-if (!fs.existsSync(serviceAccountPath)) {
-  console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
-  process.exit(1);
-}
+// Retrieve the service account credentials from the environment variable
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);  // Read from environment variable
 
-// Read and parse the service account key
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-
-// Initialize Firebase Admin SDK
+// Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
+
+console.log("Firebase Admin SDK initialized");
+
 
 const db = admin.firestore();
 const auth = admin.auth();
