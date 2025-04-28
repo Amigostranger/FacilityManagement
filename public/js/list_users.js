@@ -23,7 +23,7 @@ if(data){
   
 
 async function loadUsers() {
-  const response = await fetch('http://localhost:3000/api/get-users');
+  const response = await fetch('https://sports-management.azurewebsites.net/api/get-users');
   const data = await response.json();
    usersarr = data; 
     const tbody = document.getElementById("userTableBody");

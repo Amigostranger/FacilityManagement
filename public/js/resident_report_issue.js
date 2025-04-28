@@ -44,7 +44,7 @@ issueForm.addEventListener('submit', async (e) => {
   try {
     const idToken = await user.getIdToken();
 
-    const res = await fetch("http://localhost:3000/api/report", {
+    const res = await fetch("https://sports-management.azurewebsites.net/api/report", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ issueForm.addEventListener('submit', async (e) => {
       try {
         const token = await user.getIdToken();
     
-        const res = await fetch("http://localhost:3000/api/issues", {
+        const res = await fetch("https://sports-management.azurewebsites.net/api/issues", {
           headers: {
             "Authorization": `Bearer ${token}`
           }

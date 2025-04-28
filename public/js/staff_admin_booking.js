@@ -18,7 +18,7 @@ let selectedBookingId = "";
 async function getuser(id) {
   console.log(id);
   
-  const response=await fetch(`http://localhost:3000/api/get-users`);
+  const response=await fetch(`https://sports-management.azurewebsites.net/api/get-users`);
   const data = await response.json();
   const spec = data.find(u => u.id === id);
   console.log(spec.username);
@@ -28,7 +28,7 @@ async function getuser(id) {
 async function loadBookings() {
     bookingsTableBody.innerHTML = "";
     bookingModal.hidden = true;
-    const bookings=await fetch("http://localhost:3000/api/staff-bookings");
+    const bookings=await fetch("https://sports-management.azurewebsites.net/api/staff-bookings");
     const data = await bookings.json();
     let bookarr = [];
 
@@ -157,7 +157,8 @@ async function updateStatus(bookId,newStatus){
   // const newStatus = event.target.value;
 
   // const it =await saveStatusBtn.clicked;
-  const sendIT=await fetch(`http://localhost:3000/api/booking-status/${bookId}`,{
+ // const sendIT=await fetch(`http://localhost:3000/api/booking-status/${bookId}`,{
+  const sendIT=await etch(`https://sports-management.azurewebsites.net/api/booking-status/${bookId}`,{
   method:"PUT",
   headers:{
     "Content-Type":"application/json"
