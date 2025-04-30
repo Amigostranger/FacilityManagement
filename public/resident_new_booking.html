@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Facility Bookings - Resident</title>
+  <link rel="stylesheet" href="css/resident_new_booking.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <button id="addBookingBtn">Add Booking</button>
+      <button id="viewBookingsBtn">View My Bookings</button>
+    </nav>
+
+    <!-- Facility and Date Filters -->
+    <section id="filterSection" aria-label="Filter Bookings">
+      <form id="filterForm">
+        <label for="facilityFilter">Facility:</label>
+        <select id="facilityFilter" name="facilityFilter">
+          <option value="">--Select Facility--</option>
+          <option value="Sturrock Soccer Field">Sturrock Digs Soccer Field</option>
+          <option value="Matrix Basketball Court">Matrix Basketball Court</option>
+          <option value="Bozzoli Cricket Field">Bozzoli Cricket Field</option>
+          <option value="Digs Netball Court">Digs Netball Court</option>
+          <option value="Sturrock Esports Hall">Sturrock Esports Hall</option>
+          <option value="Solomon Mahlangu Chess Hall">Solomon Mahlangu Chess Hall</option>
+        </select>
+
+        <label for="dateFilter">Date:</label>
+        <input type="date" id="dateFilter" name="dateFilter">
+
+        <button type="button" id="viewFilteredBtn">View</button>
+      </form>
+    </section>
+  </header>
+
+  <main>
+    <p id="noBookingsMessage" hidden>No bookings found for the selected facility and date.</p>
+
+    <!-- Bookings Table -->
+    <section aria-label="My Bookings">
+      <table id="bookingsTable" hidden>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Facility</th>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic rows -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Modals -->
+    <section id="viewModal" hidden aria-modal="true" role="dialog">
+      <article>
+        <header>
+          <h2>My Bookings</h2>
+        </header>
+
+        <section id="bookingDetails">
+          <!-- Booking details inserted dynamically -->
+        </section>
+
+        <footer>
+          <button type="button" id="closeViewBtn">Close</button>
+        </footer>
+      </article>
+    </section>
+
+    <section id="addModal" hidden aria-modal="true" role="dialog">
+      <article>
+        <header>
+          <h2>New Booking</h2>
+        </header>
+
+        <form id="bookingForm">
+          <label for="bookingTitle">Title:</label>
+          <input type="text" id="bookingTitle" name="bookingTitle" required>
+
+          <label for="facilitySelect">Facility:</label>
+          <select id="facilitySelect" name="facilitySelect" required>
+            <option value="">--Select Facility--</option>
+            <option value="Sturrock Soccer Field">Sturrock Digs Soccer Field</option>
+            <option value="Matrix Basketball Court">Matrix Basketball Court</option>
+            <option value="Bozzoli Cricket Field">Bozzoli Cricket Field</option>
+            <option value="Digs Netball Court">Digs Netball Court</option>
+            <option value="Sturrock Esports Hall">Sturrock Esports Hall</option>
+            <option value="Solomon Mahlangu Chess Hall">Solomon Mahlangu Chess Hall</option>
+          </select>
+
+          <label for="bookingDescription">Description:</label>
+          <textarea id="bookingDescription" name="bookingDescription" rows="4" required></textarea>
+
+          <label for="bookingDate">Date:</label>
+          <input type="date" id="bookingDate" name="bookingDate" required>
+
+          <label for="startTime">Start Time:</label>
+          <input type="time" id="startTime" name="startTime" required>
+
+          <label for="endTime">End Time:</label>
+          <input type="time" id="endTime" name="endTime" required>
+
+          <footer>
+            <button type="submit" id="submitBookingBtn">Submit</button>
+            <button type="button" id="cancelBookingBtn">Cancel</button>
+          </footer>
+        </form>
+      </article>
+    </section>
+  </main>
+
+  <!-- Firebase SDKs -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
+
+  <!-- Your JS -->
+  <script type="module" src="js/resident_new_booking.js"></script>
+</body>
+</html>
