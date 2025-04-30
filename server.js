@@ -10,7 +10,7 @@ dotenv.config();
 
 console.log('Server is starting');
 
-let getIt=null;
+
 
  const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
@@ -23,6 +23,7 @@ const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
 //const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
 
 // Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
@@ -60,6 +61,7 @@ app.use(express.static(path.join(__dirname, 'public'))); //
 app.use(express.json());
 app.use(bodyParser.json());
 
+let getIt=null;
 // Middleware to verify Firebase ID token
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -77,6 +79,35 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+//API Endpoint for creating an event
+app.post("/api/createEvent", verifyToken,async (req,res) => {
+  const {title, description, facility, date, start, end, who}=req.body 
+  const uid=req.user.uid;
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  try {
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      date,
+      start,
+      end,
+      who,
+      //createdAt: new Date(),
+    });
+
+    res.status(200).json({ message: "Report submitted" });
+  }
+  catch{
+    console.error("Report save error:", error);
+    res.status(500).json({ error: "Failed to save event" });
+}
+
+});
 
 app.get("/api/notifications", verifyToken,async (req, res) => {
   
@@ -245,15 +276,30 @@ app.post("/api/bookings", verifyToken, async (req, res) => {
   }
 
   try {
+
+    const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
+    const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
+
+    const overlapping = await db.collection("bookings")
+      .where("facility", "==", facility)
+      .where("status", "==","Approved")
+      .where("start", "<", newEnd)
+      .where("end", ">", newStart)
+      .get();
+
+    if (!overlapping.empty) {
+      return res.status(409).json({ error: "Booking conflict detected" });
+    }
+
     await db.collection("bookings").add({
       title,
       description,
       facility,
       submittedBy: uid,
       status: "Pending",
-      start,
-      end,
-      who, // Store the "who" field in the database
+      start: newStart,
+      end: newEnd,
+      who,
     });
 
     res.status(200).json({ message: "Booking submitted" });
