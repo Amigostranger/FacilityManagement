@@ -12,14 +12,15 @@
 </head>
 <body>
     <h1>Welcome, Admin</h1>
+    <button id="eventBtn">
+        <img src="img/create_event_icon.png" alt="Create Event Icon">
+        Create Event
+    </button>
      <button id="userImgBtn">
         <img src="img/User image.jpg" alt="Button" width="200" height="80">
       </button>  
      <section class="button-container">
-        <button id="eventBtn">
-            <img src="img/create_event_icon.png" alt="Create Event Icon">
-            Create Event
-        </button>
+       
         <button id="reportBtn">
             <img src="img/report_icon.png" alt="Manage Reports Icon">
             Issues
@@ -33,5 +34,64 @@
             Bookings
         </button>
     </section>
+    
+    <!------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <!-- View Bookings Modal -->
+    <section id="viewModal" hidden aria-modal="true" role="dialog">
+        <article>
+          <header>
+            <h2>My Bookings</h2>
+          </header>
+  
+          <section id="bookingDetails">
+            <!-- Booking details populated dynamically -->
+          </section>
+  
+          <footer>
+            <button type="button" id="closeViewBtn">Close</button>
+          </footer>
+        </article>
+      </section>
+  
+      <!-- Add Booking Modal -->
+      <section id="addModal" hidden aria-modal="true" role="dialog">
+        <article>
+          <header>
+            <h2>Create Your Event!</h2>
+          </header>
+          <form id="bookingForm">
+            <label for="bookingTitle">Title:</label>
+            <input type="text" id="bookingTitle" name="bookingTitle" required><!----Lets----->
+  
+            <label for="facilitySelect">Facility:</label>
+            <select id="facilitySelect" name="facilitySelect" required><!----Lets----->
+              <option value="">--Select Facility--</option>
+              <option value="Sturrock Soccer Field">Sturrock Digs Soccer Field</option>
+              <option value="Matrix Basketball Court">Matrix Basketball Court</option>
+              <option value="Bozzoli Cricket Field">Bozzoli Cricket Field</option>
+              <option value="Digs Netball Court">Digs Netball Court</option>
+              <option value="Sturrock Esports Hall">Sturrock Esports Hall</option>
+              <option value="Solomon Mahlangu Chess Hall">Solomon Mahlangu Chess Hall</option>
+            </select>
+  
+            <label for="bookingDescription">Description:</label>
+            <textarea id="bookingDescription" name="bookingDescription" rows="4" required></textarea><!----Lets----->
+  
+            <label for="bookingDate">Date:</label>
+            <input type="date" id="bookingDate" name="bookingDate" required><!----Lets----->
+  
+            <label for="startTime">Start Time:</label>
+            <input type="time" id="startTime" name="startTime" required><!----Lets----->
+  
+            <label for="endTime">End Time:</label>
+            <input type="time" id="endTime" name="endTime" required><!----Lets----->
+  
+            <footer>
+              <button type="submit" id="submitBookingBtn">Submit</button>
+              <button type="button" id="cancelEventBtn">Cancel</button>
+            </footer>
+          </form>
+        </article>
+      </section>
 </body>
 </html>

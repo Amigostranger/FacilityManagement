@@ -11,11 +11,13 @@ managebtn.addEventListener('click',async(e)=>{
 });
 
 document.getElementById("reportBtn").addEventListener("click", () => {
-    window.location.href = "./staff_admin_issues.html"; // or any URL you want
+    window.location.href = "./staff_admin_issues.html"; 
+  });
+  document.getElementById("bookingsBtn").addEventListener("click", () => {
+    window.location.href = "./staff_admin_booking.html"; 
   });
 
-<<<<<<< Updated upstream
-=======
+
 
 //---------------------------------------------------------------------------------------------------------------// 
 import { auth } from './firebase.js';
@@ -61,7 +63,7 @@ bookingForm.addEventListener('submit', async (e) => {
 
   try {
     const idToken = await user.getIdToken();
-    //https://sports-management.azurewebsites.net
+4
     const res = await fetch("https://sports-management.azurewebsites.net/api/createEvent", {
       method: "POST",
       headers: {
@@ -85,4 +87,3 @@ bookingForm.addEventListener('submit', async (e) => {
     alert("Something went wrong. Please try again.");
 }
 });
->>>>>>> Stashed changes

@@ -10,7 +10,7 @@ dotenv.config();
 
 console.log('Server is starting');
 
-let getIt=null;
+
 
 // const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 
@@ -23,6 +23,7 @@ let getIt=null;
 
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
 
 // Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
@@ -39,7 +40,6 @@ import { fileURLToPath } from 'url';
 // Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 // Define CORS options
 // Define CORS options
 const corsOptions = {
@@ -55,11 +55,13 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public'))); // 
 
-
+// Handle preflight requests globally
+//app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(bodyParser.json());
 
+let getIt=null;
 // Middleware to verify Firebase ID token
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -76,106 +78,8 @@ const verifyToken = async (req, res, next) => {
     return res.status(401).json({ error: "Invalid or expired token" });
   }
 };
-//API Endpoint for Reading a notification
-app.post("/api/read", verifyToken, async (req, res) => {
-
-  const n_id= req.body.notification;
-
-  try {
-   const snapshot = await db.collection("notifications").where("recipient", "==", req.user.uid).where("id", "==", n_id).get();
-   
-  snapshot.forEach(async (doc) => {
-    await db.collection("notifications").doc(doc.id).update({
-      read: "true"
-    });
-  });
-
-    res.status(200).json({ message: "Event read successfully" });
-
-  } catch (error) {
-    console.error("Error reading the event details:", error);
-    res.status(500).json({ error: "Failed to read the envent details" });
-  }
-});
 
 
-<<<<<<< Updated upstream
-=======
-//API Endpoint for creating an event
-app.post("/api/createEvent", verifyToken,async (req,res) => {
-  const {title, description, facility, date, start, end, who}=req.body 
-  const uid=req.user.uid;
-  if (!title || !description || !facility || !start || !end || !who) {
-    return res.status(400).json({ error: "All fields required" });
-  }
-
-  try {
-    const snapShot=await db.collection("users").where("role","==","resident").get();
-
-    const users= snapShot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    for (const user of users) {
-      const docRef = db.collection("notifications").doc();
-      const n_id=docRef.id;
-      console.log(n_id);
-      await docRef.set({
-        id: n_id,
-        recipient: user.id,
-        title,
-        description,
-        facility,
-        submittedBy: uid,
-        date,
-        start,
-        end,
-        read: "false"
-      });
-    }
-  
-    
-    await db.collection("bookings").add({
-      title,
-      description,
-      facility,
-      submittedBy: uid,
-      date,
-      start,
-      end,
-      who,
-    
-    });
-
-    res.status(200).json({ message: "Report submitted" });
-  }
-  catch{
-    console.error("Report save error:", error);
-    res.status(500).json({ error: "Failed to save event" });
-}
-
-});
-//API Endpoint for Listing notifications
-app.get("/api/count-read", verifyToken,async (req, res) => {
-  const uid=req.user.uid;
->>>>>>> Stashed changes
-
-  try {
-
-    const snapshot = await db.collection("notifications").where("recipient", "==", uid).where("read", "==", "false").get();
-    const countRead=snapshot.size;
-    
-    res.status(200).json({"countRead":countRead});
-    console.log("Counting successful");
-
-  } catch (error) {
-    console.error("Error counting read notification :", error);
-    res.status(500).json({ error: "Failed to get Events" });
-  }
-});
-
-//API Endpoint for Listing notifications
 app.get("/api/notifications", verifyToken,async (req, res) => {
   const uid=req.user.uid;
   try {
@@ -275,7 +179,23 @@ app.get('/api/get-users',async (req,res)=>{
   }
 })
 
+app.get("/api/staff-bookings",async (req,res) => {
+  
+  try {
+    const getIt=await db.collection("bookings").get();
+    const bookings=getIt.docs.map(doc =>({
+      bookId:doc.id,
+      ...doc.data()
+    }))
+    //console.log(doc.data);
+    
+    res.status(200).send(bookings);
 
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+})
 
 app.delete('/api/user/:id',async (req,res)=>{
   try {
@@ -301,7 +221,18 @@ app.delete('/api/user/:id',async (req,res)=>{
 })
 
 
-
+app.get('/api/user/:id',async (req,res)=>{
+  try {
+    const userId=req.params.id;
+    const user=db.collection('users').doc(userId).get();
+    res.status(200).json({ 
+      userId: userId
+    });
+  } catch (error) {
+    console.error(error);
+    
+  }
+})
 
 app.post("/api/report", verifyToken, async (req, res) => {
   const { title, description, facility } = req.body;
@@ -327,6 +258,34 @@ app.post("/api/report", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to save report" });
   }
 });
+
+app.post("/api/bookings", verifyToken, async (req, res) => {
+  const { title, description, facility, start, end, who } = req.body; // Add `who` to request body
+  const uid = req.user.uid; 
+
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  try {
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      status: "Pending",
+      start,
+      end,
+      who, // Store the "who" field in the database
+    });
+
+    res.status(200).json({ message: "Booking submitted" });
+  } catch (error) {
+    console.error("Booking save error:", error);
+    res.status(500).json({ error: "Failed to save Booking" });
+  }
+});
+
 
 app.put('/api/user/:id',async (req,res)=>{
   try {
@@ -355,6 +314,24 @@ app.put('/api/user/:id',async (req,res)=>{
   }
 })
 
+app.put('/api/booking-status/:id',async (req,res)=>{
+  const bookId=req.params.id;
+
+try {
+  const {status}=req.body;
+  const getIt=  db.collection("bookings").doc(bookId);
+  if (status!=""){
+    await getIt.update({
+      status:status
+    })
+    res.status(200).json({ message: `booking ${bookId} role updated to ${status}` });
+  }
+} catch (error) {
+  console.error(error);
+  res.status(500).send("Server error");
+}
+})
+
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'register_page.html'));
 });
@@ -362,6 +339,9 @@ app.get('/register', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname,'public', 'login_page.html'));
 });
+
+
+
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname,'public', 'login_page.html'));
 });
@@ -409,3 +389,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
 });
+

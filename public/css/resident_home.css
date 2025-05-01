@@ -107,8 +107,7 @@ button img {
   vertical-align: middle;
 }
 
-<<<<<<< Updated upstream
-=======
+
 .img-container {
   position: relative;
   display: inline-block;
@@ -132,4 +131,4 @@ button img {
   font-weight: bold;
   transform: translate(50%, -50%);
 }
->>>>>>> Stashed changes
+
