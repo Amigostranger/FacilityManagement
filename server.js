@@ -10,9 +10,9 @@ dotenv.config();
 
 console.log('Server is starting');
 
+let getIt=null;
 
-
- const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
 // if (!fs.existsSync(serviceAccountPath)) {
 //   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
@@ -23,7 +23,6 @@ console.log('Server is starting');
 
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-
 
 // Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
@@ -36,7 +35,6 @@ const auth = admin.auth();
 
 const app = express();
 import { fileURLToPath } from 'url';
-import { get } from 'https';
 
 // Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -62,7 +60,6 @@ app.use(express.static(path.join(__dirname, 'public'))); //
 app.use(express.json());
 app.use(bodyParser.json());
 
-let getIt=null;
 // Middleware to verify Firebase ID token
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -80,35 +77,6 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-//API Endpoint for creating an event
-app.post("/api/createEvent", verifyToken,async (req,res) => {
-  const {title, description, facility, date, start, end, who}=req.body 
-  const uid=req.user.uid;
-  if (!title || !description || !facility || !start || !end || !who) {
-    return res.status(400).json({ error: "All fields required" });
-  }
-
-  try {
-    await db.collection("bookings").add({
-      title,
-      description,
-      facility,
-      submittedBy: uid,
-      date,
-      start,
-      end,
-      who,
-      //createdAt: new Date(),
-    });
-
-    res.status(200).json({ message: "Report submitted" });
-  }
-  catch{
-    console.error("Report save error:", error);
-    res.status(500).json({ error: "Failed to save event" });
-}
-
-});
 
 app.get("/api/notifications", verifyToken,async (req, res) => {
   
@@ -150,7 +118,7 @@ app.get("/api/issues", verifyToken,async (req, res) => {
 
 
 app.post("/api/save-user", verifyToken, async (req, res) => {
-  const { email, username ,role,status} = req.body;
+  const { email, username ,role} = req.body;
   console.log("Decoded user:", req.user);
   if (!email || !username) {
     return res.status(400).json({ error: "Email and username are required" });
@@ -162,7 +130,6 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
       email,
       username,
       role,
-      status,
     });
 
     res.status(200).json({ message: "User saved successfully" });
@@ -174,31 +141,51 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
 });
 
 
-app.get('/api/get-users',async (req,res)=>{
-
+// Update the /api/get-users endpoint to include role-based filtering
+app.get('/api/get-users', verifyToken, async (req, res) => {
   try {
-    const getIt=await db.collection("users").get();
-    const users = getIt.docs.map(doc => ({
+    const currentUserRole = req.user.role || 'resident'; // Get role from token
+    
+    const snapshot = await db.collection("users").get();
+    const allUsers = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     }));
-    res.status(200).send(users);
+
+    // Filter users based on current user's role
+    const filteredUsers = allUsers.filter(user => {
+      // Never show the current user in the list
+      if (user.id === req.user.uid) return false;
+      
+      // Admin sees everyone except other admins
+      if (currentUserRole.toLowerCase() === 'admin') {
+        return user.role.toLowerCase() !== 'admin';
+      }
+      // Staff sees only residents
+      else if (currentUserRole.toLowerCase() === 'staff') {
+        return user.role.toLowerCase() === 'resident';
+      }
+      // Residents see no one (or themselves if you want)
+      return false;
+    });
+
+    res.status(200).send(filteredUsers);
   } catch (error) {
     console.error(error);
-    
+    res.status(500).json({ error: "Failed to fetch users" });
   }
-})
+});
 
 app.get("/api/staff-bookings",async (req,res) => {
   
   try {
-    const getIt=await db.collection("bookings").where("status","==","Pending").get();
+    const getIt=await db.collection("bookings").get();
     const bookings=getIt.docs.map(doc =>({
       bookId:doc.id,
       ...doc.data()
     }))
     //console.log(doc.data);
-
+    
     res.status(200).send(bookings);
 
   } catch (error) {
@@ -244,34 +231,6 @@ app.get('/api/user/:id',async (req,res)=>{
   }
 })
 
-
-
-app.post("/api/check-users",async (req,res)=>{
-  
-
- try {
-  const {email}=req.body;
-  const getIt=await db.collection("users").where("email","==",email).get()//remember (used email for convinience ,i will change when we remove emails)
-  if(getIt.empty){
-    return res.status(400).json({ error: "user not available" });
-  }
-
-
-  let status = "Allowed";
-  getIt.forEach(doc => {
-    const data = doc.data();
-    if (data.status && data.status.toLowerCase() === "revoked") {
-      status = "revoked";
-    }
-  });
-  return res.status(200).json({ status});
-
- } catch (error) {
-    console.error(error);
-    
- }
-})
-
 app.post("/api/report", verifyToken, async (req, res) => {
   const { title, description, facility } = req.body;
   const uid = req.user.uid; 
@@ -306,30 +265,15 @@ app.post("/api/bookings", verifyToken, async (req, res) => {
   }
 
   try {
-
-    const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
-    const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
-
-    const overlapping = await db.collection("bookings")
-      .where("facility", "==", facility)
-      .where("status", "==","Approved")
-      .where("start", "<", newEnd)
-      .where("end", ">", newStart)
-      .get();
-
-    if (!overlapping.empty) {
-      return res.status(409).json({ error: "Booking conflict detected" });
-    }
-
     await db.collection("bookings").add({
       title,
       description,
       facility,
       submittedBy: uid,
       status: "Pending",
-      start: newStart,
-      end: newEnd,
-      who,
+      start,
+      end,
+      who, // Store the "who" field in the database
     });
 
     res.status(200).json({ message: "Booking submitted" });
@@ -415,15 +359,8 @@ app.post("/api/get-user", async (req, res) => {
     if (!userDoc.exists) {
       return res.status(404).send({ error: "Create an Account!" });
     }
-    
 
     const userData = userDoc.data();
-    if(userData.status=="revoked"){
-      //console.log(userData.status);
-      
-      return res.status(404).send({ error: "Account revoked!" });
-    }
-
     res.status(200).send(userData);
   } catch (error) {
     console.error("Login error:", error);
@@ -449,4 +386,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
 });
-
