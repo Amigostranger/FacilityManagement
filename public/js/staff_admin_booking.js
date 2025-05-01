@@ -164,7 +164,7 @@ async function updateStatus(bookId,newStatus){
   // const newStatus = event.target.value;
 
   // const it =await saveStatusBtn.clicked;
- const sendIT=await fetch(`http://localhost:3000/api/booking-status/${bookId}`,{
+ const sendIT=await fetch(`https://sports-management.azurewebsites.net/api/booking-status/${bookId}`,{
   //const sendIT=await fetch(`https://sports-management.azurewebsites.net/api/booking-status/${bookId}`,{
   method:"PUT",
   headers:{
