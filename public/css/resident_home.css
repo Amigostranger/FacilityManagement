@@ -107,3 +107,29 @@ button img {
   vertical-align: middle;
 }
 
+<<<<<<< Updated upstream
+=======
+.img-container {
+  position: relative;
+  display: inline-block;
+}
+
+#notify {
+  width: 30px; /* adjust size if needed */
+  height: 30px;
+}
+
+#counter {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  transform: translate(50%, -50%);
+}
+>>>>>>> Stashed changes
