@@ -33,7 +33,7 @@ const googleSignIn = async () => {
       },
       body: JSON.stringify({
         email: user.email,
-        username: user.displayName || user.email, // Use email as default username
+        username: user.displayName || user.email,
         role:"resident",
         status:"allowed",
       }),

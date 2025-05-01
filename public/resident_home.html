@@ -5,25 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resident Homepage</title>
     <link rel="stylesheet" href="css/resident_home.css">
-    <style>
-        @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        25% { transform: translateY(-5px); }
-        50% { transform: translateX(5px); }
-        75% { transform: translateX(-10px); }
-        100% { transform: translateX(1px); }
-    }
-    
-        .shake {
-            animation: shake 6.0s; /* Duration of 0.5 seconds */
-        }
-    </style>
     <script type="module" src="js/resident.js" defer></script>
 </head>
 <body>
      <h1>Welcome, Resident</h1>
-     
      <button id="userImgBtn">
         <img src="img/User image.jpg" alt="Button" width="200" height="80">
       </button>  
@@ -37,17 +22,17 @@
             Issues
         </button>
         <button id="notificationBtn">
-            <div class="img-container">
+            <section class="img-container">
                 <img id="notify" src="img/notification_icon.png" alt="Notifications Icon">
-                <span id="counter">3</span>
-            </div>
+                <section id="counter" class="counter">3</section>
+            </section>
             Notifications
         </button>
-        
         <button id="contactBtn">
             <img src="img/contact_icon.png" alt="Contact us Icon">
             Contact us
         </button>
       </section>
+      <script type="module" src="js/viewnotifications.js" defer></script>
 </body>
 </html>
