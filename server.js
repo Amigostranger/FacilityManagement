@@ -5,12 +5,23 @@ import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import fs from 'fs';
 
 dotenv.config();
 
 console.log('Server is starting');
 // Initialize Firebase Admin
+//const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+
+// if (!fs.existsSync(serviceAccountPath)) {
+//   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
+//   process.exit(1);
+// }
+
+//const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -29,15 +40,27 @@ const whitelist = [
   'https://your-production-domain.com'
 ];
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:5500',  // VS Code Live Server default
+      'http://127.0.0.1:5500',  // Alternative localhost
+      'http://localhost:3000',   // Your React/Vite dev server
+      'https://your-production-domain.com' // Add your production domain later
+    ];
+
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
+  credentials: true,
   optionsSuccessStatus: 200
 };
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json());
@@ -224,7 +247,7 @@ app.post('/api/get-user', async (req, res) => {
 // ======================
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  res.sendFile(path.join(__dirname, 'public', 'login_page.html'));
 });
 
 app.get('/register', (req, res) => {
@@ -248,5 +271,4 @@ process.on('unhandledRejection', (reason, promise) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });

@@ -1,47 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Resident Management</title>
-    <link rel="stylesheet" href="css/staff_home.css"> <!-- Reuse staff styles -->
-    <link rel="stylesheet" href="css/staff_residents.css"> <!-- New for tables -->
+  <meta charset="UTF-8">
+  <title>Residents Management</title>
+  <link rel="stylesheet" href="css/staff_residents.css">
 </head>
 <body>
-    <header>
-        <h1>Resident Management</h1>
-        <button id="backBtn" class="header-btn">
-            ← Back to Dashboard
-        </button>
-    </header>
+  <header>
+    <h1>Residents List</h1>
+    <button id="backBtn" class="back-btn">← Back to Dashboard</button>
+  </header>
 
-    <main class="resident-management">
-        <!-- Search and filter bar -->
-        <div class="controls">
-            <input type="text" id="searchInput" placeholder="Search by email...">
-            <select id="statusFilter">
-                <option value="all">All Residents</option>
-                <option value="active">Active Only</option>
-            </select>
-        </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody id="residentsTableBody">
+      <!-- Resident data will appear here -->
+    </tbody>
+  </table>
 
-        <!-- Residents table -->
-        <div class="table-scroll">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Last Active</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="residentsTableBody">
-                    <!-- Data will load here -->
-                </tbody>
-            </table>
-        </div>
-    </main>
-
-    <script type="module" src="js/staff_residents.js"></script>
+  <script src="js/staff_residents.js"></script>
 </body>
 </html>

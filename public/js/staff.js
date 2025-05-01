@@ -7,15 +7,26 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
   }
 
-  // Set staff name if available
-  const staffName = localStorage.getItem('userName') || 'Staff';
-  document.getElementById('staffName').textContent = staffName;
-
-  // Initialize button event listeners
-  initDashboardButtons();
+  // Button functionality
   
-  // Add logout functionality to profile button
-  document.getElementById('userImgBtn').addEventListener('click', showProfileOptions);
+
+  document.getElementById('reportBtn').addEventListener('click', () => {
+      window.location.href = 'staff_admin_issues.html';
+  });
+
+  document.getElementById('bookingsBtn').addEventListener('click', () => {
+      window.location.href = 'staff_admin_booking.html';
+  });
+
+  document.getElementById('usersBtn').addEventListener('click', () => {
+      window.location.href = 'staff_residents.html';
+  });
+
+  // Profile button functionality
+  document.getElementById('userImgBtn').addEventListener('click', () => {
+      // Toggle profile dropdown or redirect
+      window.location.href = 'staff_profile.html';
+  });
 });
 
 function initDashboardButtons() {

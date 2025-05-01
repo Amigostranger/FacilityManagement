@@ -2,9 +2,6 @@
 /* -------------------------------------------------------------THIS IS THE CSS FOR CREATE EVENT BUTTON---------------------------------------------------- */
   /* Create event button css */
   #eventBtn {
-    position: absolute;
-    top: 160px;
-    left: 50px;
     background: none;
     border: none;
     padding: 0;
