@@ -258,7 +258,7 @@ app.post("/api/check-users",async (req,res)=>{
 
 
   let status = "Allowed";
-  getIt.forEach(doc => {
+  getIt.docs.forEach(doc => {
     const data = doc.data();
     if (data.status && data.status.toLowerCase() === "revoked") {
       status = "revoked";
@@ -268,7 +268,7 @@ app.post("/api/check-users",async (req,res)=>{
 
  } catch (error) {
     console.error(error);
-    
+    return res.status(500).json({ error: "Server error" });
  }
 })
 
