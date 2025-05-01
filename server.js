@@ -12,7 +12,9 @@ console.log('Server is starting');
 
 
 
- const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+
+// const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+
 
 // if (!fs.existsSync(serviceAccountPath)) {
 //   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
@@ -79,6 +81,9 @@ const verifyToken = async (req, res, next) => {
     return res.status(401).json({ error: "Invalid or expired token" });
   }
 };
+//API Endpoint for Reading a notification
+app.post("/api/read", verifyToken, async (req, res) => {
+  const n_id= req.body.notification;
 
 //API Endpoint for creating an event
 app.post("/api/createEvent", verifyToken,async (req,res) => {
@@ -110,17 +115,107 @@ app.post("/api/createEvent", verifyToken,async (req,res) => {
 
 });
 
-app.get("/api/notifications", verifyToken,async (req, res) => {
-  
+
   try {
-    const snapshot = await db.collection("bookings").where("who", "==", "admin").get();
+   const snapshot = await db.collection("notifications").where("recipient", "==", req.user.uid).where("id", "==", n_id).get();
+   
+  snapshot.forEach(async (doc) => {
+    await db.collection("notifications").doc(doc.id).update({
+      read: "true"
+    });
+  });
+
+    res.status(200).json({ message: "Event read successfully" });
+
+  } catch (error) {
+    console.error("Error reading the event details:", error);
+    res.status(500).json({ error: "Failed to read the envent details" });
+  }
+});
+
+//API Endpoint for creating an event
+app.post("/api/createEvent", verifyToken,async (req,res) => {
+  const {title, description, facility, date, start, end, who}=req.body 
+  const uid=req.user.uid;
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  try {
+    const snapShot=await db.collection("users").where("role","==","resident").get();
+
+    const users= snapShot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    for (const user of users) {
+      const docRef = db.collection("notifications").doc();
+      const n_id=docRef.id;
+      console.log(n_id);
+      await docRef.set({
+        id: n_id,
+        recipient: user.id,
+        title,
+        description,
+        facility,
+        submittedBy: uid,
+        date,
+        start,
+        end,
+        read: "false"
+      });
+    }
+  
     
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      date,
+      start,
+      end,
+      who,
+    
+    });
+
+    res.status(200).json({ message: "Report submitted" });
+  }
+  catch{
+    console.error("Report save error:", error);
+    res.status(500).json({ error: "Failed to save event" });
+}
+
+});
+
+//API Endpoint for Listing notifications
+app.get("/api/count-read", verifyToken,async (req, res) => {
+  const uid=req.user.uid;
+
+  try {
+
+    const snapshot = await db.collection("notifications").where("recipient", "==", uid).where("read", "==", "false").get();
+    const countRead=snapshot.size;
+    
+    res.status(200).json({"countRead":countRead});
+    console.log("Counting successful");
+
+  } catch (error) {
+    console.error("Error counting read notification :", error);
+    res.status(500).json({ error: "Failed to get Events" });
+  }
+});
+
+//API Endpoint for Listing notifications
+app.get("/api/notifications", verifyToken,async (req, res) => {
+  const uid=req.user.uid;
+  try {
+    const snapshot = await db.collection("notifications").where("recipient", "==", uid).get();
     const events= snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
     }));
-  
-    
     res.status(200).json({events});
 
   } catch (error) {
@@ -150,13 +245,18 @@ app.get("/api/issues", verifyToken,async (req, res) => {
 
 
 app.post("/api/save-user", verifyToken, async (req, res) => {
+
   const { email, username ,role,status} = req.body;
   console.log("Decoded user:", req.user);
+  
+  // console.log("Decoded user:", req.user);
+
   if (!email || !username) {
     return res.status(400).json({ error: "Email and username are required" });
   }
 
   try {
+
     const userRef = db.collection("users").doc(req.user.uid);
     await userRef.set({
       email,
@@ -164,7 +264,30 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
       role,
       status,
     });
-
+    const snapshot = await db.collection("bookings").where("who","==","admin").get();
+    const bookings= snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    console.log(req.user.uid);
+    const userID=req.user.uid;
+    for (const booking of bookings) {
+      const docRef = db.collection("notifications").doc();
+      const n_id=docRef.id;
+      
+      await docRef.set({
+        id: n_id,
+        recipient: userID,
+        title:booking.title,
+        description:booking.description,
+        facility:booking.facility,
+        submittedBy: booking.submittedBy,
+        start:booking.start,
+        end:booking.end,
+        read: "false"
+      });
+      
+    }
     res.status(200).json({ message: "User saved successfully" });
 
   } catch (error) {

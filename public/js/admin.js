@@ -18,6 +18,7 @@ document.getElementById("reportBtn").addEventListener("click", () => {
   });
 
 
+
 //---------------------------------------------------------------------------------------------------------------// 
 import { auth } from './firebase.js';
 
@@ -62,7 +63,7 @@ bookingForm.addEventListener('submit', async (e) => {
 
   try {
     const idToken = await user.getIdToken();
-
+4
     const res = await fetch("https://sports-management.azurewebsites.net/api/createEvent", {
       method: "POST",
       headers: {
