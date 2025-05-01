@@ -1,24 +1,3 @@
-// Firebase setup
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBLsT0OJXoEha8ZKGCZaHgyht5eZ21O-mQ",
-  authDomain: "sportsmanagement-a0f0b.firebaseapp.com",
-  projectId: "sportsmanagement-a0f0b",
-  storageBucket: "sportsmanagement-a0f0b.appspot.com",
-  messagingSenderId: "674114167483",
-  appId: "1:674114167483:web:e8c57868dcf8bccfce3f9e"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-// import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-// import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-
 import { auth } from './firebase.js';
 import { db } from './firebase.js';
 // import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
@@ -74,39 +53,6 @@ closeViewBtn.addEventListener('click', () => {
 async function fetchBookings() {
   bookingsTableBody.innerHTML = ""; // Clear old bookings
 
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const submittedBy = user.email;
-      const bookingsRef = collection(db, "bookings");
-      const q = query(bookingsRef, where("submittedBy", "==", submittedBy));
-
-      const querySnapshot = await getDocs(q);
-      if (querySnapshot.empty) {
-        bookingsTable.hidden = true;
-        noBookingsMessage.hidden = false;
-      } else {
-        noBookingsMessage.hidden = true;
-        bookingsTable.hidden = false;
-        querySnapshot.forEach((doc) => {
-          const booking = doc.data();
-          const startDate = booking.start.toDate();
-          const endDate = booking.end.toDate();
-
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${booking.Title}</td>
-            <td>${booking.facility || '-'}</td>
-            <td>${startDate.toLocaleDateString()}</td>
-            <td>${startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-            <td>${endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-          `;
-          bookingsTableBody.appendChild(row);
-        });
-      }
-    }
-  });
-}
-
   const user = auth.currentUser;
   if (user) {
     const submittedBy = user.email;
@@ -139,7 +85,7 @@ async function fetchBookings() {
   } else {
     alert("You must be logged in to view bookings.");
   }
-
+}
 
 
 
@@ -156,8 +102,13 @@ bookingForm.addEventListener('submit', async (e) => {
   const startTime = document.getElementById('startTime').value;
   const endTime = document.getElementById('endTime').value;
 
-  const start = new Date(`${date}T${startTime}`);
-  const end = new Date(`${date}T${endTime}`);
+  if (!date || !startTime || !endTime) {
+    alert("Please fill in date, start time, and end time.");
+    return;
+  }
+
+  const start = new Date(`${date}T${startTime}`).toISOString();
+  const end = new Date(`${date}T${endTime}`).toISOString();
 
   const user = auth.currentUser;
   if (!user) {
@@ -168,11 +119,11 @@ bookingForm.addEventListener('submit', async (e) => {
   try {
     const idToken = await user.getIdToken();
 
-    // Add "who" field (in this case, "admin")
-    const who = "resident";  // or dynamically set based on user/role
+    const who = "resident";
     
     // Send booking details to server
-    const res = await fetch("http://localhost:3000/api/bookings", {
+    
+    const res = await fetch("https://sports-management.azurewebsites.net/api/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -193,56 +144,5 @@ bookingForm.addEventListener('submit', async (e) => {
   } catch (err) {
     console.error("Failed to submit booking:", err);
     alert("Something went wrong. Please try again.");
-  }
-});
-
-
-
-
-
-
-// View bookings by Facility + Date
-viewFilteredBtn.addEventListener('click', async () => {
-  bookingsTableBody.innerHTML = ""; // Clear old results
-  const facility = facilityFilter.value;
-  const dateSelected = dateFilter.value;
-
-  if (!facility || !dateSelected) {
-    alert("Please select both a facility and a date.");
-    return;
-  }
-
-  const bookingsRef = collection(db, "bookings");
-  const q = query(bookingsRef, where("facility", "==", facility));
-
-  const querySnapshot = await getDocs(q);
-  let found = false;
-
-  querySnapshot.forEach((doc) => {
-    const booking = doc.data();
-    const startDate = booking.start.toDate();
-    const bookingDate = startDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
-
-    if (bookingDate === dateSelected) {
-      found = true;
-
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${booking.Title}</td>
-        <td>${booking.facility || '-'}</td>
-        <td>${startDate.toLocaleDateString()}</td>
-        <td>${startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-        <td>${booking.end.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-      `;
-      bookingsTableBody.appendChild(row);
-    }
-  });
-
-  if (found) {
-    bookingsTable.hidden = false;
-    noBookingsMessage.hidden = true;
-  } else {
-    bookingsTable.hidden = true;
-    noBookingsMessage.hidden = false;
   }
 });
