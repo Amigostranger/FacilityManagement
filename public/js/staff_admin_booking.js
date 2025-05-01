@@ -1,5 +1,4 @@
 
-
 // Elements
 const bookingsTableBody = document.querySelector('#bookingsTable tbody');
 const bookingModal = document.getElementById('bookingModal');
