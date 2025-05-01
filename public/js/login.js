@@ -19,7 +19,7 @@ googleLoginBtn.addEventListener("click", async () => {
     const result = await signInWithPopup(auth, provider);
     const token = await result.user.getIdToken();
 
-
+    //http://localhost:3000/
        const response = await fetch('https://sports-management.azurewebsites.net/api/get-user', {
       method: "POST",
       headers: {
@@ -29,7 +29,7 @@ googleLoginBtn.addEventListener("click", async () => {
     });
 
     const data = await response.json();
-
+    console.log(data);
     if (response.ok) {
       message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
       setTimeout(() => {
