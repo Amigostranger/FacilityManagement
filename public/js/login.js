@@ -20,7 +20,7 @@ googleLoginBtn.addEventListener("click", async () => {
     const token = await result.user.getIdToken();
 
     //http://localhost:3000/
-       const response = await fetch('http://localhost:3000/api/get-user', {
+       const response = await fetch('https://sports-management.azurewebsites.net/api/get-user', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
