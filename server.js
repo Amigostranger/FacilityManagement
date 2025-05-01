@@ -251,9 +251,9 @@ app.post("/api/check-users",async (req,res)=>{
 
  try {
   const {email}=req.body;
-  const getIt=await db.collection("users").where("email","==",email).get()//remember (used email for convinience ,i will change when we remove emails)
+  const getIt=await db.collection("users").where("email","==",email).get()//remember 
   if(getIt.empty){
-    return res.status(400).json({ error: "user not available" });
+    return res.status(200).json({ error: "user not available" });
   }
 
 
