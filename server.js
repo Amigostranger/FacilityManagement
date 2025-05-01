@@ -81,8 +81,133 @@ const verifyToken = async (req, res, next) => {
     return res.status(401).json({ error: "Invalid or expired token" });
   }
 };
+//API Endpoint for Reading a notification
+app.post("/api/read", verifyToken, async (req, res) => {
+  const n_id= req.body.notification;
+
+//API Endpoint for creating an event
+app.post("/api/createEvent", verifyToken,async (req,res) => {
+  const {title, description, facility, date, start, end, who}=req.body 
+  const uid=req.user.uid;
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  try {
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      date,
+      start,
+      end,
+      who,
+      //createdAt: new Date(),
+    });
+
+    res.status(200).json({ message: "Report submitted" });
+  }
+  catch{
+    console.error("Report save error:", error);
+    res.status(500).json({ error: "Failed to save event" });
+}
+
+});
 
 
+  try {
+   const snapshot = await db.collection("notifications").where("recipient", "==", req.user.uid).where("id", "==", n_id).get();
+   
+  snapshot.forEach(async (doc) => {
+    await db.collection("notifications").doc(doc.id).update({
+      read: "true"
+    });
+  });
+
+    res.status(200).json({ message: "Event read successfully" });
+
+  } catch (error) {
+    console.error("Error reading the event details:", error);
+    res.status(500).json({ error: "Failed to read the envent details" });
+  }
+});
+
+//API Endpoint for creating an event
+app.post("/api/createEvent", verifyToken,async (req,res) => {
+  const {title, description, facility, date, start, end, who}=req.body 
+  const uid=req.user.uid;
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  try {
+    const snapShot=await db.collection("users").where("role","==","resident").get();
+
+    const users= snapShot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    for (const user of users) {
+      const docRef = db.collection("notifications").doc();
+      const n_id=docRef.id;
+      console.log(n_id);
+      await docRef.set({
+        id: n_id,
+        recipient: user.id,
+        title,
+        description,
+        facility,
+        submittedBy: uid,
+        date,
+        start,
+        end,
+        read: "false"
+      });
+    }
+  
+    
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      date,
+      start,
+      end,
+      who,
+    
+    });
+
+    res.status(200).json({ message: "Report submitted" });
+  }
+  catch{
+    console.error("Report save error:", error);
+    res.status(500).json({ error: "Failed to save event" });
+}
+
+});
+
+//API Endpoint for Listing notifications
+app.get("/api/count-read", verifyToken,async (req, res) => {
+  const uid=req.user.uid;
+
+  try {
+
+    const snapshot = await db.collection("notifications").where("recipient", "==", uid).where("read", "==", "false").get();
+    const countRead=snapshot.size;
+    
+    res.status(200).json({"countRead":countRead});
+    console.log("Counting successful");
+
+  } catch (error) {
+    console.error("Error counting read notification :", error);
+    res.status(500).json({ error: "Failed to get Events" });
+  }
+});
+
+//API Endpoint for Listing notifications
 app.get("/api/notifications", verifyToken,async (req, res) => {
   const uid=req.user.uid;
   try {
