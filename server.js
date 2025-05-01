@@ -231,6 +231,34 @@ app.get('/api/user/:id',async (req,res)=>{
   }
 })
 
+
+
+app.post("/api/check-users",async (req,res)=>{
+  
+
+ try {
+  const {email}=req.body;
+  const getIt=await db.collection("users").where("email","==",email).get()//remember 
+  if(getIt.empty){
+    return res.status(200).json({ error: "user not available" });
+  }
+
+
+  let status = "Allowed";
+  getIt.docs.forEach(doc => {
+    const data = doc.data();
+    if (data.status && data.status.toLowerCase() === "revoked") {
+      status = "revoked";
+    }
+  });
+  return res.status(200).json({ status});
+
+ } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Server error" });
+ }
+})
+
 app.post("/api/report", verifyToken, async (req, res) => {
   const { title, description, facility } = req.body;
   const uid = req.user.uid; 

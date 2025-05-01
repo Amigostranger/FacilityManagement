@@ -19,13 +19,13 @@ const googleSignIn = async () => {
     const which=await check(user.email);
     console.log(which);
     
-    if(!which || which==="revoked"){
+    if(which==="revoked"){
       alert("Your account has been revoked.");
       return;
     }
     //http://localhost:3000
     //https://sports-management.azurewebsites.net
-    const response = await fetch("http://localhost:3000/api/save-user", {
+    const response = await fetch("https://sports-management.azurewebsites.net/api/save-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const googleSignIn = async () => {
 };
 async function check(email) {
   try {
-    const response = await fetch(`http://localhost:3000/api/check-users`,{
+    const response = await fetch(`https://sports-management.azurewebsites.net/api/check-users`,{
       method:"POST",
       headers:{
         "Content-Type": "application/json",
@@ -56,6 +56,10 @@ async function check(email) {
       body: JSON.stringify({ email:email })
     });
     if (!response.ok) {
+
+      if (data.error === "User not available") {
+        return "not found";  // or "not_found"
+      }
       throw new Error(`Server responded with ${response.status}`);
     }
     const data = await response.json();
