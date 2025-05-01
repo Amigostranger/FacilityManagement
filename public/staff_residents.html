@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resident Management</title>
+    <link rel="stylesheet" href="css/staff_home.css"> <!-- Reuse staff styles -->
+    <link rel="stylesheet" href="css/staff_residents.css"> <!-- New for tables -->
+</head>
+<body>
+    <header>
+        <h1>Resident Management</h1>
+        <button id="backBtn" class="header-btn">
+            ← Back to Dashboard
+        </button>
+    </header>
+
+    <main class="resident-management">
+        <!-- Search and filter bar -->
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search by email...">
+            <select id="statusFilter">
+                <option value="all">All Residents</option>
+                <option value="active">Active Only</option>
+            </select>
+        </div>
+
+        <!-- Residents table -->
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Last Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="residentsTableBody">
+                    <!-- Data will load here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script type="module" src="js/staff_residents.js"></script>
+</body>
+</html>

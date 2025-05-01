@@ -3,414 +3,250 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import admin from 'firebase-admin';
 import dotenv from 'dotenv';
-import fs from 'fs';
+import { fileURLToPath } from 'url';
 import path from 'path';
 
 dotenv.config();
 
 console.log('Server is starting');
-
-let getIt=null;
-
-// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
-
-// if (!fs.existsSync(serviceAccountPath)) {
-//   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
-//   process.exit(1);
-// }
-
-// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-
-
+// Initialize Firebase Admin
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-
-// Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
-
 const db = admin.firestore();
 const auth = admin.auth();
 
+// Express setup
 const app = express();
-import { fileURLToPath } from 'url';
-
-// Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// Define CORS options
-// Define CORS options
+
+// CORS Configuration
+const whitelist = [
+  'http://127.0.0.1:5500',
+  'http://127.0.0.1:5501',
+  'https://your-production-domain.com'
+];
 const corsOptions = {
-  origin: [
-    'http://127.0.0.1:5500',
-    'http://127.0.0.1:5501'
-  ],
-  optionsSuccessStatus: 200,
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200
 };
-
-// Apply CORS middleware
-app.use(cors());
-
-app.use(express.static(path.join(__dirname, 'public'))); // 
-
-// Handle preflight requests globally
-//app.options('*', cors(corsOptions));
-
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Middleware to verify Firebase ID token
+// ======================
+// MIDDLEWARE
+// ======================
+
 const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "Token is required" });
-  }
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Authorization token required' });
 
   try {
-    getIt=token;
     const decodedToken = await auth.verifyIdToken(token);
-    req.user = decodedToken;
+    req.user = {
+      uid: decodedToken.uid,
+      email: decodedToken.email,
+      role: decodedToken.role // Ensure role is included in your Firebase custom claims
+    };
     next();
   } catch (error) {
-    return res.status(401).json({ error: "Invalid or expired token" });
+    console.error('Token verification failed:', error);
+    res.status(401).json({ error: 'Invalid or expired token' });
   }
 };
 
+const requireRole = (role) => (req, res, next) => {
+  if (req.user?.role !== role) {
+    return res.status(403).json({ error: `Requires ${role} role` });
+  }
+  next();
+};
 
-app.get("/api/notifications", verifyToken,async (req, res) => {
-  
+// ======================
+// ROUTES
+// ======================
+
+// User Management Endpoints
+app.get('/api/users', verifyToken, async (req, res) => {
   try {
-    const snapshot = await db.collection("bookings").where("who", "==", "admin").get();
+    const currentUserRole = req.user.role?.toLowerCase() || 'resident';
+    const snapshot = await db.collection('users').get();
     
-    const events= snapshot.docs.map(doc => ({
+    const filteredUsers = snapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() }))
+      .filter(user => {
+        if (user.id === req.user.uid) return false;
+        
+        switch(currentUserRole) {
+          case 'admin': return user.role?.toLowerCase() !== 'admin';
+          case 'staff': return user.role?.toLowerCase() === 'resident';
+          default: return false;
+        }
+      });
+
+    res.status(200).json(filteredUsers);
+  } catch (error) {
+    console.error('Get users error:', error);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
+app.put('/api/users/:id/role', verifyToken, requireRole('admin'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+    
+    if (!role) return res.status(400).json({ error: 'Role is required' });
+    
+    await db.collection('users').doc(id).update({ role });
+    
+    // Update custom claims if needed
+    try {
+      await auth.setCustomUserClaims(id, { role });
+    } catch (authError) {
+      console.warn('Failed to update custom claims:', authError);
+    }
+    
+    res.status(200).json({ message: `Role updated to ${role}` });
+  } catch (error) {
+    console.error('Update role error:', error);
+    res.status(500).json({ error: 'Failed to update role' });
+  }
+});
+
+// Resident-specific Endpoints
+app.get('/api/residents', verifyToken, requireRole('staff'), async (req, res) => {
+  try {
+    const snapshot = await db.collection('users')
+      .where('role', '==', 'resident')
+      .get();
+    
+    const residents = snapshot.docs.map(doc => ({
       id: doc.id,
-      ...doc.data(),
+      email: doc.data().email,
+      lastActive: doc.data().lastActive || null
     }));
-  
     
-    res.status(200).json({events});
-
+    res.status(200).json(residents);
   } catch (error) {
-    console.error("Error fetching Events:", error);
-    res.status(500).json({ error: "Failed to get Events" });
+    console.error('Get residents error:', error);
+    res.status(500).json({ error: 'Failed to fetch residents' });
   }
 });
 
-app.get("/api/issues", verifyToken,async (req, res) => {
-  const uid = req.user.uid; 
+// Booking Management
+app.get('/api/bookings', verifyToken, async (req, res) => {
   try {
-    const snapshot = await db.collection("Issues").where("submittedBy", "==", uid).get();
-
-    const issues = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    res.status(200).json({ issues });
-  } catch (error) {
-    console.error("Error fetching issues:", error);
-    res.status(500).json({ error: "Failed to get issues" });
-  }
-});
-
-
-
-
-app.post("/api/save-user", verifyToken, async (req, res) => {
-  const { email, username ,role} = req.body;
-  console.log("Decoded user:", req.user);
-  if (!email || !username) {
-    return res.status(400).json({ error: "Email and username are required" });
-  }
-
-  try {
-    const userRef = db.collection("users").doc(req.user.uid);
-    await userRef.set({
-      email,
-      username,
-      role,
-    });
-
-    res.status(200).json({ message: "User saved successfully" });
-
-  } catch (error) {
-    console.error("Error saving user to Firestore:", error);
-    res.status(500).json({ error: "Failed to save user" });
-  }
-});
-
-
-// Update the /api/get-users endpoint to include role-based filtering
-app.get('/api/get-users', verifyToken, async (req, res) => {
-  try {
-    const currentUserRole = req.user.role || 'resident'; // Get role from token
+    let query = db.collection('bookings');
     
-    const snapshot = await db.collection("users").get();
-    const allUsers = snapshot.docs.map(doc => ({
+    // Staff only see their own bookings
+    if (req.user.role === 'staff') {
+      query = query.where('submittedBy', '==', req.user.uid);
+    }
+    
+    const snapshot = await query.get();
+    const bookings = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     }));
-
-    // Filter users based on current user's role
-    const filteredUsers = allUsers.filter(user => {
-      // Never show the current user in the list
-      if (user.id === req.user.uid) return false;
-      
-      // Admin sees everyone except other admins
-      if (currentUserRole.toLowerCase() === 'admin') {
-        return user.role.toLowerCase() !== 'admin';
-      }
-      // Staff sees only residents
-      else if (currentUserRole.toLowerCase() === 'staff') {
-        return user.role.toLowerCase() === 'resident';
-      }
-      // Residents see no one (or themselves if you want)
-      return false;
-    });
-
-    res.status(200).send(filteredUsers);
+    
+    res.status(200).json(bookings);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch users" });
+    console.error('Get bookings error:', error);
+    res.status(500).json({ error: 'Failed to fetch bookings' });
   }
 });
 
-app.get("/api/staff-bookings",async (req,res) => {
-  
+// Issue Reporting
+app.post('/api/issues', verifyToken, async (req, res) => {
   try {
-    const getIt=await db.collection("bookings").get();
-    const bookings=getIt.docs.map(doc =>({
-      bookId:doc.id,
-      ...doc.data()
-    }))
-    //console.log(doc.data);
-    
-    res.status(200).send(bookings);
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server error");
-  }
-})
-
-app.delete('/api/user/:id',async (req,res)=>{
-  try {
-    const userId=req.params.id;
-   
-
-    const user=db.collection('users').doc(userId);
-    await user.delete();
-
-    res.status(200).json({ 
-      success: true,
-      message: `User ${userId} deleted successfully`,
-      deletedUserId: userId
-    });
-  } catch (error) {
-    console.error("Delete error:", error);
-    res.status(500).json({ 
-      error: "Failed to delete user",
-      details: error.message 
-    });
-   
-  }
-})
-
-
-app.get('/api/user/:id',async (req,res)=>{
-  try {
-    const userId=req.params.id;
-    const user=db.collection('users').doc(userId).get();
-    res.status(200).json({ 
-      userId: userId
-    });
-  } catch (error) {
-    console.error(error);
-    
-  }
-})
-
-
-
-app.post("/api/check-users",async (req,res)=>{
-  
-
- try {
-  const {email}=req.body;
-  const getIt=await db.collection("users").where("email","==",email).get()//remember 
-  if(getIt.empty){
-    return res.status(200).json({ error: "user not available" });
-  }
-
-
-  let status = "Allowed";
-  getIt.docs.forEach(doc => {
-    const data = doc.data();
-    if (data.status && data.status.toLowerCase() === "revoked") {
-      status = "revoked";
+    const { title, description, facility } = req.body;
+    if (!title || !description || !facility) {
+      return res.status(400).json({ error: 'All fields are required' });
     }
-  });
-  return res.status(200).json({ status});
 
- } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Server error" });
- }
-})
-
-app.post("/api/report", verifyToken, async (req, res) => {
-  const { title, description, facility } = req.body;
-  const uid = req.user.uid; 
-
-  if (!title || !description || !facility) {
-    return res.status(400).json({ error: "All fields required" });
-  }
-
-  try {
-    await db.collection("Issues").add({
+    const newIssue = {
       title,
       description,
       facility,
-      submittedBy: uid,
-      status: "Pending",
-      createdAt: new Date(),
-    });
+      submittedBy: req.user.uid,
+      status: 'pending',
+      createdAt: admin.firestore.FieldValue.serverTimestamp()
+    };
 
-    res.status(200).json({ message: "Report submitted" });
+    const docRef = await db.collection('issues').add(newIssue);
+    res.status(201).json({ id: docRef.id, ...newIssue });
   } catch (error) {
-    console.error("Report save error:", error);
-    res.status(500).json({ error: "Failed to save report" });
+    console.error('Create issue error:', error);
+    res.status(500).json({ error: 'Failed to create issue' });
   }
 });
 
-app.post("/api/bookings", verifyToken, async (req, res) => {
-  const { title, description, facility, start, end, who } = req.body; // Add `who` to request body
-  const uid = req.user.uid; 
+// ======================
+// AUTHENTICATION ROUTES
+// ======================
 
-  if (!title || !description || !facility || !start || !end || !who) {
-    return res.status(400).json({ error: "All fields required" });
-  }
-
+app.post('/api/get-user', async (req, res) => {
   try {
-    await db.collection("bookings").add({
-      title,
-      description,
-      facility,
-      submittedBy: uid,
-      status: "Pending",
-      start,
-      end,
-      who, // Store the "who" field in the database
-    });
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ error: 'Token required' });
 
-    res.status(200).json({ message: "Booking submitted" });
-  } catch (error) {
-    console.error("Booking save error:", error);
-    res.status(500).json({ error: "Failed to save Booking" });
-  }
-});
-
-
-app.put('/api/user/:id',async (req,res)=>{
-  try {
-    
-    const id=req.params.id;
-    const { role, username, email } = req.body;
-    const getIt=  db.collection("users").doc(id);
-
-
-    if (role!=""){
-      await getIt.update({
-        role:role
-      })
-      res.status(200).json({ message: `User ${id} role updated to ${role}` });
-    }
-
-    else{
-      res.status(400).json({ error: "Role cannot be empty" });
-    }
-    
-  
-
-  } catch (e) {
-    console.error(e);
-    
-  }
-})
-
-app.put('/api/booking-status/:id',async (req,res)=>{
-  const bookId=req.params.id;
-
-try {
-  const {status}=req.body;
-  const getIt=  db.collection("bookings").doc(bookId);
-  if (status!=""){
-    await getIt.update({
-      status:status
-    })
-    res.status(200).json({ message: `booking ${bookId} role updated to ${status}` });
-  }
-} catch (error) {
-  console.error(error);
-  res.status(500).send("Server error");
-}
-})
-
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'register_page.html'));
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname,'public', 'login_page.html'));
-});
-
-
-
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname,'public', 'login_page.html'));
-});
-
-app.use(express.static(__dirname));
-
-// Endpoint to get user from Firestore
-app.post("/api/get-user", async (req, res) => {
-  const authHeader = req.headers.authorization || "";
-  const token = authHeader.split("Bearer ")[1];
-
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(token);
-    const uid = decodedToken.uid;
-
-    const userDoc = await db.collection("users").doc(uid).get();
+    const decodedToken = await auth.verifyIdToken(token);
+    const userDoc = await db.collection('users').doc(decodedToken.uid).get();
 
     if (!userDoc.exists) {
-      return res.status(404).send({ error: "Create an Account!" });
+      return res.status(404).json({ error: 'User not registered' });
     }
 
-    const userData = userDoc.data();
-    res.status(200).send(userData);
+    res.status(200).json({
+      userId: decodedToken.uid,
+      email: decodedToken.email,
+      ...userDoc.data()
+    });
   } catch (error) {
-    console.error("Login error:", error);
-    res.status(401).send({ error: "Unauthorized" });
+    console.error('Get user error:', error);
+    res.status(401).json({ error: 'Authentication failed' });
   }
 });
 
+// ======================
+// STATIC FILES
+// ======================
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
 
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
 
-// Global error handlers
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
+// ======================
+// ERROR HANDLING
+// ======================
+
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).json({ error: 'Internal server error' });
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection:', reason);
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
-// Start the server
+// Start server
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });

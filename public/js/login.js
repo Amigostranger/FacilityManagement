@@ -1,14 +1,9 @@
-// login.js
-
-import {  signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { auth } from './firebase.js';
 
-//const loginForm = document.getElementById("btnlog");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
 const message = document.getElementById("message");
-const signup=document.getElementById('sign-up');
-let hy=null;
-
+const signup = document.getElementById('sign-up');
 
 //https://sports-management.azurewebsites.net
 
@@ -20,7 +15,8 @@ googleLoginBtn.addEventListener("click", async () => {
     const token = await result.user.getIdToken();
 
     //http://localhost:3000/
-       const response = await fetch('https://sports-management.azurewebsites.net/api/get-user', {
+    
+    const response = await fetch('https://sports-management.azurewebsites.net/api/get-user', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,32 +26,54 @@ googleLoginBtn.addEventListener("click", async () => {
 
     const data = await response.json();
     console.log(data);
+    
     if (response.ok) {
       message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;
+      
+      // Store user data in localStorage for role-based access control
+      localStorage.setItem('userToken', token);
+      localStorage.setItem('userRole', data.role.toUpperCase());
+      localStorage.setItem('userId', data.userId || result.user.uid);
+      localStorage.setItem('userEmail', result.user.email);
+      
       setTimeout(() => {
-        const the=data.role.toUpperCase();
-        if(the==="RESIDENT"){
-          window.location.href = 'resident_home.html';
-        }
-        else if(the=="STAFF"){
-          window.location.href = 'staff_home.html';
-        }
-        else if(the==="ADMIN"){
-          window.location.href = 'admin_home.html'
-        }
-       
+        const role = data.role.toUpperCase();
+        redirectBasedOnRole(role);
       }, 2000);
     } else {
-      message.textContent = `Error: ${data.error}`;
-      message.style.color = "red";
-      signup.textContent='Sign up';
+      showError(`Error: ${data.error}`);
     }
   } catch (error) {
-    message.textContent = "Google login failed: " + error.message;
-    message.style.color = "red";
+    showError("Google login failed: " + error.message);
   }
 });
 
-signup.addEventListener('click',event=>{
-  window.location.href='register.html';
-})
+// Helper function for role-based redirection
+function redirectBasedOnRole(role) {
+  switch(role) {
+    case "RESIDENT":
+      window.location.href = 'resident_home.html';
+      break;
+    case "STAFF":
+      window.location.href = 'staff_home.html';
+      break;
+    case "ADMIN":
+      window.location.href = 'admin_home.html';
+      break;
+    default:
+      showError("Unknown user role");
+      break;
+  }
+}
+
+// Helper function to display errors
+function showError(errorMessage) {
+  message.textContent = errorMessage;
+  message.style.color = "red";
+  signup.textContent = 'Sign up';
+}
+
+// Handle signup click
+signup.addEventListener('click', event => {
+  window.location.href = 'register.html';
+});
