@@ -12,7 +12,9 @@ console.log('Server is starting');
 
 
 
+
 // const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+
 
 // if (!fs.existsSync(serviceAccountPath)) {
 //   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
@@ -36,6 +38,7 @@ const auth = admin.auth();
 
 const app = express();
 import { fileURLToPath } from 'url';
+import { get } from 'https';
 
 // Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -117,8 +120,12 @@ app.get("/api/issues", verifyToken,async (req, res) => {
 
 
 app.post("/api/save-user", verifyToken, async (req, res) => {
-  const { email, username ,role} = req.body;
+
+  const { email, username ,role,status} = req.body;
+  console.log("Decoded user:", req.user);
+  
   // console.log("Decoded user:", req.user);
+
   if (!email || !username) {
     return res.status(400).json({ error: "Email and username are required" });
   }
@@ -130,6 +137,7 @@ app.post("/api/save-user", verifyToken, async (req, res) => {
       email,
       username,
       role,
+      status,
     });
     const snapshot = await db.collection("bookings").where("who","==","admin").get();
     const bookings= snapshot.docs.map(doc => ({
@@ -182,13 +190,13 @@ app.get('/api/get-users',async (req,res)=>{
 app.get("/api/staff-bookings",async (req,res) => {
   
   try {
-    const getIt=await db.collection("bookings").get();
+    const getIt=await db.collection("bookings").where("status","==","Pending").get();
     const bookings=getIt.docs.map(doc =>({
       bookId:doc.id,
       ...doc.data()
     }))
     //console.log(doc.data);
-    
+
     res.status(200).send(bookings);
 
   } catch (error) {
@@ -234,6 +242,34 @@ app.get('/api/user/:id',async (req,res)=>{
   }
 })
 
+
+
+app.post("/api/check-users",async (req,res)=>{
+  
+
+ try {
+  const {email}=req.body;
+  const getIt=await db.collection("users").where("email","==",email).get()//remember 
+  if(getIt.empty){
+    return res.status(200).json({ error: "user not available" });
+  }
+
+
+  let status = "Allowed";
+  getIt.docs.forEach(doc => {
+    const data = doc.data();
+    if (data.status && data.status.toLowerCase() === "revoked") {
+      status = "revoked";
+    }
+  });
+  return res.status(200).json({ status});
+
+ } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Server error" });
+ }
+})
+
 app.post("/api/report", verifyToken, async (req, res) => {
   const { title, description, facility } = req.body;
   const uid = req.user.uid; 
@@ -268,15 +304,30 @@ app.post("/api/bookings", verifyToken, async (req, res) => {
   }
 
   try {
+
+    const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
+    const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
+
+    const overlapping = await db.collection("bookings")
+      .where("facility", "==", facility)
+      .where("status", "==","Approved")
+      .where("start", "<", newEnd)
+      .where("end", ">", newStart)
+      .get();
+
+    if (!overlapping.empty) {
+      return res.status(409).json({ error: "Booking conflict detected" });
+    }
+
     await db.collection("bookings").add({
       title,
       description,
       facility,
       submittedBy: uid,
       status: "Pending",
-      start,
-      end,
-      who, // Store the "who" field in the database
+      start: newStart,
+      end: newEnd,
+      who,
     });
 
     res.status(200).json({ message: "Booking submitted" });
@@ -362,8 +413,15 @@ app.post("/api/get-user", async (req, res) => {
     if (!userDoc.exists) {
       return res.status(404).send({ error: "Create an Account!" });
     }
+    
 
     const userData = userDoc.data();
+    if(userData.status=="revoked"){
+      //console.log(userData.status);
+      
+      return res.status(404).send({ error: "Account revoked!" });
+    }
+
     res.status(200).send(userData);
   } catch (error) {
     console.error("Login error:", error);

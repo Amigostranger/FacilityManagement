@@ -71,6 +71,27 @@
   th {
     background-color: rgba(0, 0, 0, 0.4);
   }
+
+  /* View Button Styles */
+.viewBtn {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid white;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    backdrop-filter: blur(6px);
+    transition: all 0.3s ease;
+  }
+  
+  .viewBtn:hover {
+    background: #005fa3;
+    transform: scale(1.05);
+    border-color: #005fa3;
+  }
+  
   
   tr:hover {
     background-color: rgba(255, 255, 255, 0.1);
