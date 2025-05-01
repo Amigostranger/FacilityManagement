@@ -107,6 +107,7 @@ button img {
   vertical-align: middle;
 }
 
+
 .img-container {
   position: relative;
   display: inline-block;
@@ -118,6 +119,7 @@ button img {
 }
 
 #counter {
+  visibility: hidden;
   position: absolute;
   top: 0;
   right: 0;
@@ -129,3 +131,4 @@ button img {
   font-weight: bold;
   transform: translate(50%, -50%);
 }
+
