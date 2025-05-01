@@ -19,7 +19,7 @@ const googleSignIn = async () => {
     const which=await check(user.email);
     console.log(which);
     
-    if(!which || which==="revoked"){
+    if(which==="revoked"){
       alert("Your account has been revoked.");
       return;
     }
@@ -56,6 +56,10 @@ async function check(email) {
       body: JSON.stringify({ email:email })
     });
     if (!response.ok) {
+
+      if (data.error === "User not available") {
+        return "not found";  // or "not_found"
+      }
       throw new Error(`Server responded with ${response.status}`);
     }
     const data = await response.json();
