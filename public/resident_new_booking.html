@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Facility Bookings - Resident</title>
   <link rel="stylesheet" href="css/resident_new_booking.css">
+  
+  <script src="
+  https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js
+  "></script>
+  
 </head>
 <body>
   <header>
@@ -114,6 +119,8 @@
     </section>
   </main>
 
+  <section id="calendar"></section>
+
   <!-- Firebase SDKs -->
   <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
@@ -121,5 +128,7 @@
 
   <!-- Your JS -->
   <script type="module" src="js/resident_new_booking.js"></script>
+  <script type="module" src="js/viewCalendar.js"></script>
+
 </body>
 </html>

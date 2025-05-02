@@ -25,6 +25,10 @@
     justify-content: space-between;
     align-items: center;
   }
+  .clicked-row {
+    background-color: rgba(255, 255, 255, 0.2);
+
+  }
   
   h1 {
     font-size: 32px;
@@ -37,6 +41,7 @@
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
   }
   
+
   table {
     width: 60%;
     max-width: 900px;
@@ -167,37 +172,8 @@
   box-sizing: border-box;
 }
 
-body { 
-  font-family: Arial, sans-serif;
-  height: 100vh;
-  background-image: url("../img/background_light.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 50px 20px;
-  gap: 30px;
-}
 
-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-h1 {
-  font-size: 32px;
-  color: white;
-  padding: 20px 20px;
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 2px solid white;
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-  box-shadow: 6px 4px 10px rgba(0, 0, 0, 0.3);
-}
 
 nav button {
   font-size: 16px;

@@ -15,7 +15,14 @@ const googleSignIn = async () => {
     const email=user.email;
     const username=user.displayName || user.email;
     const role="Resident";
+    // const status="allowed";
+    const which=await check(user.email);
+    console.log(which);
     
+    if(which==="revoked"){
+      alert("Your account has been revoked.");
+      return;
+    }
     //http://localhost:3000
     //https://sports-management.azurewebsites.net
     const response = await fetch("https://sports-management.azurewebsites.net/api/save-user", {
@@ -26,8 +33,9 @@ const googleSignIn = async () => {
       },
       body: JSON.stringify({
         email: user.email,
-        username: user.displayName || user.email, // Use email as default username
+        username: user.displayName || user.email,
         role:"resident",
+        status:"allowed",
       }),
     });
     
@@ -38,7 +46,35 @@ const googleSignIn = async () => {
     console.error("Google sign-in failed:", error);
   }
 };
+async function check(email) {
+  try {
+    const response = await fetch(`https://sports-management.azurewebsites.net/api/check-users`,{
+      method:"POST",
+      headers:{
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email:email })
+    });
+    if (!response.ok) {
 
+      if (data.error === "User not available") {
+        return "not found";  // or "not_found"
+      }
+      throw new Error(`Server responded with ${response.status}`);
+    }
+    const data = await response.json();
+    if(data.status=="revoked"){
+      console.log("revoked");
+      
+    }
+    console.log(`data.status ${data.status}`);
+    
+    return data.status;
+  } catch (error) {
+    console.error(error);
+    
+  }
 
+}
 // Attach event listener for Google Sign-In button
 document.getElementById("googleSignInButton").addEventListener("click", googleSignIn);
