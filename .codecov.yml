@@ -1,0 +1,15 @@
+codecov:
+  require_ci_to_pass: no
+
+coverage:
+  status:
+    project:
+      default:
+        target: 60%
+        threshold: 0%  
+
+comment:
+  layout: "reach,diff,flags,files"
+  behavior: default  
+  require_changes: false 
+
