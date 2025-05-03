@@ -257,7 +257,7 @@ footer button:hover {
 
 /* Style event blocks */
 .fc-event {
-  background-color: #005fa3;
+  background-color: #007bff;
   border: none;
   border-radius: 8px;
   padding: 2px 4px;
@@ -265,7 +265,7 @@ footer button:hover {
 }
 
 .fc-event:hover {
-  background-color: #007bff;
+  background-color: #005fa3;
   cursor: pointer;
 }
 
@@ -281,7 +281,9 @@ footer button:hover {
   color: white;
 }
 
-.fc-button:hover {
-  background-color: #005fa3;
-}
 
+
+.fc .fc-list-day-cushion {
+  background-color: #2e3b46;
+  color: #b8b8b8; 
+}

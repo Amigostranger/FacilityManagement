@@ -5,4 +5,12 @@ coverage:
   status:
     project:
       default:
-        target: 60% 
+        target: 60%
+        threshold: 0%  
+
+comment:
+  layout: "reach,diff,flags,files"
+  behavior: default  
+  require_changes: false 
+
+cat codecov.yml | curl --data-binary @- https://codecov.io/validate

@@ -50,21 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
         right: 'dayGridMonth,listWeek'
       },
 
-      eventClick: function(info) {
-        alert(
-          `Title: ${info.event.title}\n` +
-          `Start: ${info.event.start.toLocaleString()}\n` +
-          `Details: ${info.event.extendedProps.description}`
-        );
-      }
-   
     });
 
     calendar.render()
 })
 
 
-module.exports = {
-  fetchEvents,
-  mapDocsToEvents
-};
