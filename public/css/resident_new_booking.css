@@ -239,23 +239,51 @@ footer button:hover {
   }
 }
 
-#calendar-wrapper {
-  all: unset; 
-  display: block;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-  z-index: 1;
-}
 
 #calendar {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
   backdrop-filter: blur(6px);
-  min-height: 600px;
-  padding: 10px;
+  padding: 20px;
+  border-radius: 16px;
+  
 }
+
+
+.fc-daygrid-day-number {
+  color: #002f50;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:bold;
+}
+
+/* Style event blocks */
+.fc-event {
+  background-color: #005fa3;
+  border: none;
+  border-radius: 8px;
+  padding: 2px 4px;
+  font-size: 14px;
+}
+
+.fc-event:hover {
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+
+.fc-toolbar-title {
+  color: white;
+  font-size: 20px;
+}
+
+.fc-button {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+.fc .fc-list-day-cushion {
+  background-color:rgba(182, 182, 182, 0.1);
+  backdrop-filter: blur(6px);
+  color: #024b80; 
+}
+
