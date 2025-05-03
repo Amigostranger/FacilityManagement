@@ -21,7 +21,7 @@ async function getuser(id) {
  //const response=await fetch("http://localhost:3000/api/get-users");
   const data = await response.json();
   const spec = data.find(u => u.id === id);
-  console.log(spec.username);
+  //console.log(spec.username);
   
   return spec.username;
 }

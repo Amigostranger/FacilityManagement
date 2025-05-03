@@ -19,7 +19,8 @@ function mapDocsToEvents(docs){
 
 async function fetchEvents(fetchInfo, successCallback, failureCallback){
   try{
-    const snapshot = await getDocs(collection(db, "bookings"), where("status", "==", "Approved"));
+    const eventsQuery = query(collection(db, "bookings"), where("status", "==", "Approved"));
+    const snapshot = await getDocs(eventsQuery);
     const events = mapDocsToEvents(snapshot.docs);
     successCallback(events);
   }
@@ -32,26 +33,26 @@ async function fetchEvents(fetchInfo, successCallback, failureCallback){
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar')
-
-
+    const calendarEl = document.getElementById('calendar');
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
       
       events: fetchEvents,
 
-      initialView: 'timeGridWeek',
+      height: "auto",
+    
+
+      initialView: 'dayGridMonth',
 
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listWeek'
-      }
+        right: 'dayGridMonth,listWeek'
+      },
 
-    
-   
     });
 
     calendar.render()
-  })
+})
+
 
