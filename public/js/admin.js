@@ -18,6 +18,7 @@ document.getElementById("reportBtn").addEventListener("click", () => {
   });
 
 
+
 //---------------------------------------------------------------------------------------------------------------// 
 import { auth } from './firebase.js';
 
@@ -49,27 +50,33 @@ bookingForm.addEventListener('submit', async (e) => {
   const facility = document.getElementById("facilitySelect").value.trim();
   //const title = document.getElementById("issueTitle").value.trim()
   const date = document.getElementById("bookingDate").value.trim();
-  const start = document.getElementById("startTime").value.trim();
-  const end = document.getElementById("endTime").value.trim();
+  const startTime = document.getElementById("startTime").value.trim();
+  const endTime = document.getElementById("endTime").value.trim();
   const who = "admin";
   
+
+
+  const start = new Date(`${date}T${startTime}`).toISOString();
+  const end = new Date(`${date}T${endTime}`).toISOString();
+
 
   const user = auth.currentUser;
   if (!user) {
     alert("Please log in first.");
     return;
   }
-
+  //http://localhost:3000/api/createEvent
+  //https://sports-management.azurewebsites.net/api/createEvent
   try {
     const idToken = await user.getIdToken();
-
+4
     const res = await fetch("https://sports-management.azurewebsites.net/api/createEvent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${idToken}`
       },
-      body: JSON.stringify({ title, description, facility, date, start, end, who })
+      body: JSON.stringify({ title, description, facility, start, end, who })
     });
 
     const data = await res.json();
