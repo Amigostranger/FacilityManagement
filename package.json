@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ."    
   },
   "dependencies": {
     "body-parser": "^2.2.0",
