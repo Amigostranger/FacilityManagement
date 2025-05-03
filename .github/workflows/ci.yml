@@ -26,7 +26,7 @@ jobs:
               run: npm run lint
 
     test:
-        name: Run Tests
+        name: Run Tests and Upload Coverage
         runs-on: ubuntu-latest
 
         steps:
@@ -41,7 +41,7 @@ jobs:
               run: npm install
 
             - name: Run tests
-              run: npm test
+              run: npm test -- --coverage
 
             - name: Upload coverage reports to Codecov with GitHub Action
               uses: codecov/codecov-action@v5

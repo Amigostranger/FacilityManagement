@@ -245,7 +245,7 @@ footer button:hover {
   backdrop-filter: blur(6px);
   padding: 20px;
   border-radius: 16px;
-  color: white;
+  
 }
 
 
@@ -257,7 +257,7 @@ footer button:hover {
 
 /* Style event blocks */
 .fc-event {
-  background-color: #007bff;
+  background-color: #005fa3;
   border: none;
   border-radius: 8px;
   padding: 2px 4px;
@@ -265,7 +265,7 @@ footer button:hover {
 }
 
 .fc-event:hover {
-  background-color: #005fa3;
+  background-color: #007bff;
   cursor: pointer;
 }
 
@@ -281,9 +281,9 @@ footer button:hover {
   color: white;
 }
 
-
-
 .fc .fc-list-day-cushion {
-  background-color: #2e3b46;
-  color: #b8b8b8; 
+  background-color:rgba(182, 182, 182, 0.1);
+  backdrop-filter: blur(6px);
+  color: #024b80; 
 }
+
