@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
       events: fetchEvents,
 
       height: "auto",
-      width: "auto",
+    
 
       initialView: 'dayGridMonth',
 
@@ -62,3 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calendar.render()
 })
+
+
+module.exports = {
+  fetchEvents,
+  mapDocsToEvents
+};
