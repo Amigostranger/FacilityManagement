@@ -1,7 +1,7 @@
 
 import { auth } from './firebase.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-//import { onAuthStateChanged } from 'firebase/auth';
+//import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,10 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
 //const tableBody = document.getElementById("notificationTable");
 const tableBody = document.querySelector("#notificationTable tbody");
 if (!tableBody) {
-  console.warn("Table body with ID 'notificationTable' not found in the DOM.");
-  // return; // Stop further execution to prevent errors
+  console.error("Table body with ID 'notificationTable' not found in the DOM.");
+  return; // Stop further execution to prevent errors
 }
-console.log("Table body found:", tableBody); // Debugging line
 //Event details
 const viewDescribe= document.getElementById("describe");
 const viewDate=document.getElementById("date");
@@ -47,7 +46,7 @@ async function loadnotifications(user) {
       return;
     }
     //https://sports-management.azurewebsites.net
-    const res = await fetch("http://localhost:3000/api/notifications", {
+    const res = await fetch("https://sports-management.azurewebsites.net/api/notifications", {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -61,7 +60,7 @@ async function loadnotifications(user) {
       const row = document.createElement("tr");
    
       row.addEventListener("click",async () => {
-        const resRead = await fetch("http://localhost:3000/api/read", {
+        const resRead = await fetch("https://sports-management.azurewebsites.net/api/read", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -110,7 +109,7 @@ async function loadnotifications(user) {
 
 async function countread(user){
     const token = await user.getIdToken();
-    const res = await fetch("http://localhost:3000/api/count-read", {
+    const res = await fetch("https://sports-management.azurewebsites.net/api/count-read", {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -118,7 +117,6 @@ async function countread(user){
       const data = await res.json();
       countRead = data.countRead;
       console.log(counter);
-      
       if (counter) {
         counter.innerText = countRead;
         counter.style.visibility = countRead === 0 ? "hidden" : "visible";

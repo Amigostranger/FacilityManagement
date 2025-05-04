@@ -1,4 +1,4 @@
-
+import { auth } from './firebase.js';
 // admin.js
 const managebtn=document.getElementById('usersBtn');
 
@@ -19,8 +19,8 @@ document.getElementById("reportBtn").addEventListener("click", () => {
 
 
 
-//---------------------------------------------------------------------------------------------------------------// 
-import { auth } from './firebase.js';
+
+
 
 
 const createEventbtn=document.getElementById('eventBtn');
