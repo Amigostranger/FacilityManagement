@@ -1,168 +1,160 @@
-// Check user role on page load
-document.addEventListener('DOMContentLoaded', async () => {
-  const userRole = localStorage.getItem('userRole');
-  if (!userRole) {
-    window.location.href = 'login.html';
-    return;
-  }
 
-  // Set page title based on role
-  document.getElementById('pageTitle').textContent = 
-    userRole === 'ADMIN' ? 'User Management (Admin)' : 'Residents List';
 
-  try {
-    const response = await fetch('https://sports-management.azurewebsites.net/api/get-users', {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('userToken')}`
-      }
-    });
+//https://sports-management.azurewebsites.net
+const response=await fetch('https://sports-management.azurewebsites.net/api/get-users',{
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch users');
-    }
+  method:"GET",
+  headers:{
+     "Content-Type":"application/json"
+  },
 
-    const data = await response.json();
-    await loadUsers(data, userRole);
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Failed to load users. Please try again.');
-  }
-});
+})
 
-async function loadUsers(usersData, currentUserRole) {
-  const tbody = document.getElementById("userTableBody");
-  const headerRow = document.getElementById("tableHeaderRow");
-  tbody.innerHTML = "";
+const data =await response.json();
+//const usersstring = localStorage.getItem('usersData');
+
+
+let usersarr = [];
+
+
+if(data){
+  usersarr = data;
+}
   
-  // Set table headers based on role
-  if (currentUserRole === 'ADMIN') {
-    headerRow.innerHTML = `
-      <th>Email</th>
-      <th>Role</th>
-      <th>Assign Role</th>
-      <th>Actions</th>
-    `;
-  } else {
-    headerRow.innerHTML = `
-      <th>Email</th>
-      <th>Role</th>
-    `;
-  }
 
-  // Filter users based on role
-  const filteredUsers = usersData.filter(user => {
-    if (currentUserRole === 'ADMIN') {
-      return user.role.toLowerCase() !== 'admin'; // Admins see everyone except other admins
-    } else if (currentUserRole === 'STAFF') {
-      return user.role.toLowerCase() === 'resident'; // Staff only see residents
-    }
-    return false;
-  });
-
-  // Populate table rows
-  filteredUsers.forEach(user => {
-    const row = document.createElement("tr");
-    
-    if (currentUserRole === 'ADMIN') {
+async function loadUsers() {
+ // const response = await fetch('https://sports-management.azurewebsites.net/api/get-users');
+  const response = await fetch('https://sports-management.azurewebsites.net/api/get-users')
+  const data = await response.json();
+   usersarr = data; 
+    const tbody = document.getElementById("userTableBody");
+    tbody.innerHTML = ""; 
+  
+    usersarr.forEach(users => {
+      //const data = users.data();
+      if(users.role!='admin' && users.role!="Admin"){
+              const row = document.createElement("tr");
+  
       row.innerHTML = `
-        <td>${user.email || "N/A"}</td>
-        <td>${user.role || "None"}</td>
+        <td>${users.email || "N/A"}</td>
+        <td>${users.role || "None"}</td>
+        
         <td>
-          <select data-id="${user.id}" class="roleSelector">
+          <select data-id="${users.id}" class="roleSelector">
             <option value="">-- Select --</option>
-            <option value="Resident" ${user.role === 'Resident' ? 'selected' : ''}>Resident</option>
-            <option value="Staff" ${user.role === 'Staff' ? 'selected' : ''}>Staff</option>
-            <option value="Admin" ${user.role === 'Admin' ? 'selected' : ''}>Admin</option>
+            <option value="Resident">Resident</option>
+            <option value="Staff">Staff</option>
+            <option value="Admin">Admin</option>
           </select>
+
+
         </td>
         <td>
-          <button class="deleteBtn" data-id="${user.id}">Revoke</button>
+          <button class="deleteBtn" data-id="${users.id}">Revoke</button>
         </td>
       `;
-    } else {
-      row.innerHTML = `
-        <td>${user.email || "N/A"}</td>
-        <td>${user.role || "None"}</td>
-      `;
-    }
-    
-    tbody.appendChild(row);
-  });
+      tbody.appendChild(row);
+      }
 
-  if (currentUserRole === 'ADMIN') {
+    });
+  
     attachListeners();
   }
-}
-
-function attachListeners() {
-  document.querySelectorAll('.deleteBtn').forEach(btn => {
-    btn.addEventListener('click', deleteIT);
-  });
-
-  document.querySelectorAll(".roleSelector").forEach(select => {
-    select.addEventListener('change', talkToit);
-  });
-}
-
-async function talkToit(event) {
-  const newRole = event.target.value;
-  const userId = event.target.getAttribute('data-id');
-
-  if (!newRole) return;
-
-  if (!confirm(`Are you sure you want to change role to ${newRole}?`)) {
-    return;
-  }
-
-  try {
-    const response = await fetch(`https://sports-management.azurewebsites.net/api/user/${userId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('userToken')}`
-      },
-      body: JSON.stringify({ role: newRole })
-    });
-
-    if (response.ok) {
-      alert(`Role updated successfully to ${newRole}`);
-      location.reload(); // Refresh to show changes
-    } else {
-      const result = await response.json();
-      throw new Error(result.error || 'Failed to update role');
-    }
-  } catch (error) {
-    console.error(error);
-    alert('Failed to update role. Please try again.');
-  }
-}
-
-async function deleteIT(event) {
-  const userId = event.target.getAttribute('data-id');
   
-  if (!confirm('Confirm to revoke access of user?')) {
-    return;
-  }
+  function attachListeners() {
+    document.querySelectorAll('.deleteBtn').forEach(btn=>{
+        btn.addEventListener('click',deleteIT);
+    })
+  
 
-  try {
-    const response = await fetch(`https://sports-management.azurewebsites.net/api/user/${userId}`, {
-      method: "PUT",
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem('userToken')}`
-      }
+
+    document.querySelectorAll(".roleSelector").forEach(it=>{
+
+        it.addEventListener('change',talkToit)
+
     });
-
-    if (response.ok) {
-      alert('User access revoked successfully');
-      location.reload(); // Refresh to show changes
-    } else {
-      const result = await response.json();
-      throw new Error(result.error || 'Failed to revoke access');
-    }
-  } catch (error) {
-    console.error(error);
-    alert('Failed to revoke access. Please try again.');
   }
-}
+  loadUsers();
+
+
+
+
+  async function talkToit(event) {
+    
+    const selectedvalue=event.target.value;
+    const userId = event.target.getAttribute('data-id');
+    const newRole = event.target.value;
+
+
+    if(!newRole){
+      return;
+    }
+
+
+    if (!confirm(`Are you sure you want to change role to ${newRole}?`)) {
+      console.log("No");
+      
+      return;
+    }
+    try {
+
+        const response=await fetch(`https://sports-management.azurewebsites.net/api/user/${userId}`,{
+          //const response=await fetch(`http://localhost:3000/api/user/${userId}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({ role: newRole })
+        });
+
+
+        const result = await response.json();
+        if (response.ok) {
+          console.log(`Updated role for user ${userId} to ${newRole}`);
+
+          const user=usersarr.find(u=>u.id===userId);
+          if(user){
+            user.role=newRole;
+            // localStorage.setItem("usersData",JSON.stringify(usersarr));
+            loadUsers();
+          }
+        } else {
+          console.error(result.error || 'Failed to update');
+        }
+    } catch (error) {
+        console.error(error);
+        
+    }
+
+  }
+
+ async function deleteIT(event) {
+    const userId=event.target.getAttribute('data-id');
+    
+    if (!confirm('Confirm to revoke access of user?')) {
+      console.log("No");
+      
+      return;
+    }
+    try {
+        
+        const response=await fetch(`https://sports-management.azurewebsites.net/api/user/api/user/${userId}`,{
+            method:"Put",
+        });
+        const result=await response.json();
+        if(response.ok){
+
+         // usersarr=usersarr.filter(user=>user.id!==userId);
+          // localStorage.setItem('userData',JSON.stringify(usersarr));
+            console.log(` User ${userId} deleted successfully`);
+            loadUsers();
+        }
+        else{
+            console.error('Failed to Revoke user:');
+        }
+
+    } catch (error) {
+        console.error(error);
+        
+    }
+ }
