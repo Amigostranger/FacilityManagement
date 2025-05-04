@@ -1,7 +1,7 @@
 
 import { auth } from './firebase.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-//import { onAuthStateChanged } from 'firebase/auth';
+//import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,10 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
 //const tableBody = document.getElementById("notificationTable");
 const tableBody = document.querySelector("#notificationTable tbody");
 if (!tableBody) {
-  console.warn("Table body with ID 'notificationTable' not found in the DOM.");
-  // return; // Stop further execution to prevent errors
+  console.error("Table body with ID 'notificationTable' not found in the DOM.");
+  return; // Stop further execution to prevent errors
 }
-console.log("Table body found:", tableBody); // Debugging line
 //Event details
 const viewDescribe= document.getElementById("describe");
 const viewDate=document.getElementById("date");
@@ -118,7 +117,6 @@ async function countread(user){
       const data = await res.json();
       countRead = data.countRead;
       console.log(counter);
-      
       if (counter) {
         counter.innerText = countRead;
         counter.style.visibility = countRead === 0 ? "hidden" : "visible";

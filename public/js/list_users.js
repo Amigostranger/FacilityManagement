@@ -1,5 +1,3 @@
-
-
 //https://sports-management.azurewebsites.net
 const response=await fetch('https://sports-management.azurewebsites.net/api/get-users',{
 

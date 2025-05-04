@@ -13,22 +13,18 @@ console.log('Server is starting');
 
 
 
-// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+// const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 
 
-// // const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+if (!fs.existsSync(serviceAccountPath)) {
+  console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
+  process.exit(1);
+}
+
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
-
-// if (!fs.existsSync(serviceAccountPath)) {
-//   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
-//   process.exit(1);
-// }
-
-// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-
-
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+//const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 
 // Initialize Firebase Admin SDK with the service account credentials
@@ -88,7 +84,6 @@ const verifyToken = async (req, res, next) => {
 //API Endpoint for Reading a notification
 app.post("/api/read", verifyToken, async (req, res) => {
   const n_id = req.body.notification;
-
   try {
     const snapshot = await db.collection("notifications")
       .where("recipient", "==", req.user.uid)
@@ -175,7 +170,7 @@ app.get("/api/count-read", verifyToken,async (req, res) => {
     const countRead=snapshot.size;
     
     res.status(200).json({"countRead":countRead});
-    console.log("Counting successful");
+    // console.log("Counting successful");
 
   } catch (error) {
     console.error("Error counting read notification :", error);
@@ -543,7 +538,7 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000||5173;
 
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
