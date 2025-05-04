@@ -87,53 +87,28 @@ const verifyToken = async (req, res, next) => {
 };
 //API Endpoint for Reading a notification
 app.post("/api/read", verifyToken, async (req, res) => {
-  const n_id= req.body.notification;
-  try {
-
-
-    const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
-    const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
-
-    await db.collection("bookings").add({
-      title,
-      description,
-      facility,
-      submittedBy: uid,
-      //date,
-      status:"Approved",
-      start:newStart,
-      end:newEnd,
-      who,
-      //createdAt: new Date(),
-    });
-
-    res.status(200).json({ message: "Report submitted" });
-  }
-  catch{
-    console.error("Report save error:", error);
-    res.status(500).json({ error: "Failed to save event" });
-}
-
-});
-
+  const n_id = req.body.notification;
 
   try {
-   const snapshot = await db.collection("notifications").where("recipient", "==", req.user.uid).where("id", "==", n_id).get();
-   
-  snapshot.forEach(async (doc) => {
-    await db.collection("notifications").doc(doc.id).update({
-      read: "true"
-    });
-  });
+    const snapshot = await db.collection("notifications")
+      .where("recipient", "==", req.user.uid)
+      .where("id", "==", n_id).get();
 
-    res.status(200).json({ message: "Event read successfully" });
+    if (snapshot.empty) {
+      return res.status(404).json({ error: "Notification not found" });
+    }
+
+    for (const doc of snapshot.docs) {
+      await doc.ref.update({ read: "true" });
+    }
+
+    res.status(200).json({ message: "Notification marked as read" });
 
   } catch (error) {
     console.error("Error reading the event details:", error);
-    res.status(500).json({ error: "Failed to read the envent details" });
+    res.status(500).json({ error: "Failed to mark as read" });
   }
 });
-
 //API Endpoint for creating an event
 app.post("/api/createEvent", verifyToken,async (req,res) => {
   const {title, description, facility, date, start, end, who}=req.body 
