@@ -88,15 +88,6 @@ const verifyToken = async (req, res, next) => {
 //API Endpoint for Reading a notification
 app.post("/api/read", verifyToken, async (req, res) => {
   const n_id= req.body.notification;
-
-//API Endpoint for creating an event
-app.post("/api/createEvent", verifyToken,async (req,res) => {
-  const {title, description, facility, start, end, who}=req.body 
-  const uid=req.user.uid;
-  if (!title || !description || !facility || !start || !end || !who) {
-    return res.status(400).json({ error: "All fields required" });
-  }
-
   try {
 
 
