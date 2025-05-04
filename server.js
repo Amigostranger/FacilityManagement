@@ -13,7 +13,7 @@ console.log('Server is starting');
 
 
 
-const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+// const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 
 
 if (!fs.existsSync(serviceAccountPath)) {
@@ -85,18 +85,45 @@ const verifyToken = async (req, res, next) => {
 app.post("/api/read", verifyToken, async (req, res) => {
   const n_id = req.body.notification;
 
+//API Endpoint for creating an event
+app.post("/api/createEvent", verifyToken,async (req,res) => {
+  const {title, description, facility, date, start, end, who}=req.body 
+  const uid=req.user.uid;
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
   try {
-    const snapshot = await db.collection("notifications")
-      .where("recipient", "==", req.user.uid)
-      .where("id", "==", n_id).get();
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      date,
+      start,
+      end,
+      who,
+      //createdAt: new Date(),
+    });
 
-    if (snapshot.empty) {
-      return res.status(404).json({ error: "Notification not found" });
-    }
+    res.status(200).json({ message: "Report submitted" });
+  }
+  catch{
+    console.error("Report save error:", error);
+    res.status(500).json({ error: "Failed to save event" });
+}
 
-    for (const doc of snapshot.docs) {
-      await doc.ref.update({ read: "true" });
-    }
+});
+
+
+  try {
+   const snapshot = await db.collection("notifications").where("recipient", "==", req.user.uid).where("id", "==", n_id).get();
+   
+  snapshot.forEach(async (doc) => {
+    await db.collection("notifications").doc(doc.id).update({
+      read: "true"
+    });
+  });
 
     res.status(200).json({ message: "Notification marked as read" });
 

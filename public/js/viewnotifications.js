@@ -47,7 +47,7 @@ async function loadnotifications(user) {
       return;
     }
     //https://sports-management.azurewebsites.net
-    const res = await fetch("http://localhost:3000/api/notifications", {
+    const res = await fetch("https://sports-management.azurewebsites.net/api/notifications", {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -61,7 +61,7 @@ async function loadnotifications(user) {
       const row = document.createElement("tr");
    
       row.addEventListener("click",async () => {
-        const resRead = await fetch("http://localhost:3000/api/read", {
+        const resRead = await fetch("https://sports-management.azurewebsites.net/api/read", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -110,7 +110,7 @@ async function loadnotifications(user) {
 
 async function countread(user){
     const token = await user.getIdToken();
-    const res = await fetch("http://localhost:3000/api/count-read", {
+    const res = await fetch("https://sports-management.azurewebsites.net/api/count-read", {
         headers: {
           "Authorization": `Bearer ${token}`
         }

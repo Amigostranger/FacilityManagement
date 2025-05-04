@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>Facility Bookings - Resident</title>
   <link rel="stylesheet" href="css/resident_new_booking.css">
+  <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/index.global.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.7/index.global.min.css" rel="stylesheet" />
+
   <script src="
   https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js
   "></script>
@@ -15,27 +18,6 @@
       <button id="addBookingBtn">Add Booking</button>
       <button id="viewBookingsBtn">View My Bookings</button>
     </nav>
-
-    <!-- Facility and Date Filters -->
-    <section id="filterSection" aria-label="Filter Bookings">
-      <form id="filterForm">
-        <label for="facilityFilter">Facility:</label>
-        <select id="facilityFilter" name="facilityFilter">
-          <option value="">--Select Facility--</option>
-          <option value="Sturrock Soccer Field">Sturrock Digs Soccer Field</option>
-          <option value="Matrix Basketball Court">Matrix Basketball Court</option>
-          <option value="Bozzoli Cricket Field">Bozzoli Cricket Field</option>
-          <option value="Digs Netball Court">Digs Netball Court</option>
-          <option value="Sturrock Esports Hall">Sturrock Esports Hall</option>
-          <option value="Solomon Mahlangu Chess Hall">Solomon Mahlangu Chess Hall</option>
-        </select>
-
-        <label for="dateFilter">Date:</label>
-        <input type="date" id="dateFilter" name="dateFilter">
-
-        <button type="button" id="viewFilteredBtn">View</button>
-      </form>
-    </section>
   </header>
 
   <main>
@@ -119,6 +101,7 @@
   </main>
 
   <section id="calendar"></section>
+  
 
   <!-- Firebase SDKs -->
   <script type="module" src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
@@ -127,9 +110,6 @@
 
   <!-- Your JS -->
   <script type="module" src="js/resident_new_booking.js"></script>
-  
-
-  
   <script type="module" src="js/viewCalendar.js"></script>
 
 </body>
