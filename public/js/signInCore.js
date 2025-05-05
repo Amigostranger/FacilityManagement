@@ -12,7 +12,7 @@ export async function signInCore(user) {
   
     const token = await user.getIdToken();
   
-    const response = await fetch("http://localhost:3000/api/save-user", {
+    const response = await fetch("https://sports-management.azurewebsites.net/api/save-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
