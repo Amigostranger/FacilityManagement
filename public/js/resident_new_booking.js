@@ -164,7 +164,7 @@ bookingForm.addEventListener('submit', async (e) => {
     
     // Send booking details to server
     // http://localhost:3000
-    const res = await fetch("http://localhost:3000/api/bookings", {
+    const res = await fetch("https://sports-management.azurewebsites.net/api/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
