@@ -1,6 +1,4 @@
 // console.log("JS loaded successfully!");
-
-
 // Firebase setup
 import { db } from './firebase.js';
 // import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";

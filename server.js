@@ -13,11 +13,7 @@ console.log('Server is starting');
 
 
 
-// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
-
-
-// // const serviceAccountPath = path.resolve('../serviceAccountKey.json');
-
+//const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 
 
 // if (!fs.existsSync(serviceAccountPath)) {
@@ -25,7 +21,7 @@ console.log('Server is starting');
 //   process.exit(1);
 // }
 
-// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+//const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -87,62 +83,27 @@ const verifyToken = async (req, res, next) => {
 };
 //API Endpoint for Reading a notification
 app.post("/api/read", verifyToken, async (req, res) => {
-  const n_id= req.body.notification;
-
-//API Endpoint for creating an event
-app.post("/api/createEvent", verifyToken,async (req,res) => {
-  const {title, description, facility, start, end, who}=req.body 
-  const uid=req.user.uid;
-  if (!title || !description || !facility || !start || !end || !who) {
-    return res.status(400).json({ error: "All fields required" });
-  }
-
+  const n_id = req.body.notification;
   try {
+    const snapshot = await db.collection("notifications")
+      .where("recipient", "==", req.user.uid)
+      .where("id", "==", n_id).get();
 
+    if (snapshot.empty) {
+      return res.status(404).json({ error: "Notification not found" });
+    }
 
-    const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
-    const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
+    for (const doc of snapshot.docs) {
+      await doc.ref.update({ read: "true" });
+    }
 
-    await db.collection("bookings").add({
-      title,
-      description,
-      facility,
-      submittedBy: uid,
-      //date,
-      status:"Approved",
-      start:newStart,
-      end:newEnd,
-      who,
-      //createdAt: new Date(),
-    });
-
-    res.status(200).json({ message: "Report submitted" });
-  }
-  catch{
-    console.error("Report save error:", error);
-    res.status(500).json({ error: "Failed to save event" });
-}
-
-});
-
-
-  try {
-   const snapshot = await db.collection("notifications").where("recipient", "==", req.user.uid).where("id", "==", n_id).get();
-   
-  snapshot.forEach(async (doc) => {
-    await db.collection("notifications").doc(doc.id).update({
-      read: "true"
-    });
-  });
-
-    res.status(200).json({ message: "Event read successfully" });
+    res.status(200).json({ message: "Notification marked as read" });
 
   } catch (error) {
     console.error("Error reading the event details:", error);
-    res.status(500).json({ error: "Failed to read the envent details" });
+    res.status(500).json({ error: "Failed to mark as read" });
   }
 });
-
 //API Endpoint for creating an event
 app.post("/api/createEvent", verifyToken,async (req,res) => {
   const {title, description, facility, date, start, end, who}=req.body 
@@ -209,7 +170,7 @@ app.get("/api/count-read", verifyToken,async (req, res) => {
     const countRead=snapshot.size;
     
     res.status(200).json({"countRead":countRead});
-    console.log("Counting successful");
+    // console.log("Counting successful");
 
   } catch (error) {
     console.error("Error counting read notification :", error);
@@ -577,7 +538,7 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000||5173;
 
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);

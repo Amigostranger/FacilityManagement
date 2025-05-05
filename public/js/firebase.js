@@ -1,9 +1,11 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-//import { getFirestore } from "firebase-admin/firestore";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Same version as firebase-auth
+// // import { initializeApp } from 'firebase/app';
 
+// import { getFirestore } from 'firebase/firestore';
+// import { initializeApp } from 'firebase/app';
+// import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 
 const firebaseConfig = {

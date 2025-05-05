@@ -1,6 +1,7 @@
 const viewMyIssues = require("./viewMyIssues");
 
 describe("viewMyIssues", () => {
+  jest.spyOn(console, 'error').mockImplementation(() => {});
   let fakeDB;
 
   beforeEach(() => {

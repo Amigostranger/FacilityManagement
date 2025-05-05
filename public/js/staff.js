@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
   // Verify staff role
@@ -92,3 +93,17 @@ async function logout() {
       alert('Logout failed. Please try again.');
   }
 }
+=======
+document.getElementById("reportBtn").addEventListener("click", () => {
+    window.location.href = "./staff_admin_issues.html";
+  });
+  document.getElementById("bookingsBtn").addEventListener("click", () => {
+    window.location.href = "./staff_admin_booking.html"; 
+  });
+
+  document.getElementById("usersbtn").addEventListener("click", () => {
+   
+  window.location.href="./list_residents.html";
+  });
+ 
+>>>>>>> 21c515c66c71d3810a7a549cada94f6ea7fd57e3
