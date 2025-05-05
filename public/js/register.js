@@ -25,7 +25,7 @@ const googleSignIn = async () => {
     }
     //http://localhost:3000
     //https://sports-management.azurewebsites.net
-    const response = await fetch("https://sports-management.azurewebsites.net/api/save-user", {
+    const response = await fetch("http://localhost:3000/api/save-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const googleSignIn = async () => {
 };
 async function check(email) {
   try {
-    const response = await fetch(`https://sports-management.azurewebsites.net/api/check-users`,{
+    const response = await fetch(`http://localhost:3000/api/check-users`,{
       method:"POST",
       headers:{
         "Content-Type": "application/json",
