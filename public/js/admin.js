@@ -1,4 +1,4 @@
-import { auth } from './firebase.js';
+
 // admin.js
 const managebtn=document.getElementById('usersBtn');
 
@@ -19,27 +19,24 @@ document.getElementById("reportBtn").addEventListener("click", () => {
 
 
 
+//---------------------------------------------------------------------------------------------------------------// 
 
+import { auth } from './firebase.js';
 
-
-
-const createEventbtn=document.getElementById('eventBtn');
+const eventBtn = document.getElementById('eventBtn');
 const Modal = document.getElementById('addModal');
 const cancelBtn = document.getElementById('cancelEventBtn');
 const bookingForm = document.getElementById('bookingForm');
 
 // Show modal
 eventBtn.addEventListener('click', () => {
-    Modal.hidden = false;
-  });
-
+  Modal.hidden = false;
+});
 
 // Hide modal
-cancelEventBtn.addEventListener('click', () => {
-    Modal.hidden = true;
-  });  
-
-
+cancelBtn.addEventListener('click', () => {
+  Modal.hidden = true;
+});
 
 // Submit form
 bookingForm.addEventListener('submit', async (e) => {
@@ -48,29 +45,25 @@ bookingForm.addEventListener('submit', async (e) => {
   const title = document.getElementById("bookingTitle").value.trim();
   const description = document.getElementById("bookingDescription").value.trim();
   const facility = document.getElementById("facilitySelect").value.trim();
-  //const title = document.getElementById("issueTitle").value.trim()
   const date = document.getElementById("bookingDate").value.trim();
   const startTime = document.getElementById("startTime").value.trim();
   const endTime = document.getElementById("endTime").value.trim();
   const who = "admin";
-  
 
-
-  const start = new Date(`${date}T${startTime}`).toISOString();
-  const end = new Date(`${date}T${endTime}`).toISOString();
-
+  // Construct consistent datetime strings
+  const start = `${date}T${startTime}:00`; // e.g. "2025-05-04T10:00:00"
+  const end = `${date}T${endTime}:00`;
 
   const user = auth.currentUser;
   if (!user) {
     alert("Please log in first.");
     return;
   }
-  //http://localhost:3000/api/createEvent
-  //https://sports-management.azurewebsites.net/api/createEvent
+
   try {
     const idToken = await user.getIdToken();
-4
-    const res = await fetch("https://sports-management.azurewebsites.net/api/createEvent", {
+
+    const res = await fetch("http://localhost:3000/api/createEvent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -91,5 +84,6 @@ bookingForm.addEventListener('submit', async (e) => {
   } catch (err) {
     console.error("Failed to submit:", err);
     alert("Something went wrong. Please try again.");
-}
+  }
 });
+
