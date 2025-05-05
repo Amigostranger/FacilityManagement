@@ -1,16 +1,7 @@
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-//import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import{auth} from './firebase.js'
+import { googleSignIn } from './googlesignIn.js';
 
-// Google Sign-In button handler
-const googleSignIn = async () => {
-  const provider = new GoogleAuthProvider();
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    // console.log("Google user:", user);
 
+<<<<<<< HEAD
     // Send user data to backend
     const email=user.email;
     const username=user.displayName || user.email;
@@ -77,4 +68,6 @@ async function check(email) {
 
 }
 // Attach event listener for Google Sign-In button
+=======
+>>>>>>> origin/main
 document.getElementById("googleSignInButton").addEventListener("click", googleSignIn);

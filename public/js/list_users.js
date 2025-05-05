@@ -1,5 +1,3 @@
-
-
 //https://sports-management.azurewebsites.net
 //http://localhost:3000
 //const response=await fetch('http://localhost:3000/api/get-users',{
