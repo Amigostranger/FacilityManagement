@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1746390142101" clover="3.2.0">
-  <project timestamp="1746390142101" name="All files">
+<coverage generated="1746419203120" clover="3.2.0">
+  <project timestamp="1746419203120" name="All files">
     <metrics statements="549" coveredstatements="0" conditionals="142" coveredconditionals="0" methods="79" coveredmethods="0" elements="770" coveredelements="0" complexity="0" loc="549" ncloc="549" packages="1" files="17" classes="17"/>
     <file name="admin.js" path="C:\Users\janmo\OneDrive - University of Witwatersrand\Documents\YOS 03\SOFTWARE DESIGN\Projects\Project 1\sports\FacilityManagement\public\js\admin.js">
       <metrics statements="43" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>

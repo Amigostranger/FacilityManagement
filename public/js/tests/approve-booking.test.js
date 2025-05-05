@@ -5,6 +5,7 @@ describe("approveBooking", () => {
   let fakeDB;
   
   beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
     fakeDB = {
       collection: jest.fn(() => fakeDB),
       doc: jest.fn(() => fakeDB),
