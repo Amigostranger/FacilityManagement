@@ -104,51 +104,120 @@ app.post("/api/read", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to mark as read" });
   }
 });
+// //API Endpoint for creating an event
+// app.post("/api/createEvent", verifyToken,async (req,res) => {
+//   const {title, description, facility, date, start, end, who}=req.body 
+//   const uid=req.user.uid;
+//   if (!title || !description || !facility || !start || !end || !who) {
+//     return res.status(400).json({ error: "All fields required" });
+//   }
+
+//   try {
+//     const snapShot=await db.collection("users").where("role","==","resident").get();
+
+//     const users= snapShot.docs.map(doc => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     }));
+
+//     for (const user of users) {
+//       const docRef = db.collection("notifications").doc();
+//       const n_id=docRef.id;
+//       console.log(n_id);
+//       await docRef.set({
+//         id: n_id,
+//         recipient: user.id,
+//         title,
+//         description,
+//         facility,
+//         submittedBy: uid,
+//         date,
+//         start,
+//         end,
+//         read: "false"
+//       });
+//     }
+  
+    
+//     await db.collection("bookings").add({
+//       title,
+//       description,
+//       facility,
+//       submittedBy: uid,
+//       date,
+//       start,
+//       end,
+//       who,
+    
+//     });
+
+//     res.status(200).json({ message: "Report submitted" });
+//   }
+//   catch{
+//     console.error("Report save error:", error);
+//     res.status(500).json({ error: "Failed to save event" });
+// }
+
+// });
+
+// //API Endpoint for Listing notifications
+// app.get("/api/count-read", verifyToken,async (req, res) => {
+//   const uid=req.user.uid;
+
+//   try {
+
+//     const snapshot = await db.collection("notifications").where("recipient", "==", uid).where("read", "==", "false").get();
+//     const countRead=snapshot.size;
+    
+//     res.status(200).json({"countRead":countRead});
+//     // console.log("Counting successful");
+
+//   } catch (error) {
+//     console.error("Error counting read notification :", error);
+//     res.status(500).json({ error: "Failed to get Events" });
+//   }
+// });
+
+//-------------------------------------------------------------//
 //API Endpoint for creating an event
 app.post("/api/createEvent", verifyToken,async (req,res) => {
-  const {title, description, facility, date, start, end, who}=req.body 
+  const {title, description, facility, start, end, who}=req.body 
   const uid=req.user.uid;
   if (!title || !description || !facility || !start || !end || !who) {
     return res.status(400).json({ error: "All fields required" });
   }
 
   try {
-    const snapShot=await db.collection("users").where("role","==","resident").get();
 
-    const users= snapShot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
 
-    for (const user of users) {
-      const docRef = db.collection("notifications").doc();
-      const n_id=docRef.id;
-      console.log(n_id);
-      await docRef.set({
-        id: n_id,
-        recipient: user.id,
-        title,
-        description,
-        facility,
-        submittedBy: uid,
-        date,
-        start,
-        end,
-        read: "false"
-      });
+    const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
+    const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
+
+
+
+    const overlapping = await db.collection("bookings")
+      .where("facility", "==", facility)
+      .where("status", "==","Approved")
+      .where("start", "<", newEnd)
+      .where("end", ">", newStart)
+      .get();
+
+    if (!overlapping.empty) {
+      return res.status(409).json({ error: "Event conflict detected" });
     }
-  
-    
+
+
     await db.collection("bookings").add({
       title,
       description,
       facility,
       submittedBy: uid,
-      date,
-      start,
-      end,
+      //date,
+      status:"Approved",
+      start:newStart,
+      end:newEnd,
       who,
-    
+      //createdAt: new Date(),
     });
 
     res.status(200).json({ message: "Report submitted" });
@@ -158,24 +227,6 @@ app.post("/api/createEvent", verifyToken,async (req,res) => {
     res.status(500).json({ error: "Failed to save event" });
 }
 
-});
-
-//API Endpoint for Listing notifications
-app.get("/api/count-read", verifyToken,async (req, res) => {
-  const uid=req.user.uid;
-
-  try {
-
-    const snapshot = await db.collection("notifications").where("recipient", "==", uid).where("read", "==", "false").get();
-    const countRead=snapshot.size;
-    
-    res.status(200).json({"countRead":countRead});
-    // console.log("Counting successful");
-
-  } catch (error) {
-    console.error("Error counting read notification :", error);
-    res.status(500).json({ error: "Failed to get Events" });
-  }
 });
 
 //API Endpoint for Listing notifications
