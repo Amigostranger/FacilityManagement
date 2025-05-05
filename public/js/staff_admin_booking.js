@@ -21,9 +21,12 @@ async function getuser(id) {
  //const response=await fetch("http://localhost:3000/api/get-users");
   const data = await response.json();
   const spec = data.find(u => u.id === id);
+  if(spec){
+    return spec.username;
+  }
   //console.log(spec.username);
   
-  return spec.username;
+  
 }
 async function loadBookings() {
     bookingsTableBody.innerHTML = "";
@@ -74,8 +77,18 @@ function attachListeners(bookarr) {
     modalTitle.textContent=specificBooking.Title;
     modalDescription.textContent=specificBooking.Description;
 
-    modalStart.textContent=specificBooking.start;
-    modalEnd.textContent=specificBooking.end;
+
+  const startDate = new Date(specificBooking.start._seconds * 1000);
+  const endDate = new Date(specificBooking.end._seconds * 1000);
+
+  modalStart.textContent = startDate.toLocaleString();
+  modalEnd.textContent = endDate.toLocaleString();
+
+
+
+  //const startDate = specificBooking.start.toDate();
+   // modalStart.textContent=specificBooking.start;
+  //  modalEnd.textContent=specificBooking.end;
     modalFacility.textContent=specificBooking.facility;
     sec.innerHTML = ""; 
 
