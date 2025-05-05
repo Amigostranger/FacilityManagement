@@ -2,8 +2,8 @@
 
 //https://sports-management.azurewebsites.net
 //http://localhost:3000
-//const response=await fetch('http://localhost:3000/api/get-users',{
-    const response=await fetch('https://sports-management.azurewebsites.net/api/get-users',{
+const response=await fetch('http://localhost:3000/api/get-users',{
+   // const response=await fetch('https://sports-management.azurewebsites.net/api/get-users',{
     method:"GET",
     headers:{
        "Content-Type":"application/json"
@@ -38,18 +38,8 @@
     
         row.innerHTML = `
           <td>${users.email || "N/A"}</td>
-          <td>${users.role || "None"}</td>
+
           
-          <td>
-            <select data-id="${users.id}" class="roleSelector">
-              <option value="">-- Select --</option>
-              <option value="Resident">Resident</option>
-              <option value="Staff">Staff</option>
-              <option value="Admin">Admin</option>
-            </select>
-  
-  
-          </td>
           <td>
             <button class="deleteBtn" data-id="${users.id}">Revoke</button>
           </td>
@@ -69,65 +59,65 @@
     
   
   
-      document.querySelectorAll(".roleSelector").forEach(it=>{
+    //   document.querySelectorAll(".roleSelector").forEach(it=>{
   
-          it.addEventListener('change',talkToit)
+    //       it.addEventListener('change',talkToit)
   
-      });
+    //   });
     }
     loadUsers();
   
   
   
   
-    async function talkToit(event) {
+    // async function talkToit(event) {
       
-      const selectedvalue=event.target.value;
-      const userId = event.target.getAttribute('data-id');
-      const newRole = event.target.value;
+    //   const selectedvalue=event.target.value;
+    //   const userId = event.target.getAttribute('data-id');
+    //   const newRole = event.target.value;
   
   
-      if(!newRole){
-        return;
-      }
+    //   if(!newRole){
+    //     return;
+    //   }
   
   
-      if (!confirm(`Are you sure you want to change role to ${newRole}?`)) {
-        console.log("No");
+    //   if (!confirm(`Are you sure you want to change role to ${newRole}?`)) {
+    //     console.log("No");
         
-        return;
-      }
-      try {
+    //     return;
+    //   }
+    //   try {
   
-          //const response=await fetch(`http://localhost:3000/api/user/${userId}`,{
-            const response=await fetch(`'https://sports-management.azurewebsites.net/api/user/${userId}`,{
-              method:"PUT",
-              headers:{
-                  "Content-Type":"application/json"
-              },
-              body: JSON.stringify({ role: newRole })
-          });
+    //       const response=await fetch(`http://localhost:3000/api/user/${userId}`,{
+    //         //const response=await fetch(`'https://sports-management.azurewebsites.net/api/user/${userId}`,{
+    //           method:"PUT",
+    //           headers:{
+    //               "Content-Type":"application/json"
+    //           },
+    //           body: JSON.stringify({ role: newRole })
+    //       });
   
   
-          const result = await response.json();
-          if (response.ok) {
-            console.log(`Updated role for user ${userId} to ${newRole}`);
+    //       const result = await response.json();
+    //       if (response.ok) {
+    //         console.log(`Updated role for user ${userId} to ${newRole}`);
   
-            const user=usersarr.find(u=>u.id===userId);
-            if(user){
-              user.role=newRole;
-              // localStorage.setItem("usersData",JSON.stringify(usersarr));
-              loadUsers();
-            }
-          } else {
-            console.error(result.error || 'Failed to update');
-          }
-      } catch (error) {
-          console.error(error);
+    //         const user=usersarr.find(u=>u.id===userId);
+    //         if(user){
+    //           user.role=newRole;
+    //           // localStorage.setItem("usersData",JSON.stringify(usersarr));
+    //           loadUsers();
+    //         }
+    //       } else {
+    //         console.error(result.error || 'Failed to update');
+    //       }
+    //   } catch (error) {
+    //       console.error(error);
           
-      }
+    //   }
   
-    }
+    // }
   
    async function deleteIT(event) {
       const userId=event.target.getAttribute('data-id');
@@ -138,8 +128,8 @@
         return;
       }
       try {
-        const response=await fetch(`'https://sports-management.azurewebsites.net/api/user/${userId}`,{
-          //const response=await fetch(`http://localhost:3000/api/user/${userId}`,{
+        //const response=await fetch(`'https://sports-management.azurewebsites.net/api/user/${userId}`,{
+          const response=await fetch(`http://localhost:3000/api/user/${userId}`,{
               method:"Put",
           });
           const result=await response.json();
