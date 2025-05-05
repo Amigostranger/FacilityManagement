@@ -13,7 +13,7 @@ console.log('Server is starting');
 
 
 
-//const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+// const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 
 
 // if (!fs.existsSync(serviceAccountPath)) {
@@ -21,7 +21,7 @@ console.log('Server is starting');
 //   process.exit(1);
 // }
 
-//const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -81,6 +81,44 @@ const verifyToken = async (req, res, next) => {
     return res.status(401).json({ error: "Invalid or expired token" });
   }
 };
+
+
+
+
+app.put('/api/user-revoke/:id',async (req,res)=>{
+
+  const userID=req.params.id;
+  const {status}=req.body;
+  // const user=db.collection('users').doc(userID);
+  // if(!user.exists){
+  //   return res.status(404).json({ error: "user not found" });
+  // }
+
+  // if(user.status!=status){
+  //   await doc(userID).update({status:"revoked"});
+  // }
+
+  try {
+    
+    const userRef = db.collection('users').doc(userID);
+    const userSnap = await userRef.get();
+    //const currentStatus = userSnap.data().status;
+    if (!userSnap.exists) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const currentStatus = userSnap.data().status;
+
+    if (currentStatus !== status) {
+      await userRef.update({ status: "revoked" });
+    }
+
+    return res.status(200).json({ message: "User status updated if needed" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+
+})
 //API Endpoint for Reading a notification
 app.post("/api/read", verifyToken, async (req, res) => {
   const n_id = req.body.notification;

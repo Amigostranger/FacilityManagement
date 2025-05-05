@@ -1,8 +1,10 @@
 import { auth } from './firebase.js';
+
 import { db } from './firebase.js';
 // import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
+// Use the same version as firebase.js
+import { collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 
 // Elements
@@ -38,9 +40,19 @@ cancelBookingBtn.addEventListener('click', () => {
 
 // Show "View My Bookings" modal + table and fetch bookings
 viewBookingsBtn.addEventListener('click', () => {
-  viewModal.hidden = false;
-  bookingsTable.hidden = false;
-  fetchBookings();
+  const isVisible = !bookingsTable.hidden;
+
+  if (isVisible) {
+    // Hide table and change button text back
+    bookingsTable.hidden = true;
+    noBookingsMessage.hidden = true;
+    viewBookingsBtn.textContent = "View My Bookings";
+  } else {
+    // Show table and fetch data
+    bookingsTable.hidden = false;
+    fetchBookings();
+    viewBookingsBtn.textContent = "Close My Bookings";
+  }
 });
 
 // Hide "View My Bookings" modal + hide table
@@ -49,42 +61,71 @@ closeViewBtn.addEventListener('click', () => {
   bookingsTable.hidden = true;
 });
 
+
+
+
+
+
+
 // Fetch and display user's own bookings
 async function fetchBookings() {
   bookingsTableBody.innerHTML = ""; // Clear old bookings
 
-  const user = auth.currentUser;
-  if (user) {
-    const submittedBy = user.email;
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      alert("You must be logged in to view bookings.");
+      return;
+    }
+
+    const submittedBy = user.uid;
+    console.log(submittedBy);
+    
     const bookingsRef = collection(db, "bookings");
     const q = query(bookingsRef, where("submittedBy", "==", submittedBy));
 
-    const querySnapshot = await getDocs(q);
-    if (querySnapshot.empty) {
-      bookingsTable.hidden = true;
-      noBookingsMessage.hidden = false;
-    } else {
-      noBookingsMessage.hidden = true;
-      bookingsTable.hidden = false;
-      querySnapshot.forEach((doc) => {
-        const booking = doc.data();
-        const startDate = booking.start.toDate();
-        const endDate = booking.end.toDate();
+    try {
+      const querySnapshot = await getDocs(q);
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${booking.Title}</td>
-          <td>${booking.facility || '-'}</td>
-          <td>${startDate.toLocaleDateString()}</td>
-          <td>${startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-          <td>${endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-        `;
-        bookingsTableBody.appendChild(row);
-      });
+      if (querySnapshot.empty) {
+        console.log("empty");
+        
+        bookingsTable.hidden = true;
+        noBookingsMessage.hidden = false;
+      } else {
+        console.log("not");
+
+        noBookingsMessage.hidden = true;
+        bookingsTable.hidden = false;
+
+        querySnapshot.forEach((doc) => {
+          const booking = doc.data();
+        
+          const start = booking.start?.toDate?.() ?? new Date(booking.start);
+          const end = booking.end?.toDate?.() ?? new Date(booking.end);
+        
+          // Skip if invalid dates
+          if (isNaN(start) || isNaN(end)) {
+            console.warn("Invalid date found in booking:", booking);
+            return;
+          }
+        
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${booking.title}</td>
+            <td>${booking.facility || '-'}</td>
+            <td>${start.toLocaleDateString()}</td>
+            <td>${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+            <td>${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+          `;
+          bookingsTableBody.appendChild(row);
+        });
+        
+      }
+    } catch (err) {
+      console.error("Error fetching bookings:", err);
+      alert("Failed to fetch bookings. Please try again later.");
     }
-  } else {
-    alert("You must be logged in to view bookings.");
-  }
+  });
 }
 
 
@@ -122,8 +163,8 @@ bookingForm.addEventListener('submit', async (e) => {
     const who = "resident";
     
     // Send booking details to server
-    
-    const res = await fetch("https://sports-management.azurewebsites.net/api/bookings", {
+    // http://localhost:3000
+    const res = await fetch("http://localhost:3000/api/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

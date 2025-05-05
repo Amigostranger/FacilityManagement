@@ -2,8 +2,8 @@
 
 //https://sports-management.azurewebsites.net
 //http://localhost:3000
-const response=await fetch('http://localhost:3000/api/get-users',{
-   // const response=await fetch('https://sports-management.azurewebsites.net/api/get-users',{
+//const response=await fetch('http://localhost:3000/api/get-users',{
+   const response=await fetch('https://sports-management.azurewebsites.net/api/get-users',{
     method:"GET",
     headers:{
        "Content-Type":"application/json"
@@ -119,33 +119,38 @@ const response=await fetch('http://localhost:3000/api/get-users',{
   
     // }
   
-   async function deleteIT(event) {
-      const userId=event.target.getAttribute('data-id');
-      
-      if (!confirm('Confirm to revoke access of user?')) {
-        console.log("No");
+    async function deleteIT(event) {
+        const userId=event.target.getAttribute('data-id');
         
-        return;
-      }
-      try {
-        //const response=await fetch(`'https://sports-management.azurewebsites.net/api/user/${userId}`,{
-          const response=await fetch(`http://localhost:3000/api/user/${userId}`,{
-              method:"Put",
-          });
-          const result=await response.json();
-          if(response.ok){
-  
-           // usersarr=usersarr.filter(user=>user.id!==userId);
-            // localStorage.setItem('userData',JSON.stringify(usersarr));
-              console.log(` User ${userId} deleted successfully`);
-              loadUsers();
-          }
-          else{
-              console.error('Failed to Revoke user:');
-          }
-  
-      } catch (error) {
-          console.error(error);
+        if (!confirm('Confirm to revoke access of user?')) {
+          console.log("No");
           
-      }
-   }
+          return;
+        }
+        try {
+            
+            //const response=await fetch(`https://sports-management.azurewebsites.net/api/user/${userId}`,{
+              const response=await fetch(`https://sports-management.azurewebsites.net/api/user-revoke/${userId}`,{
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({ status: "revoked" })
+            });
+            const result=await response.json();
+            if(response.ok){
+    
+             // usersarr=usersarr.filter(user=>user.id!==userId);
+              // localStorage.setItem('userData',JSON.stringify(usersarr));
+                console.log(` User ${userId} revoked successfully`);
+                loadUsers();
+            }
+            else{
+                console.error('Failed to Revoke user:');
+            }
+    
+        } catch (error) {
+            console.error(error);
+            
+        }
+     }
