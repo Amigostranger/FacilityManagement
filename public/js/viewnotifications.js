@@ -54,8 +54,8 @@ async function loadnotifications(user) {
     });
     const data = await res.json();
     const events = data.events;
-    
-    //console.log("EVENTS",events);
+    f
+    console.log("EVENTS",events);
 
     events.forEach(async (event) => {
       const row = document.createElement("tr");
