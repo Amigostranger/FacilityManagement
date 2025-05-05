@@ -544,3 +544,26 @@ app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
 });
 
+
+app.get("/api/bookings", verifyToken, async (req, res) => {
+  try {
+    const bookingsSnapshot = await db.collection("bookings")
+      .where("submittedBy", "==", req.user.uid)
+      .get();
+
+    const bookings = [];
+    bookingsSnapshot.forEach(doc => {
+      bookings.push({
+        id: doc.id,
+        ...doc.data(),
+        start: doc.data().start.toDate(), // Convert Firestore timestamp to JS Date
+        end: doc.data().end.toDate()
+      });
+    });
+
+    res.status(200).json({ bookings });
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    res.status(500).json({ error: "Failed to fetch bookings" });
+  }
+});
