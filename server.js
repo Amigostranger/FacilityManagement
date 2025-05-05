@@ -218,6 +218,7 @@ app.get("/api/count-read", verifyToken,async (req, res) => {
 
 //-------------------------------------------------------------//
 //API Endpoint for creating an event
+//API Endpoint for creating an event
 app.post("/api/createEvent", verifyToken,async (req,res) => {
   const {title, description, facility, start, end, who}=req.body 
   const uid=req.user.uid;
@@ -226,7 +227,29 @@ app.post("/api/createEvent", verifyToken,async (req,res) => {
   }
 
   try {
+      const snapShot=await db.collection("users").where("role","==","resident").get();
 
+      const users= snapShot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      for (const user of users) {
+        const docRef = db.collection("notifications").doc();
+        const n_id=docRef.id;
+        console.log(n_id);
+        await docRef.set({
+          id: n_id,
+          recipient: user.id,
+          title,
+          description,
+          facility,
+          submittedBy: uid,
+          start,
+          end,
+          read: "false"
+        });
+      }
 
     const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
     const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
