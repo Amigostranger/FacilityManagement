@@ -47,21 +47,23 @@ async function loadnotifications(user) {
       return;
     }
     //https://sports-management.azurewebsites.net
-    const res = await fetch("https://sports-management.azurewebsites.net/api/notifications", {
+    //http://localhost:3000
+    const res = await fetch("http://localhost:3000/api/notifications", {
       headers: {
         "Authorization": `Bearer ${token}`
       }
     });
     const data = await res.json();
     const events = data.events;
-    f
+    // console.log("event.start:", event.start);
+    
     console.log("EVENTS",events);
 
     events.forEach(async (event) => {
       const row = document.createElement("tr");
    
       row.addEventListener("click",async () => {
-        const resRead = await fetch("https://sports-management.azurewebsites.net/api/read", {
+        const resRead = await fetch("http://localhost:3000/api/read", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -80,10 +82,11 @@ async function loadnotifications(user) {
           cell.style.color = "white";
         });
         
-        viewDate.textContent = event.date || "No Date";
+    
+        
         viewFacility.textContent = event.facility || "No Facility";
-        viewStart.textContent = event.start || "No start time";
-        viewEnd.textContent = event.end || "No End time";
+        viewStart.textContent =new Date(event.start._seconds * 1000)|| "No start time";
+        viewEnd.textContent = new Date(event.end._seconds * 1000)|| "No End time";
         viewDescribe.textContent = event.description || "No description.";
         viewModal.hidden = false;
       });
