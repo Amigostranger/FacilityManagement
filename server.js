@@ -160,23 +160,23 @@ app.post("/api/read", verifyToken, async (req, res) => {
 
 // });
 
-// //API Endpoint for Listing notifications
-// app.get("/api/count-read", verifyToken,async (req, res) => {
-//   const uid=req.user.uid;
+//API Endpoint for Listing notifications
+app.get("/api/count-read", verifyToken,async (req, res) => {
+  const uid=req.user.uid;
 
-//   try {
+  try {
 
-//     const snapshot = await db.collection("notifications").where("recipient", "==", uid).where("read", "==", "false").get();
-//     const countRead=snapshot.size;
+    const snapshot = await db.collection("notifications").where("recipient", "==", uid).where("read", "==", "false").get();
+    const countRead=snapshot.size;
     
-//     res.status(200).json({"countRead":countRead});
-//     // console.log("Counting successful");
+    res.status(200).json({"countRead":countRead});
+    // console.log("Counting successful");
 
-//   } catch (error) {
-//     console.error("Error counting read notification :", error);
-//     res.status(500).json({ error: "Failed to get Events" });
-//   }
-// });
+  } catch (error) {
+    console.error("Error counting read notification :", error);
+    res.status(500).json({ error: "Failed to get Events" });
+  }
+});
 
 //-------------------------------------------------------------//
 //API Endpoint for creating an event
