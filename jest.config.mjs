@@ -1,10 +1,9 @@
-// jest.config.mjs
 export default {
   collectCoverage: true,
   collectCoverageFrom: [
-    'public/js/**/*.js',
-    '!public/js/tests/**',
-    '!public/js/firebase.js'
+    'public/js/tests/**/*.js',  // Collect coverage from all .js files in the public/js/tests folder
+    '!public/js/tests/**/testHelpers.js',  // Exclude any helper files, if applicable
+    '!public/js/tests/setupTests.js'  // Exclude setup files, if necessary
   ],
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
