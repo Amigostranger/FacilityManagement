@@ -1,7 +1,7 @@
 
 import { auth } from './firebase.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-//import { onAuthStateChanged } from 'firebase/auth';
+//import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,10 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
 //const tableBody = document.getElementById("notificationTable");
 const tableBody = document.querySelector("#notificationTable tbody");
 if (!tableBody) {
-  console.warn("Table body with ID 'notificationTable' not found in the DOM.");
-  // return; // Stop further execution to prevent errors
+  console.error("Table body with ID 'notificationTable' not found in the DOM.");
+  return; // Stop further execution to prevent errors
 }
-console.log("Table body found:", tableBody); // Debugging line
 //Event details
 const viewDescribe= document.getElementById("describe");
 const viewDate=document.getElementById("date");
@@ -47,7 +46,6 @@ async function loadnotifications(user) {
       return;
     }
     //https://sports-management.azurewebsites.net
-    //http://localhost:3000
     const res = await fetch("https://sports-management.azurewebsites.net/api/notifications", {
       headers: {
         "Authorization": `Bearer ${token}`
@@ -55,9 +53,8 @@ async function loadnotifications(user) {
     });
     const data = await res.json();
     const events = data.events;
-    // console.log("event.start:", event.start);
     
-    console.log("EVENTS",events);
+    //console.log("EVENTS",events);
 
     events.forEach(async (event) => {
       const row = document.createElement("tr");
@@ -82,11 +79,10 @@ async function loadnotifications(user) {
           cell.style.color = "white";
         });
         
-    
-        
+        viewDate.textContent = event.date || "No Date";
         viewFacility.textContent = event.facility || "No Facility";
-        viewStart.textContent =new Date(event.start._seconds * 1000)|| "No start time";
-        viewEnd.textContent = new Date(event.end._seconds * 1000)|| "No End time";
+        viewStart.textContent = event.start || "No start time";
+        viewEnd.textContent = event.end || "No End time";
         viewDescribe.textContent = event.description || "No description.";
         viewModal.hidden = false;
       });
@@ -121,7 +117,6 @@ async function countread(user){
       const data = await res.json();
       countRead = data.countRead;
       console.log(counter);
-      
       if (counter) {
         counter.innerText = countRead;
         counter.style.visibility = countRead === 0 ? "hidden" : "visible";

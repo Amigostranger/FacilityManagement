@@ -1,15 +1,4 @@
 import { auth } from './firebase.js';
-//  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-// onAuthStateChanged(auth, (user) => {
-//   if (user) {
-//     console.log("User is signed in:", user.email);
-//   } else {
-//     console.log("No user signed in");
-//   }
-// }); 
-
-
 
 // Elements
 const newIssueBtn = document.getElementById('newIssueBtn');
