@@ -1,6 +1,6 @@
 // googleSignIn.js (used in browser only)
 import { auth } from './firebase.js';
-
+import { signInCore } from './signInCore.js';
 import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 
