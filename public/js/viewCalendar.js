@@ -30,29 +30,55 @@ async function fetchEvents(fetchInfo, successCallback, failureCallback){
   }
 }
 
+function setupCalendar(calendarEl){
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+      
+    events: fetchEvents,
+
+    height: "auto",
+
+
+    initialView: 'dayGridMonth',
+
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,listWeek'
+    },
+
+    eventClick: function(info) {
+      const event = info.event;
+      const title = event.title;
+      const facility = event.extendedProps.facility;
+      const description = event.extendedProps.description;
+      const start = new Date(event.start).toLocaleString();
+      const end = new Date(event.end).toLocaleString();
+
+      alert(
+        `🏟️ ${title}\n` +
+        `📍 Facility: ${facility}\n` +
+        `📅 Start: ${start}\n` +
+        `⏱️ End: ${end}\n` +
+        `📝 Description: ${description || 'None'}`
+      );
+    }
+  });
+
+
+  calendar.render()
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
 
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      
-      events: fetchEvents,
-
-      height: "auto",
+    setupCalendar(calendarEl);
+    
     
 
-      initialView: 'dayGridMonth',
-
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,listWeek'
-      },
-
-    });
-
-    calendar.render()
 })
+
+export { mapDocsToEvents, fetchEvents, setupCalendar};
+
 
 
