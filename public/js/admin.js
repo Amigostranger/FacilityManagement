@@ -20,6 +20,7 @@ document.getElementById("reportBtn").addEventListener("click", () => {
 
 
 //---------------------------------------------------------------------------------------------------------------// 
+
 import { auth } from './firebase.js';
 
 const eventBtn = document.getElementById('eventBtn');
