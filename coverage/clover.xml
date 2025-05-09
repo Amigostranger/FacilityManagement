@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1746428606827" clover="3.2.0">
-  <project timestamp="1746428606827" name="All files">
+<coverage generated="1746800003960" clover="3.2.0">
+  <project timestamp="1746800003960" name="All files">
     <metrics statements="149" coveredstatements="108" conditionals="74" coveredconditionals="42" methods="20" coveredmethods="15" elements="243" coveredelements="165" complexity="0" loc="149" ncloc="149" packages="1" files="9" classes="9"/>
     <file name="approveBooking.js" path="C:\Users\janmo\OneDrive - University of Witwatersrand\Documents\YOS 03\SOFTWARE DESIGN\Projects\Project 1\sports\FacilityManagement\public\js\tests\approveBooking.js">
       <metrics statements="12" coveredstatements="0" conditionals="7" coveredconditionals="0" methods="1" coveredmethods="0"/>
