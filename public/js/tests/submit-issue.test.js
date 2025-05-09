@@ -1,6 +1,7 @@
 const submitIssue = require("./submitIssue");
 
 describe("submitIssue", () => {
+  jest.spyOn(console, 'error').mockImplementation(() => {});
   let fakeDB;
 
   beforeEach(() => {

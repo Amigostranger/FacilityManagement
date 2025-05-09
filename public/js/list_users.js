@@ -1,6 +1,7 @@
 //https://sports-management.azurewebsites.net
-const response=await fetch('https://sports-management.azurewebsites.net/api/get-users',{
-
+//http://localhost:3000
+//const response=await fetch('http://localhost:3000/api/get-users',{
+ const response = await fetch('https://sports-management.azurewebsites.net/api/get-users',{
   method:"GET",
   headers:{
      "Content-Type":"application/json"
@@ -21,8 +22,8 @@ if(data){
   
 
 async function loadUsers() {
- // const response = await fetch('https://sports-management.azurewebsites.net/api/get-users');
-  const response = await fetch('https://sports-management.azurewebsites.net/api/get-users')
+ const response = await fetch('https://sports-management.azurewebsites.net/api/get-users');
+  //const response = await fetch('http://localhost:3000/api/get-users')
   const data = await response.json();
    usersarr = data; 
     const tbody = document.getElementById("userTableBody");
@@ -34,8 +35,8 @@ async function loadUsers() {
               const row = document.createElement("tr");
   
       row.innerHTML = `
-        <td>${users.email || "N/A"}</td>
-        <td>${users.role || "None"}</td>
+        <td>${users.email || "N/A"}</td> 
+                <td>${users.role || "None"}</td>
         
         <td>
           <select data-id="${users.id}" class="roleSelector">
@@ -46,7 +47,7 @@ async function loadUsers() {
           </select>
 
 
-        </td>
+        </td> 
         <td>
           <button class="deleteBtn" data-id="${users.id}">Revoke</button>
         </td>
@@ -136,15 +137,20 @@ async function loadUsers() {
     }
     try {
         
-        const response=await fetch(`https://sports-management.azurewebsites.net/api/user/api/user/${userId}`,{
-            method:"Put",
+        const response=await fetch(`https://sports-management.azurewebsites.net/api/user/${userId}`,{
+          //const response=await fetch(`http://localhost:3000/api/user-revoke/${userId}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({ status: "revoked" })
         });
         const result=await response.json();
         if(response.ok){
 
          // usersarr=usersarr.filter(user=>user.id!==userId);
           // localStorage.setItem('userData',JSON.stringify(usersarr));
-            console.log(` User ${userId} deleted successfully`);
+            console.log(` User ${userId} revoked successfully`);
             loadUsers();
         }
         else{
