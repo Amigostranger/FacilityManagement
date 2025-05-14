@@ -1,6 +1,6 @@
 // login.js
 import { signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-const { auth } = require('../../utils/firebase');
+import { auth } from './firebase';
 
 //const loginForm = document.getElementById("btnlog");
 const googleLoginBtn = document.getElementById("googleLoginBtn");
