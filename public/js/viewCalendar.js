@@ -1,4 +1,4 @@
-import { db } from '../../firebase';
+import { db } from '../../utils/firebase.js';
 import { collection, getDocs, query, where  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 function mapDocsToEvents(docs){

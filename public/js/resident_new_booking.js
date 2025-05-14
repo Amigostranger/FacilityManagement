@@ -1,6 +1,6 @@
-import { auth } from './firebase';
+import { auth } from '../../utils/firebase.js';
 
-import { db } from './firebase';
+import { db } from '../../utils/firebase.js';
 // import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 // Use the same version as firebase.js
 import { collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
