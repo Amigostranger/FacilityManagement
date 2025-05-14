@@ -13,7 +13,7 @@ console.log('Server is starting');
 
 
 
-//const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+//const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
 
 // if (!fs.existsSync(serviceAccountPath)) {
@@ -21,7 +21,7 @@ console.log('Server is starting');
 //   process.exit(1);
 // }
 
-//const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -81,6 +81,44 @@ const verifyToken = async (req, res, next) => {
     return res.status(401).json({ error: "Invalid or expired token" });
   }
 };
+
+
+
+
+app.put('/api/user-revoke/:id',async (req,res)=>{
+
+  const userID=req.params.id;
+  const {status}=req.body;
+  // const user=db.collection('users').doc(userID);
+  // if(!user.exists){
+  //   return res.status(404).json({ error: "user not found" });
+  // }
+
+  // if(user.status!=status){
+  //   await doc(userID).update({status:"revoked"});
+  // }
+
+  try {
+    
+    const userRef = db.collection('users').doc(userID);
+    const userSnap = await userRef.get();
+    //const currentStatus = userSnap.data().status;
+    if (!userSnap.exists) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const currentStatus = userSnap.data().status;
+
+    if (currentStatus !== status) {
+      await userRef.update({ status: "revoked" });
+    }
+
+    return res.status(200).json({ message: "User status updated if needed" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+
+})
 //API Endpoint for Reading a notification
 app.post("/api/read", verifyToken, async (req, res) => {
   const n_id = req.body.notification;
@@ -104,61 +142,61 @@ app.post("/api/read", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to mark as read" });
   }
 });
-//API Endpoint for creating an event
-app.post("/api/createEvent", verifyToken,async (req,res) => {
-  const {title, description, facility, date, start, end, who}=req.body 
-  const uid=req.user.uid;
-  if (!title || !description || !facility || !start || !end || !who) {
-    return res.status(400).json({ error: "All fields required" });
-  }
+// //API Endpoint for creating an event
+// app.post("/api/createEvent", verifyToken,async (req,res) => {
+//   const {title, description, facility, date, start, end, who}=req.body 
+//   const uid=req.user.uid;
+//   if (!title || !description || !facility || !start || !end || !who) {
+//     return res.status(400).json({ error: "All fields required" });
+//   }
 
-  try {
-    const snapShot=await db.collection("users").where("role","==","resident").get();
+//   try {
+//     const snapShot=await db.collection("users").where("role","==","resident").get();
 
-    const users= snapShot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+//     const users= snapShot.docs.map(doc => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     }));
 
-    for (const user of users) {
-      const docRef = db.collection("notifications").doc();
-      const n_id=docRef.id;
-      console.log(n_id);
-      await docRef.set({
-        id: n_id,
-        recipient: user.id,
-        title,
-        description,
-        facility,
-        submittedBy: uid,
-        date,
-        start,
-        end,
-        read: "false"
-      });
-    }
+//     for (const user of users) {
+//       const docRef = db.collection("notifications").doc();
+//       const n_id=docRef.id;
+//       console.log(n_id);
+//       await docRef.set({
+//         id: n_id,
+//         recipient: user.id,
+//         title,
+//         description,
+//         facility,
+//         submittedBy: uid,
+//         date,
+//         start,
+//         end,
+//         read: "false"
+//       });
+//     }
   
     
-    await db.collection("bookings").add({
-      title,
-      description,
-      facility,
-      submittedBy: uid,
-      date,
-      start,
-      end,
-      who,
+//     await db.collection("bookings").add({
+//       title,
+//       description,
+//       facility,
+//       submittedBy: uid,
+//       date,
+//       start,
+//       end,
+//       who,
     
-    });
+//     });
 
-    res.status(200).json({ message: "Report submitted" });
-  }
-  catch{
-    console.error("Report save error:", error);
-    res.status(500).json({ error: "Failed to save event" });
-}
+//     res.status(200).json({ message: "Report submitted" });
+//   }
+//   catch{
+//     console.error("Report save error:", error);
+//     res.status(500).json({ error: "Failed to save event" });
+// }
 
-});
+// });
 
 //API Endpoint for Listing notifications
 app.get("/api/count-read", verifyToken,async (req, res) => {
@@ -177,6 +215,87 @@ app.get("/api/count-read", verifyToken,async (req, res) => {
     res.status(500).json({ error: "Failed to get Events" });
   }
 });
+
+//-------------------------------------------------------------//
+//API Endpoint for creating an event
+
+//API Endpoint for creating an event
+app.post("/api/createEvent", verifyToken,async (req,res) => {
+  const {title, description, facility, start, end, who}=req.body 
+  const uid=req.user.uid;
+  if (!title || !description || !facility || !start || !end || !who) {
+    return res.status(400).json({ error: "All fields required" });
+  }
+
+  try {
+
+      const snapShot=await db.collection("users").where("role","==","resident").get();
+
+      const users= snapShot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      for (const user of users) {
+        const docRef = db.collection("notifications").doc();
+        const n_id=docRef.id;
+        console.log(n_id);
+        await docRef.set({
+          id: n_id,
+          recipient: user.id,
+          title,
+          description,
+          facility,
+          submittedBy: uid,
+          start,
+          end,
+          read: "false"
+        });
+      }
+
+    const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
+    const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
+
+
+
+
+    const overlapping = await db.collection("bookings")
+      .where("facility", "==", facility)
+      .where("status", "==","Approved")
+      .where("start", "<", newEnd)
+      .where("end", ">", newStart)
+      .get();
+
+    if (!overlapping.empty) {
+      return res.status(409).json({ error: "Event conflict detected" });
+    }
+
+
+    await db.collection("bookings").add({
+      title,
+      description,
+      facility,
+      submittedBy: uid,
+      //date,
+      status:"Approved",
+      start:newStart,
+      end:newEnd,
+      who,
+      //createdAt: new Date(),
+    });
+
+    res.status(200).json({ message: "Report submitted" });
+  }
+  catch{
+    console.error("Report save error:", error);
+    res.status(500).json({ error: "Failed to save event" });
+}
+
+});
+
+
+
+//----------------------------------------------------------//
 
 //API Endpoint for Listing notifications
 app.get("/api/notifications", verifyToken,async (req, res) => {
