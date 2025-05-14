@@ -1,4 +1,4 @@
-import { auth } from './firebase.js';
+import { auth } from '../../utils/firebase';
 
 // Elements
 const newIssueBtn = document.getElementById('newIssueBtn');
