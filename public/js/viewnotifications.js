@@ -30,9 +30,13 @@ const closeViewBtn = document.getElementById("closeViewBtn");
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
+    if(counter){
+      await countread(user);
+    }
+    else{
+      await loadnotifications(user);
+    }
     
-    await loadnotifications(user);
-    await countread(user);
   } else {
     console.log("No user signed in");
     alert("You need to be signed in to view issues.");
@@ -110,7 +114,6 @@ async function loadnotifications(user) {
 }
 
 
-
 async function countread(user){
     const token = await user.getIdToken();
     const res = await fetch("https://sports-management.azurewebsites.net/api/count-read", {
@@ -125,23 +128,27 @@ async function countread(user){
       if (counter) {
         counter.innerText = countRead;
         counter.style.visibility = countRead === 0 ? "hidden" : "visible";
+
+        setInterval(function() {location.reload();}, 20000);
+
       } else {
         console.warn("Counter element not found in the DOM.");
       }
-     
       console.log("Number of unread notification : ",countRead)
+}
+if(viewModal){
+    viewModal.addEventListener("click", (e) => {
+    if (e.target === viewModal) {
+      viewModal.hidden = true;
+    }
+  });
 
+  closeViewBtn.addEventListener("click", () => {
+    viewModal.hidden = true;
+  });
 }
 
-viewModal.addEventListener("click", (e) => {
-  if (e.target === viewModal) {
-    viewModal.hidden = true;
-  }
-});
 
-closeViewBtn.addEventListener("click", () => {
-  viewModal.hidden = true;
-});
 
 
 })
