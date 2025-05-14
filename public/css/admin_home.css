@@ -1,7 +1,7 @@
 /* Reset default margins/padding */
 /* -------------------------------------------------------------THIS IS THE CSS FOR CREATE EVENT BUTTON---------------------------------------------------- */
   /* Create event button css */
-  #eventBtn {
+  /* #eventBtn {
     position: absolute;
     top: 160px;
     left: 50px;
@@ -9,7 +9,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-  }
+  } */
 
   #eventBtn{
     /* button:not(#userImgBtn){   */
@@ -27,9 +27,8 @@
 
 
 
-
-  button:not(#userImgBtn):not(#eventBtn){
-    /* button:not(#userImgBtn){   */
+  /* button:not(#userImgBtn):not(#eventBtn){   */
+    button:not(#userImgBtn){  
       width: 250px;
       height: 80px;
       font-size: 20px;
