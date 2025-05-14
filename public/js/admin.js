@@ -21,7 +21,7 @@ document.getElementById("reportBtn").addEventListener("click", () => {
 
 //---------------------------------------------------------------------------------------------------------------// 
 
-import { auth } from './firebase.js';
+import { auth } from '../../utils/firebase';
 
 const eventBtn = document.getElementById('eventBtn');
 const Modal = document.getElementById('addModal');

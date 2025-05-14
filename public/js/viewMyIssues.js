@@ -1,6 +1,6 @@
 // viewMyIssues.js
 
-import { auth } from './firebase.js';
+import { auth } from '../../firebase';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 const tableBody = document.getElementById("issuesTable");
