@@ -5,16 +5,9 @@ import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
-
 dotenv.config();
-
 console.log('Server is starting');
-
-
-
-
-const serviceAccountPath = path.resolve('./serviceAccountKey.json');
-
+const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 
 if (!fs.existsSync(serviceAccountPath)) {
   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
@@ -24,7 +17,7 @@ if (!fs.existsSync(serviceAccountPath)) {
 const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
-// const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+//const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 
 // Initialize Firebase Admin SDK with the service account credentials
@@ -442,7 +435,18 @@ app.delete('/api/user/:id',async (req,res)=>{
    
   }
 })
-
+app.get('/api/adminInfo/:id',async (req,res)=>{
+  try {
+    const userId=req.params.id;
+    const user=db.collection('users').doc(userId).get();
+   
+    res.status(200).json({user
+    });
+  } catch (error) {
+    console.error(error);
+    
+  }
+})
 
 app.get('/api/user/:id',async (req,res)=>{
   try {
@@ -622,7 +626,7 @@ app.post("/api/get-user", async (req, res) => {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
     const uid = decodedToken.uid;
-
+    
     const userDoc = await db.collection("users").doc(uid).get();
 
     if (!userDoc.exists) {

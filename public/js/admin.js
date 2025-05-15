@@ -16,6 +16,9 @@ document.getElementById("reportBtn").addEventListener("click", () => {
   document.getElementById("bookingsBtn").addEventListener("click", () => {
     window.location.href = "./staff_admin_booking.html"; 
   });
+  document.getElementById("dashboardBtn").addEventListener("click", () => {
+    window.location.href = "./reports_dashboard.html"; 
+  });
 
 
 

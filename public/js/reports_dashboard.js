@@ -2,6 +2,10 @@
 
 
 
+import { getPieChartData } from './piechart_issues.js';
+
+
+
 import { totUsers } from './tot_users.js';
 
 document.addEventListener("DOMContentLoaded",async function () {
@@ -103,24 +107,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  var options = {
+document.addEventListener("DOMContentLoaded", function() {
+  initializePieChart().catch(error => {
+    console.error("Pie chart failed:", error);
+    document.querySelector(".piechart").textContent = "Could not load data";
+  });
+});
+
+async function initializePieChart() {
+  const pieData = await getPieChartData();
+  
+  const options = {
     chart: {
-      type: 'bar',
-      height: 350
+      type: 'pie',
+      height: 350,
     },
-    series: [{
-      name: 'Sales',
-      data: [30, 40, 45, 50, 49, 60, 70]
-    }],
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    }
+    series: pieData.series,
+    labels: pieData.labels,
+    colors: ['#00E396', '#FF4560']
   };
 
-  var chart = new ApexCharts(document.querySelector(".piechart"), options);
-  chart.render();
-});
+  new ApexCharts(document.querySelector(".piechart"), options).render();
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {

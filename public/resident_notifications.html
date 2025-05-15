@@ -7,70 +7,57 @@
 </head>
 <body>
   <header>
-   
   </header>
-
   <main>
-    <!-- Issues Table -->
-    <section aria-label="Reported Issues">
+    <section class="table-container">
       <table id="notificationTable">
         <thead>
           <tr>
+            <th>From</th>
             <th>Events</th>
+            <th>Received</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Rows will be inserted dynamically from Firebase -->
         </tbody>
       </table>
     </section>
 
-    <!-- View Issue Modal -->
+    <!-- View Modal -->
     <section id="viewModal" hidden aria-modal="true" role="dialog">
       <article>
         <header>
           <h2>Event Details</h2>
         </header>
+
         <br>
-        <section>
-          <p><strong>Description:</strong></p>
-          <p id="describe"></p>
-        </section>
-        <br>
-        <section>
-          <p><strong>Date:</strong></p>
-          <p id="date"></p>
-        </section> 
-        <br>
-        <section>
-          <p><strong>Facility:</strong></p>
+        <section class="inline-section">
+          <p><strong>📍Facility:</strong></p>
           <p id="facility"></p>
         </section>
         <br>
-        <section>
-          <p><strong>Time:</strong></p>
-          <section style="margin-left: 20px;">
-            <p>Start</p>
-            <p id="start"></p>
-            <p>" "</p>
-            <p>End</p>
-            <p id="end"></p>
-          </section>
+        <section class="inline-section">
+          <p><strong>📆Start:</strong></p>
+          <p id="start"></p>
         </section>
         <br>
-       
-
+        <section class="inline-section">
+          <p><strong>🕧End:</strong></p>
+          <p id="end"></p>
+        </section>
+         <br>
+        <section>
+          <p><strong>📑Description:</strong></p>
+          <p id="describe"></p>
+        </section>
         <footer>
           <button type="button" id="closeViewBtn">Close</button>
         </footer>
       </article>
     </section>
-
-
   </main>
-
-  <!-- Firebase scripts -->
   <script type="module" src="js/viewnotifications.js" defer></script>
-  
+
+
 </body>
 </html>
