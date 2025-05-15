@@ -71,12 +71,9 @@ function setupCalendar(calendarEl){
 
 document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
-
     setupCalendar(calendarEl);
-    
-    
-
 })
+
 
 export { mapDocsToEvents, fetchEvents, setupCalendar};
 
