@@ -2,9 +2,6 @@
 /* -------------------------------------------------------------THIS IS THE CSS FOR CREATE EVENT BUTTON---------------------------------------------------- */
   /* Create event button css */
  
-
-
-
   button:not(#userImgBtn):not(#eventBtn){
     /* button:not(#userImgBtn){   */
       width: 250px;
