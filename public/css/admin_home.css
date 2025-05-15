@@ -223,3 +223,21 @@
     vertical-align: middle;
   }
     
+
+    /* Form inside Modal(This about the color of the background in dropdown) */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form select {
+  background-color: #333;
+  color: white;
+  border: 1px solid white;
+}
+
+form select option {
+  background-color: #333;
+  color: white;
+}
