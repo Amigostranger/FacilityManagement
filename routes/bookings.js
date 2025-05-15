@@ -1,7 +1,6 @@
 import express from 'express';
-import { db, admin } from '../utils/firebase.js'
+import { db } from '../utils/firebase.js'
 import { verifyToken } from '../middleware/verifyToken.js'
-
 
 import admin from 'firebase-admin';
 
