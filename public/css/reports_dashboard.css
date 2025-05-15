@@ -49,7 +49,7 @@ section.lower-graphs {
 article {
   background-color: #f5f5f5;
   padding: 160px; /* this shouldn't override the smaller ones */
-  border-radius: 50px;
+  border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   flex: 1;
   min-width: 250px;
@@ -59,19 +59,32 @@ article {
 
 
 /* Larger articles */
-article.facility-bargraph {
+/* article.facility-bargraph {
   padding: 320px;
 }
 
 article.months-bargraph{
   padding: 270px;
-}
-article.piechart{
+}  */
+
+/* article.months-bargraph {
+  padding: 20px;
+  height: 400px; /* already defined in base article rule 
+} */
+/* article.piechart{
   padding: 190px;
 }
 article.line-graph{
   padding: 270px;
-}
+}*/
+
+article.facility-bargraph,
+article.months-bargraph,
+article.piechart,
+article.line-graph,
+article.line-graph {
+  padding: 20px;  
+} 
 
 
 .upper-graphs .total-users,
