@@ -1,7 +1,7 @@
 /* Reset default margins/padding */
 /* -------------------------------------------------------------THIS IS THE CSS FOR CREATE EVENT BUTTON---------------------------------------------------- */
   /* Create event button css */
-  #eventBtn {
+  /* #eventBtn {
     position: absolute;
     top: 160px;
     left: 50px;
@@ -9,7 +9,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-  }
+  } */
 
   #eventBtn{
     /* button:not(#userImgBtn){   */
@@ -25,9 +25,7 @@
       backdrop-filter: blur(4px);   
     }
 
-
-
-
+ 
   button:not(#userImgBtn):not(#eventBtn){
     /* button:not(#userImgBtn){   */
       width: 250px;
@@ -224,3 +222,21 @@
     vertical-align: middle;
   }
     
+
+    /* Form inside Modal(This about the color of the background in dropdown) */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form select {
+  background-color: #333;
+  color: white;
+  border: 1px solid white;
+}
+
+form select option {
+  background-color: #333;
+  color: white;
+}
