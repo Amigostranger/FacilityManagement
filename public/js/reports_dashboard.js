@@ -5,24 +5,50 @@
 import { getPieChartData } from './piechart_issues.js';
 import { getBookingsData } from './linegraph_bookings.js';
 
- document.addEventListener("DOMContentLoaded", function () {
+
+
+import { totalUsers,getTotalUsers } from './tot_users.js';
+
+document.addEventListener("DOMContentLoaded",async function () {
+   
+  await getTotalUsers()
+
+
+
+
+  
   var options = {
     chart: {
-      type: 'bar',
-      height: 350
+      type: 'radialBar',
+      height: 250
     },
-    series: [{
-      name: 'Sales',
-      data: [30, 40, 45, 50, 49, 60, 70]
-    }],
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    series: [100],
+    labels: ['Users'],
+    plotOptions: {
+      radialBar: {
+        dataLabels: {
+          name: {
+            fontSize: '20px',
+          },
+          value: {
+            fontSize: '25px',
+          },
+          total: {
+            show: true,
+            label: 'Total Users ',
+            formatter: function () {
+              return totalUsers.toString(); 
+            }
+          }
+        }
+      }
     }
   };
 
   var chart = new ApexCharts(document.querySelector("#tot_users"), options);
   chart.render();
 });
+
 
  document.addEventListener("DOMContentLoaded", function () {
   var options = {
