@@ -1,4 +1,3 @@
-import { auth } from '../utils/firebase.js'
 
 let getIt=null;
 // Middleware to verify Firebase ID token
