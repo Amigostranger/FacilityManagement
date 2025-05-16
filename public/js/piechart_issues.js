@@ -8,7 +8,7 @@ export async function getPieChartData() {
     }
     try {
         const idToken = await user.getIdToken();
-        const response = await fetch('https://sports-management.azurewebsites.net/api/issues/status-counts', {
+        const response = await fetch('https://sports-management.azurewebsites.net/api/status-counts', {
             headers: {
                 "Authorization": `Bearer ${idToken}`
             }
