@@ -11,6 +11,11 @@ import { totalUsers,getTotalUsers } from './tot_users.js';
 document.addEventListener("DOMContentLoaded",async function () {
    
   await getTotalUsers()
+
+
+
+
+  
   var options = {
     chart: {
       type: 'radialBar',
