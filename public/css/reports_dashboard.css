@@ -24,12 +24,43 @@ body {
 
 /* Make all-graphs fill viewport width and stack vertically */
 .all-graphs {
-  width: 100%;
-  max-width: 1200px; /* Optional: limit width for better appearance */
+  width: 95%;
+  /* Optional: limit width for better appearance */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 40px;
+}
+
+.upper-graphs .active-users
+{
+  display: flex;
+  flex-direction: column;
+  background: #f6f2f2;
+  color: #fff;
+  padding: 1px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  width: 220px;
+  height: 85%;
+}
+.counts-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; /* Optional: vertically centers items */
+    width: 100%;
+    margin-top: 10px;
+    font-size: 10px;
+    font-family: Arial, sans-serif; /* Specify a fallback font */
+    font-weight: bold;
+    padding: 0; /* Reset padding if needed */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.count-item {
+  color: blue;
+  font-size: 14px;
+  text-align: center;
 }
 
 /* Each section fills full width and lays out content horizontally */
@@ -41,8 +72,8 @@ section.lower-graphs {
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  gap: 25px;
-  padding: 20px;
+  gap: 10px;
+  padding: 1px;
   box-sizing: border-box;
 }
 
@@ -57,27 +88,6 @@ article {
   height: 400px;
 }
 
-
-/* Larger articles */
-/* article.facility-bargraph {
-  padding: 320px;
-}
-
-article.months-bargraph{
-  padding: 270px;
-}  */
-
-/* article.months-bargraph {
-  padding: 20px;
-  height: 400px; /* already defined in base article rule 
-} */
-/* article.piechart{
-  padding: 190px;
-}
-article.line-graph{
-  padding: 270px;
-}*/
-
 article.facility-bargraph,
 article.months-bargraph,
 article.piechart,
@@ -88,7 +98,6 @@ article.line-graph {
 
 
 .upper-graphs .total-users,
-.upper-graphs .active-users,
 .upper-graphs .report {
   height: 200px;
   padding: 40px;
