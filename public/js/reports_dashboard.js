@@ -1,3 +1,6 @@
+import { auth } from '../../utils/firebase.js';
+
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 
 
@@ -113,29 +116,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        const pieData = await getPieChartData();
 
-document.addEventListener("DOMContentLoaded", function() {
-  initializePieChart().catch(error => {
-    console.error("Pie chart failed:", error);
-    document.querySelector(".piechart").textContent = "Could not load data";
+        const options = {
+          chart: {
+            type: 'pie',
+            height: 350,
+          },
+          series: pieData.series,
+          labels: pieData.labels,
+          colors: ['#00E396', '#FF4560']
+        };
+
+        new ApexCharts(document.querySelector(".piechart"), options).render();
+      } catch (error) {
+        console.error("Pie chart failed:", error);
+        document.querySelector(".piechart").textContent = "Could not load data";
+      }
+    } else {
+      console.warn("User not logged in yet");
+      document.querySelector(".piechart").textContent = "Please log in to view data";
+    }
   });
 });
 
-async function initializePieChart() {
-  const pieData = await getPieChartData();
-  
-  const options = {
-    chart: {
-      type: 'pie',
-      height: 350,
-    },
-    series: pieData.series,
-    labels: pieData.labels,
-    colors: ['#00E396', '#FF4560']
-  };
-
-  new ApexCharts(document.querySelector(".piechart"), options).render();
-}
 
 
 document.addEventListener("DOMContentLoaded", function() {

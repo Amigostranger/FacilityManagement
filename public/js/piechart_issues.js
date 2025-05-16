@@ -1,32 +1,32 @@
-import { db } from '../../utils/firebase.js';
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { auth } from '../../utils/firebase.js';
 
 export async function getPieChartData() {
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Please log in first.");
+        return { series: [], labels: [] };
+    }
     try {
-        const issuesCollection = collection(db, "Issues");
-        const querySnapshot = await getDocs(issuesCollection);
-        
-        let solvedCount = 0;
-        let unsolvedCount = 0;
-
-        querySnapshot.forEach(doc => {
-            const data = doc.data();
-            if (data.status) {
-                
-                if (data.status.toLowerCase() === "solved") {
-                    solvedCount++;
-                } else {
-                    unsolvedCount++;
-                }
+        const idToken = await user.getIdToken();
+        const response = await fetch('https://sports-management.azurewebsites.net/api/issues/status-counts', {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
             }
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        // Handle both possible response structures
         return {
-            series: [solvedCount, unsolvedCount],
-            labels: ["Solved", "Unsolved"]
+            series: result.data?.series || result.series || [],
+            labels: result.data?.labels || result.labels || []
         };
     } catch (error) {
         console.error("Error fetching pie chart data:", error);
-        throw error;
+        return { series: [], labels: [] };
     }
 }
