@@ -7,17 +7,17 @@ import fs from 'fs';
 import path from 'path';
 dotenv.config();
 console.log('Server is starting');
-const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+//const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 
 // if (!fs.existsSync(serviceAccountPath)) {
 //   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
 //   process.exit(1);
 // }
 
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+//onst serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
-//const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 
 // Initialize Firebase Admin SDK with the service account credentials
@@ -77,7 +77,6 @@ const verifyToken = async (req, res, next) => {
 
 
 
-
 app.put('/api/user-revoke/:id',async (req,res)=>{
 
   const userID=req.params.id;
@@ -112,6 +111,61 @@ app.put('/api/user-revoke/:id',async (req,res)=>{
 
 
 })
+//API Endpoint for All bookings
+app.get("/api/activeUsers",async (req,res) => {
+  
+  try {
+    const getIssues=await db.collection("Issues").get();
+    const issues=getIssues.docs.map(doc =>({
+      bookId:doc.id,
+      ...doc.data()
+    }))
+    const usersSnapshot = await db.collection("users").get();
+    const totalUsers = usersSnapshot.docs.length; 
+
+    const now = new Date();
+
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const lastWeekStart = new Date(today);
+    lastWeekStart.setDate(today.getDate() - 7 - today.getDay() + 1);
+
+    const lastWeekEnd = new Date(lastWeekStart);
+    lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
+
+    const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1); // 1st of last month
+    const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0); // Last day of last month
+
+
+    // Convert Firestore timestamp and filter
+    const lastWeekIssues = issues.filter(issue => {
+      const createdAt = issue.createdAt?.seconds 
+        ? new Date(issue.createdAt.seconds * 1000) 
+        : new Date(issue.createdAt._seconds * 1000);
+      
+      return createdAt >= lastWeekStart && createdAt <= lastWeekEnd;
+    });
+
+    const lastMonthIssues = issues.filter(issue => {
+      const createdAt = issue.createdAt?.seconds 
+        ? new Date(issue.createdAt.seconds * 1000) 
+        : new Date(issue.createdAt._seconds * 1000);
+      
+      return createdAt >= lastMonthStart && createdAt <= lastMonthEnd;
+    });
+
+    
+
+    res.status(200).send({
+            lastWeek: lastWeekIssues.length,
+            lastMonth: lastMonthIssues.length,
+            totalUsers:totalUsers
+        });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+})
 //API Endpoint for Reading a notification
 app.post("/api/read", verifyToken, async (req, res) => {
   const n_id = req.body.notification;
@@ -135,61 +189,6 @@ app.post("/api/read", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to mark as read" });
   }
 });
-// //API Endpoint for creating an event
-// app.post("/api/createEvent", verifyToken,async (req,res) => {
-//   const {title, description, facility, date, start, end, who}=req.body 
-//   const uid=req.user.uid;
-//   if (!title || !description || !facility || !start || !end || !who) {
-//     return res.status(400).json({ error: "All fields required" });
-//   }
-
-//   try {
-//     const snapShot=await db.collection("users").where("role","==","resident").get();
-
-//     const users= snapShot.docs.map(doc => ({
-//       id: doc.id,
-//       ...doc.data(),
-//     }));
-
-//     for (const user of users) {
-//       const docRef = db.collection("notifications").doc();
-//       const n_id=docRef.id;
-//       console.log(n_id);
-//       await docRef.set({
-//         id: n_id,
-//         recipient: user.id,
-//         title,
-//         description,
-//         facility,
-//         submittedBy: uid,
-//         date,
-//         start,
-//         end,
-//         read: "false"
-//       });
-//     }
-  
-    
-//     await db.collection("bookings").add({
-//       title,
-//       description,
-//       facility,
-//       submittedBy: uid,
-//       date,
-//       start,
-//       end,
-//       who,
-    
-//     });
-
-//     res.status(200).json({ message: "Report submitted" });
-//   }
-//   catch{
-//     console.error("Report save error:", error);
-//     res.status(500).json({ error: "Failed to save event" });
-// }
-
-// });
 
 //API Endpoint for Listing notifications
 app.get("/api/count-read", verifyToken,async (req, res) => {
@@ -246,8 +245,8 @@ app.post("/api/createEvent", verifyToken,async (req,res) => {
         });
       }
 
-    const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
-    const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
+      const newStart = admin.firestore.Timestamp.fromDate(new Date(start));
+      const newEnd = admin.firestore.Timestamp.fromDate(new Date(end));
 
 
 
