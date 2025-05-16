@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function updateChart(month) {
     try {
-      const response = await fetch(`http://localhost:3000/api/bookings-per-facility?month=${month}`);
+      const response = await fetch(`https://sports-management.azurewebsites.net/api/bookings-per-facility?month=${month}`);
       const data = await response.json();
 
       const categories =  ['Soccer Field', 'Basketball Court','Cricket Field', 'Netball Court','EsportsHall ', 'Chess Hall'];
