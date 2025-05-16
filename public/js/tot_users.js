@@ -1,24 +1,21 @@
 
 // import fetch from 'node-fetch';  
-
-export async function getTotalUsers() {
+let totalUsers=0
+async function getTotalUsers() {
   try {
-    const response = await fetch('http://localhost:3000/api/get-users', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch('https://sports-management.azurewebsites.net/api/get-users')
 
     if (!response.ok) {
-      console.error('Failed to fetch users:', response.status);
-      return 0;
+
+      totalUsers= 0;
     }
 
     const data = await response.json();
-    return data.length;
+    totalUsers= data.length;
   } catch (error) {
     console.error('Fetch error:', error);
-    return 0;
+    totalUsers= 0;
   }
 }
 
-//export { totUsers };
+export {totalUsers,getTotalUsers}

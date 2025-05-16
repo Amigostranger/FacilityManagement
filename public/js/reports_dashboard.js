@@ -6,31 +6,32 @@ import { getPieChartData } from './piechart_issues.js';
 
 
 
-import { totUsers } from './tot_users.js';
+import { totalUsers,getTotalUsers } from './tot_users.js';
 
 document.addEventListener("DOMContentLoaded",async function () {
-   //const totalUsers = await getTotalUsers();
+   
+  await getTotalUsers()
   var options = {
     chart: {
       type: 'radialBar',
       height: 250
     },
-    series: [75], 
+    series: [100],
     labels: ['Users'],
     plotOptions: {
       radialBar: {
         dataLabels: {
           name: {
-            fontSize: '16px',
+            fontSize: '20px',
           },
           value: {
-            fontSize: '22px',
+            fontSize: '25px',
           },
           total: {
             show: true,
-            label: 'Total',
+            label: 'Total Users ',
             formatter: function () {
-              return 80; 
+              return totalUsers.toString(); 
             }
           }
         }
