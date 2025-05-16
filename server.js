@@ -142,7 +142,7 @@ app.post("/api/read", verifyToken, async (req, res) => {
 });
 
 
-app.get('/api/issues/status-counts', verifyToken, async (req, res) => {
+app.get('/api/status-counts', verifyToken, async (req, res) => {
   try {
     const snapshot = await db.collection("Issues").get();
     
