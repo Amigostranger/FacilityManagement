@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const chart = new ApexCharts(document.querySelector("#bookingsChart"), {
   //const options = {
     chart: {
-      height: 350,
+      height: 300,
       type: 'bar',
     },
     series: [{name: 'Bookings', data: []}],
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(`http://localhost:3000/api/bookings-per-facility?month=${month}`);
       const data = await response.json();
 
-      const categories = Object.keys(data);
+      const categories =  ['Soccer Field', 'Basketball Court','Cricket Field', 'Netball Court','EsportsHall ', 'Chess Hall'];
       const counts = Object.values(data);
 
       chart.updateOptions({

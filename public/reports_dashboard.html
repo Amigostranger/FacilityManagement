@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resident Homepage</title>
+    <title>Reports Dashboard</title>
     <link rel="stylesheet" href="css/reports_dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="module" src="js/barGraph.js" defer></script>
@@ -11,7 +11,22 @@
 <body>
 
 <section class="all-graphs">
-    
+
+    <button onclick="window.print()">Export as PDF</button>
+    <section class="upper-graphs">
+        <article class="total-users" id="tot_users">
+        </article>
+        <article class="active-users" id="act_users">
+        <section id="median-ratio"></section>
+
+        <section class="counts-row">
+            <section class="count-item" id="week-count"></section>
+            <section class="count-item" id="month-count"></section>
+        </section>
+        </article>
+        <article class="report">
+        </article>
+    </section>
     <section class="middle-graphs">
         <article class="facility-bargraph" id="facility-bar">
             <section>
