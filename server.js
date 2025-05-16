@@ -16,8 +16,6 @@ dotenv.config();
 
 console.log('Server is starting');
 
-const serviceAccountPath = path.resolve('./serviceAccountKey.json');
-
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
