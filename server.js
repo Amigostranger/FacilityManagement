@@ -19,7 +19,7 @@ const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 // }
 
 
-//onst serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+//const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
 

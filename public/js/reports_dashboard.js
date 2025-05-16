@@ -3,20 +3,10 @@ import { auth } from '../../utils/firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { getPieChartData } from './piechart_issues.js';
 import { getBookingsData } from './linegraph_bookings.js';
-
-
-
-
 import { totalUsers,getTotalUsers } from './tot_users.js';
 
 document.addEventListener("DOMContentLoaded",async function () {
-   
   await getTotalUsers()
-
-
-
-
-  
   var options = {
     chart: {
       type: 'radialBar',
