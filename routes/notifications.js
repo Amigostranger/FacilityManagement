@@ -64,6 +64,20 @@ const createNotificationsRouter = (db, admin) => {
     }
   });
 
+  router.get('/api/adminInfo/:id',async (req,res)=>{
+  try {
+    const userId=req.params.id;
+    const user=db.collection('users').doc(userId).get();
+   
+    res.status(200).json({user
+    });
+  } catch (error) {
+    console.error(error);
+    
+  }
+  })
+
+
   return router;
 
 };

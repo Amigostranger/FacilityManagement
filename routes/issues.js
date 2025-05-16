@@ -48,6 +48,50 @@ const router = express.Router();
     }
   });
     
+  router.get('/api/status-counts', verifyToken(admin.auth()), async (req, res) => {
+  try {
+    const snapshot = await db.collection("Issues").get();
+    
+    let counts = {
+      solved: 0,
+      unsolved: 0
+    };
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      
+      // Explicit null/undefined check
+      if (!data || typeof data.status !== 'string') {
+        counts.unsolved++; // Count as unsolved if status is missing or invalid
+        return; // Continue to next document
+      }
+
+      const status = data.status.toLowerCase();
+      
+      if (status === "solved") {
+        counts.solved++;
+      } else {
+        counts.unsolved++; // Count everything else as unsolved
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        series: [counts.solved, counts.unsolved],
+        labels: ["Solved", "Unsolved"]
+      }
+    });
+
+  } catch (error) {
+    console.error("Error fetching status counts:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch issue status counts"
+    });
+  }
+  });
+
   return router
 
 };

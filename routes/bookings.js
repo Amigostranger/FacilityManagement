@@ -157,6 +157,32 @@ const router = express.Router();
   }
   })
 
+  app.get('/api/get-bookings-per-month', async (req, res) => {
+  try {
+    const bookingsRef = db.collection("bookings");
+    const snapshot = await bookingsRef.get();
+    
+    const monthlyCounts = new Array(12).fill(0);
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      if (data.start) {
+        const date = data.start.toDate(); 
+        const month = date.getMonth(); // 0 = January, 11 = December
+        monthlyCounts[month]++;
+      }
+    });
+
+    res.json(monthlyCounts);
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    res.status(500).json({ 
+      error: "Failed to get bookings data",
+      details: error.message 
+    });
+  }
+  });
+
   return router;
 
 };
