@@ -5,11 +5,19 @@ import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
+
+
+import userRoutes from './routes/users.js';
+import notificationRoutes from './routes/notifications.js';
+import bookingRoutes from './routes/bookings.js';
+import issuesRoutes from './routes/issues.js';
+
 dotenv.config();
+
 console.log('Server is starting');
 
-const serviceAccountPath = path.resolve('../serviceAccountKey.json');
-//const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+//const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
 
 
@@ -19,18 +27,14 @@ const serviceAccountPath = path.resolve('../serviceAccountKey.json');
 // }
 
 
-//const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
-
-// Initialize Firebase Admin SDK with the service account credentials
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
 
 const db = admin.firestore();
 const auth = admin.auth();
@@ -39,11 +43,9 @@ const app = express();
 import { fileURLToPath } from 'url';
 import { get } from 'https';
 
-// Recreate __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// Define CORS options
-// Define CORS options
+
 const corsOptions = {
   origin: [
     'http://127.0.0.1:5500',
@@ -52,49 +54,25 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-// Apply CORS middleware
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, 'public'))); // 
-
-// Handle preflight requests globally
-//app.options('*', cors(corsOptions));
+app.use(express.static(path.join(__dirname, 'public'))); 
 
 app.use(express.json());
+
 app.use(bodyParser.json());
 
-let getIt=null;
-// Middleware to verify Firebase ID token
-const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "Token is required" });
-  }
 
-  try {
-    getIt=token;
-    const decodedToken = await auth.verifyIdToken(token);
-    req.user = decodedToken;
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: "Invalid or expired token" });
-  }
-};
+//Routes--------------------------------------------------------------------------------------------
 
+app.use('/', userRoutes(db, admin));
 
+app.use('/', notificationRoutes(db, admin));
 
-app.put('/api/user-revoke/:id',async (req,res)=>{
+app.use('/', bookingRoutes(db, admin));
 
-  const userID=req.params.id;
-  const {status}=req.body;
-  // const user=db.collection('users').doc(userID);
-  // if(!user.exists){
-  //   return res.status(404).json({ error: "user not found" });
-  // }
+app.use('/', issuesRoutes(db, admin));
 
-  // if(user.status!=status){
-  //   await doc(userID).update({status:"revoked"});
-  // }
 
   try {
     
@@ -115,8 +93,6 @@ app.put('/api/user-revoke/:id',async (req,res)=>{
     return res.status(500).json({ error: error.message });
   }
 
-
-})
 //API Endpoint for All bookings
 app.get("/api/activeUsers",async (req,res) => {
   
@@ -375,6 +351,33 @@ app.get("/api/issues", verifyToken,async (req, res) => {
     res.status(500).json({ error: "Failed to get issues" });
   }
 });
+
+//--------------------------barGraph Endpoint--------------------------------------//
+app.get('/api/bookings-per-facility', async (req, res) => {
+  const month = req.query.month; // Format: '2025-03'
+
+  if (!month) return res.status(400).json({ error: 'Missing month param' });
+
+  const startDate = new Date(`${month}-01T00:00:00Z`);
+  const endDate = new Date(startDate);
+  endDate.setMonth(endDate.getMonth() + 1);
+
+  const snapshot = await db.collection('bookings')
+    .where('status', '==', 'Approved')
+    .where('end', '>=', startDate)
+    .where('end', '<', endDate)
+    .get();
+
+  const facilityCounts = {};
+
+  snapshot.forEach(doc => {
+    const facility = doc.get('facility') || 'Unknown';
+    facilityCounts[facility] = (facilityCounts[facility] || 0) + 1;
+  });
+
+  res.json(facilityCounts);
+});
+//----------------------------------------------------------//
 
 
 
@@ -654,6 +657,8 @@ try {
 }
 })
 
+//Public Pages---------------------------------------------------------------------------------------
+
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'register_page.html'));
 });
@@ -662,73 +667,15 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname,'public', 'login_page.html'));
 });
 
-
-
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname,'public', 'login_page.html'));
 });
 
 app.use(express.static(__dirname));
 
-// Endpoint to get user from Firestore
-app.post("/api/get-user", async (req, res) => {
-  const authHeader = req.headers.authorization || "";
-  const token = authHeader.split("Bearer ")[1];
 
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(token);
-    const uid = decodedToken.uid;
-    
-    const userDoc = await db.collection("users").doc(uid).get();
+//Error Handling--------------------------------------------------------------------------------------------
 
-    if (!userDoc.exists) {
-      return res.status(404).send({ error: "Create an Account!" });
-    }
-    
-
-    const userData = userDoc.data();
-    if(userData.status=="revoked"){
-      //console.log(userData.status);
-      
-      return res.status(404).send({ error: "Account revoked!" });
-    }
-
-    res.status(200).send(userData);
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(401).send({ error: "Unauthorized" });
-  }
-});
-
-app.get('/api/get-bookings-per-month', async (req, res) => {
-  try {
-    const bookingsRef = db.collection("bookings");
-    const snapshot = await bookingsRef.get();
-    
-    const monthlyCounts = new Array(12).fill(0);
-
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      if (data.start) {
-        const date = data.start.toDate(); 
-        const month = date.getMonth(); // 0 = January, 11 = December
-        monthlyCounts[month]++;
-      }
-    });
-
-    res.json(monthlyCounts);
-  } catch (error) {
-    console.error("Error fetching bookings:", error);
-    res.status(500).json({ 
-      error: "Failed to get bookings data",
-      details: error.message 
-    });
-  }
-});
-
-
-
-// Global error handlers
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
 });
@@ -737,10 +684,10 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection:', reason);
 });
 
-// Start the server
 const PORT = process.env.PORT || 3000||5173;
 
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(` Server running on port: ${PORT}`);
 });
 
+  
