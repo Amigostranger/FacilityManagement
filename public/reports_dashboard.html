@@ -6,39 +6,46 @@
     <title>Resident Homepage</title>
     <link rel="stylesheet" href="css/reports_dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="module" src="js/barGraph.js" defer></script>
 </head>
 <body>
 
 <section class="all-graphs">
-    <section class="upper-graphs">
-        <article class="total-users" id="tot_users">
-
-        </article>
-        <article class="active-users"  id="act_users">
-
-        </article>
-        <article class="report">
-
-        </article>
-    </section>
+    
     <section class="middle-graphs">
         <article class="facility-bargraph" id="facility-bar">
+            <section>
+        <section>
+    <!-- <h2>Bookings Per Facility</h2> -->
 
+    <label for="monthSelect">Select Month:</label>
+    <select id="monthSelect">
+      <!-- <option value="blank">Please select a month</option> -->
+      <option value="2025-01">January 2025</option>
+      <option value="2025-02">February 2025</option>
+      <option value="2025-03">March 2025</option>
+      <option value="2025-04">April 2025</option>
+      <option value="2025-05">May 2025</option>
+      <option value="2025-06">June 2025</option>
+      <option value="2025-07">July 2025</option>
+      <option value="2025-08">August 2025</option>
+      <option value="2025-09">September 2025</option>
+      <option value="2025-10">October 2025</option>
+      <option value="2025-11">November 2025</option>
+      <option value="2025-12">December 2025</option>
+      <!-- Add more months as needed -->
+    </select>
+
+    <section id="bookingsChart" style="max-width: 650px; margin-top: 30px;"></section>
+  </section>
+  <!--------------------------------------------------------------------------------------------------------------->
         </article>
         <article class="piechart" id="pie">
 
-        </article>
+        
 
     </section>
-    <section class="lower-graphs">
-       
-        <article class="line-graph" id="line">
 
-        </article>
-        <article class="months-bargraph" id="months_bar">
-
-        </article>
-    </section>
 </section>
        
       <script type="module" src="js/reports_dashboard.js" ></script>

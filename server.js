@@ -329,6 +329,33 @@ app.get("/api/issues", verifyToken,async (req, res) => {
   }
 });
 
+//--------------------------barGraph Endpoint--------------------------------------//
+app.get('/api/bookings-per-facility', async (req, res) => {
+  const month = req.query.month; // Format: '2025-03'
+
+  if (!month) return res.status(400).json({ error: 'Missing month param' });
+
+  const startDate = new Date(`${month}-01T00:00:00Z`);
+  const endDate = new Date(startDate);
+  endDate.setMonth(endDate.getMonth() + 1);
+
+  const snapshot = await db.collection('bookings')
+    .where('status', '==', 'Approved')
+    .where('end', '>=', startDate)
+    .where('end', '<', endDate)
+    .get();
+
+  const facilityCounts = {};
+
+  snapshot.forEach(doc => {
+    const facility = doc.get('facility') || 'Unknown';
+    facilityCounts[facility] = (facilityCounts[facility] || 0) + 1;
+  });
+
+  res.json(facilityCounts);
+});
+//----------------------------------------------------------//
+
 
 
 
