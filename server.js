@@ -400,6 +400,20 @@ app.get('/api/get-users',async (req,res)=>{
   }
 })
 
+app.get('/api/get-reports',async(req,res)=>{
+    try {
+    const getIt=await db.collection("Issues").get();
+    const reports = getIt.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    res.status(200).send(reports);
+  } catch (error) {
+    console.error(error);
+    
+  }
+})
+
 app.get("/api/staff-bookings",async (req,res) => {
   
   try {
@@ -518,6 +532,9 @@ app.post("/api/report", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to save report" });
   }
 });
+
+
+
 
 app.post("/api/bookings", verifyToken, async (req, res) => {
   const { title, description, facility, start, end, who } = req.body; // Add `who` to request body

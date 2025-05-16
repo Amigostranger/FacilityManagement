@@ -4,7 +4,7 @@
 
 import { getPieChartData } from './piechart_issues.js';
 
-
+import { totalReports,no } from './issuesreport.js';
 
 import { totalUsers,getTotalUsers } from './tot_users.js';
 
@@ -48,6 +48,13 @@ document.addEventListener("DOMContentLoaded",async function () {
   chart.render();
 });
 
+document.addEventListener("DOMContentLoaded",async function () {
+  // document.querySelector("#main-heading")
+  await totalReports();
+  document.getElementById("main-heading").textContent = no;
+})
+
+
 
  document.addEventListener("DOMContentLoaded", function () {
   var options = {
@@ -68,23 +75,9 @@ document.addEventListener("DOMContentLoaded",async function () {
   chart.render();
 });
 
- document.addEventListener("DOMContentLoaded", function () {
-  var options = {
-    chart: {
-      type: 'bar',
-      height: 350
-    },
-    series: [{
-      name: 'Sales',
-      data: [30, 40, 45, 50, 49, 60, 70]
-    }],
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    }
-  };
+ document.addEventListener("DOMContentLoaded", async function () {
+  await totalReports();
 
-  var chart = new ApexCharts(document.querySelector(".report"), options);
-  chart.render();
 });
 
 
