@@ -67,7 +67,7 @@ async function loadnotifications(user) {
     });
     events.forEach(async (event) => {
       const row = document.createElement("tr");
-      const resAdmin= await fetch(`https://sports-management.azurewebsites.net/api/adminInfo/${event.id}`)
+      const resAdmin= await fetch(`http://localhost:3000/api/adminInfo/${event.id}`)
       const adminInfo=await resAdmin.json();
 
       console.log(adminInfo);
