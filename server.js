@@ -16,6 +16,8 @@ dotenv.config();
 
 console.log('Server is starting');
 
+const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
@@ -51,13 +53,13 @@ app.use(bodyParser.json());
 
 //Routes--------------------------------------------------------------------------------------------
 
-app.use('/', userRoutes);
+app.use('/', userRoutes(db, admin));
 
-app.use('/', notificationRoutes);
+app.use('/', notificationRoutes(db, admin));
 
-app.use('/', bookingRoutes);
+app.use('/', bookingRoutes(db, admin));
 
-app.use('/', issuesRoutes);
+app.use('/', issuesRoutes(db, admin));
 
 
 //Public Pages---------------------------------------------------------------------------------------
@@ -90,7 +92,7 @@ process.on('unhandledRejection', (reason, promise) => {
 const PORT = process.env.PORT || 3000||5173;
 
 app.listen(PORT, () => {
-  console.log(` Server running on port ${PORT}`);
+  console.log(` Server running on port: ${PORT}`);
 });
 
   
