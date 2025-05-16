@@ -3,6 +3,7 @@
 
 
 import { getPieChartData } from './piechart_issues.js';
+import { getBookingsData } from './linegraph_bookings.js';
 
 
 
@@ -137,23 +138,54 @@ async function initializePieChart() {
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  var options = {
-    chart: {
-      type: 'bar',
-      height: 350
-    },
-    series: [{
-      name: 'Sales',
-      data: [30, 40, 45, 50, 49, 60, 70]
-    }],
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    }
-  };
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize the chart with empty data first
+    var options = {
+        series: [{
+            name: "Bookings",
+            data: [] // Empty initially
+        }],
+        chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            text: 'Overall Bookings per Month',
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        }
+    };
 
-  var chart = new ApexCharts(document.querySelector(".line-graph"), options);
-  chart.render();
+    var chart = new ApexCharts(document.querySelector(".line-graph"), options);
+    chart.render();
+
+    // Now fetch the data and update the chart
+    getBookingsData().then(monthlyData => {
+        chart.updateSeries([{
+            name: "Bookings",
+            data: monthlyData
+        }]);
+    }).catch(error => {
+        console.error("Error loading booking data:", error);
+        document.querySelector(".line-graph").textContent = "Could not load booking data";
+    });
 });
 
 
