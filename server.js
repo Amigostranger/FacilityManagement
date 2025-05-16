@@ -7,14 +7,20 @@ import fs from 'fs';
 import path from 'path';
 dotenv.config();
 console.log('Server is starting');
-//const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+
+const serviceAccountPath = path.resolve('../serviceAccountKey.json');
+//const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+
+
 
 // if (!fs.existsSync(serviceAccountPath)) {
 //   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
 //   process.exit(1);
 // }
 
+
 //onst serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+
 
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -189,6 +195,53 @@ app.post("/api/read", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to mark as read" });
   }
 });
+
+
+app.get('/api/status-counts', verifyToken, async (req, res) => {
+  try {
+    const snapshot = await db.collection("Issues").get();
+    
+    let counts = {
+      solved: 0,
+      unsolved: 0
+    };
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      
+      // Explicit null/undefined check
+      if (!data || typeof data.status !== 'string') {
+        counts.unsolved++; // Count as unsolved if status is missing or invalid
+        return; // Continue to next document
+      }
+
+      const status = data.status.toLowerCase();
+      
+      if (status === "solved") {
+        counts.solved++;
+      } else {
+        counts.unsolved++; // Count everything else as unsolved
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        series: [counts.solved, counts.unsolved],
+        labels: ["Solved", "Unsolved"]
+      }
+    });
+
+  } catch (error) {
+    console.error("Error fetching status counts:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch issue status counts"
+    });
+  }
+});
+
+
 
 //API Endpoint for Listing notifications
 app.get("/api/count-read", verifyToken,async (req, res) => {
@@ -647,6 +700,31 @@ app.post("/api/get-user", async (req, res) => {
   }
 });
 
+app.get('/api/get-bookings-per-month', async (req, res) => {
+  try {
+    const bookingsRef = db.collection("bookings");
+    const snapshot = await bookingsRef.get();
+    
+    const monthlyCounts = new Array(12).fill(0);
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      if (data.start) {
+        const date = data.start.toDate(); 
+        const month = date.getMonth(); // 0 = January, 11 = December
+        monthlyCounts[month]++;
+      }
+    });
+
+    res.json(monthlyCounts);
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    res.status(500).json({ 
+      error: "Failed to get bookings data",
+      details: error.message 
+    });
+  }
+});
 
 
 
