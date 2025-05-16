@@ -146,54 +146,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Initialize the chart with empty data first
-    var options = {
-        series: [{
-            name: "Bookings",
-            data: [] // Empty initially
-        }],
-        chart: {
-            height: 350,
-            type: 'line',
-            zoom: {
-                enabled: false
-            }
+document.addEventListener("DOMContentLoaded", async function () {
+  try {
+    const monthlyData = await getBookingsData();
+
+    const options = {
+      series: [{
+        name: "Bookings",
+        data: monthlyData
+      }],
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: { enabled: false }
+      },
+      dataLabels: { enabled: false },
+      stroke: { curve: 'straight' },
+      title: {
+        text: 'Overall Bookings per Month',
+        align: 'left'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
         },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: 'straight'
-        },
-        title: {
-            text: 'Overall Bookings per Month',
-            align: 'left'
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'],
-                opacity: 0.5
-            },
-        },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        }
+      },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      }
     };
 
-    var chart = new ApexCharts(document.querySelector(".line-graph"), options);
+    const chart = new ApexCharts(document.querySelector(".line-graph"), options);
     chart.render();
 
-    // Now fetch the data and update the chart
-    getBookingsData().then(monthlyData => {
-        chart.updateSeries([{
-            name: "Bookings",
-            data: monthlyData
-        }]);
-    }).catch(error => {
-        console.error("Error loading booking data:", error);
-        document.querySelector(".line-graph").textContent = "Could not load booking data";
-    });
+  } catch (err) {
+    console.error("Error rendering chart:", err);
+  }
 });
 
 

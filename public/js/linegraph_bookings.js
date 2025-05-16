@@ -1,26 +1,20 @@
-import { db } from '../../utils/firebase.js';
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-export async function getBookingsData() {
-    try {
-        const bookingsCollection = collection(db, "bookings");
-        const querySnapshot = await getDocs(bookingsCollection);
-        
-        const monthlyBookings = new Array(12).fill(0);
-
-        querySnapshot.forEach(doc => {
-            const bookingData = doc.data();
-             console.log("Booking:", bookingData);
-            if (bookingData.start) {
-                const date = bookingData.start.toDate();
-                const month = date.getMonth();
-                monthlyBookings[month]++;
-            }
-        });
-
-        return monthlyBookings;
-    } catch (error) {
-        console.error("Error fetching bar chart data:", error);
-        throw error;
+async function getBookingsData() {
+  try {
+    const response = await fetch('https://sports-management.azurewebsites.net/api/get-bookings-per-month');
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Server error: ${response.status}`);
     }
+    
+    return await response.json();
+    
+  } catch (error) {
+    console.error('Full fetch error:', {
+      message: error.message,
+      stack: error.stack
+    });
+    return Array(12).fill(0);
+  }
 }
+export { getBookingsData };
