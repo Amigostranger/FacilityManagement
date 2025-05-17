@@ -100,46 +100,6 @@ document.addEventListener("DOMContentLoaded",async function () {
         chart.render();
 });
 
-
- document.addEventListener("DOMContentLoaded", function () {
-  var options = {
-    chart: {
-      type: 'bar',
-      height: 350
-    },
-    series: [{
-      name: 'Sales',
-      data: [30, 40, 45, 50, 49, 60, 70]
-    }],
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    }
-  };
-
-});
-
- document.addEventListener("DOMContentLoaded", function () {
-  var options = {
-    chart: {
-      type: 'bar',
-      height: 350
-    },
-    series: [{
-      name: 'Sales',
-      data: [30, 40, 45, 50, 49, 60, 70]
-    }],
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    }
-  };
-
-  var chart = new ApexCharts(document.querySelector(".report"), options);
-  chart.render();
-});
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
   var options = {
     chart: {
@@ -158,9 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var chart = new ApexCharts(document.querySelector(".facility-bargraph"), options);
   chart.render();
 });
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
   onAuthStateChanged(auth, async (user) => {

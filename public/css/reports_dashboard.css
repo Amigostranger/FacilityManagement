@@ -42,7 +42,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   width: 220px;
-  height: 85%;
+  height: 110%;
 }
 .counts-row {
     display: flex;
