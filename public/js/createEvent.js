@@ -39,7 +39,6 @@ bookingForm.addEventListener('submit', async (e) => {
 
   try {
     const idToken = await user.getIdToken();
-
     const res = await fetch("https://sports-management.azurewebsites.net/api/createEvent", {
       method: "POST",
       headers: {

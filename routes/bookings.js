@@ -25,7 +25,7 @@ const router = express.Router();
         for (const user of users) {
           const docRef = db.collection("notifications").doc();
           const n_id=docRef.id;
-          console.log(n_id);
+          
           await docRef.set({
             id: n_id,
             recipient: user.id,
@@ -34,6 +34,7 @@ const router = express.Router();
             facility,
             submittedBy: uid,
             start,
+            createdAt: new Date(),
             end,
             read: "false"
           });
@@ -55,19 +56,17 @@ const router = express.Router();
       if (!overlapping.empty) {
         return res.status(409).json({ error: "Event conflict detected" });
       }
-
-
+     
       await db.collection("bookings").add({
         title,
         description,
         facility,
         submittedBy: uid,
-        //date,
+        createdAt: new Date(),
         status:"Approved",
         start:newStart,
         end:newEnd,
-        who,
-        //createdAt: new Date(),
+        who
       });
 
       res.status(200).json({ message: "Report submitted" });
@@ -141,6 +140,7 @@ const router = express.Router();
         description,
         facility,
         submittedBy: uid,
+        createdAt:new Date(),
         status: "Pending",
         start: newStart,
         end: newEnd,
