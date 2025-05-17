@@ -183,6 +183,20 @@ const router = express.Router();
   }
   });
 
+  router.get('/api/get-reports',async(req,res)=>{
+      try {
+    const getIt=await db.collection("Issues").get();
+    const reports = getIt.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    res.status(200).send(reports);
+  } catch (error) {
+    console.error(error);
+    
+  }
+})
+
   router.get('/api/bookings-per-facility', async (req, res) => {
   const month = req.query.month; // Format: '2025-03'
 
@@ -211,5 +225,7 @@ const router = express.Router();
   return router;
 
 };
+
+
 
 export default createBookingsRouter;
