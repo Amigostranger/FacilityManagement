@@ -1,51 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports Dashboard</title>
-    <link rel="stylesheet" href="css/reports_dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reports Dashboard</title>
+  <link rel="stylesheet" href="css/reports_dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  
 </head>
 <body>
 
-<section class="all-graphs">
+  <section class="all-graphs">
     <button onclick="window.print()">Export as PDF</button>
-    <section class="upper-graphs">
-        <article class="total-users" id="tot_users">
-        </article>
-        <article class="active-users" id="act_users">
-        <section id="median-ratio"></section>
 
+    <section class="upper-graphs">
+      <article class="total-users" id="tot_users"></article>
+
+      <article class="active-users" id="act_users">
+        <section id="median-ratio"></section>
         <section class="counts-row">
-            <section class="count-item" id="week-count"></section>
-            <section class="count-item" id="month-count"></section>
+          <section class="count-item" id="week-count"></section>
+          <section class="count-item" id="month-count"></section>
         </section>
-        </article>
-        <article class="report">
-        </article>
+      </article>
+
+      <article class="report">
+        <h1 id="v">Reports for this month</h1>
+        <h2 id="main-heading" style="margin-top: 25px; text-align: center; color: rgba(10, 113, 209, 0.87); font-weight: bold; font-size: 100px;">0</h2>
+      </article>
     </section>
+
     <section class="middle-graphs">
         <article class="facility-bargraph" id="facility-bar">
-
+        <label for="monthSelect">Select Month:</label>
+        <select id="monthSelect">
+            <option value="2025-01">January 2025</option>
+            <option value="2025-02">February 2025</option>
+            <option value="2025-03">March 2025</option>
+            <option value="2025-04">April 2025</option>
+            <option value="2025-05">May 2025</option>
+            <option value="2025-06">June 2025</option>
+            <option value="2025-07">July 2025</option>
+            <option value="2025-08">August 2025</option>
+            <option value="2025-09">September 2025</option>
+            <option value="2025-10">October 2025</option>
+            <option value="2025-11">November 2025</option>
+            <option value="2025-12">December 2025</option>
+        </select>
+        <section id="bookingsChart" style="max-width: 650px; margin-top: 30px;">
+        </section>
         </article>
-        <article class="piechart" id="pie">
-
-        </article>
-
+        <article class="piechart" id="pie"></article>
     </section>
+
     <section class="lower-graphs">
-       
-        <article class="line-graph" id="line">
-
-        </article>
-        <article class="months-bargraph" id="months_bar">
-
-        </article>
+      <article class="line-graph" id="line"></article>
+      <article class="months-bargraph" id="months_bar"></article>
+      
     </section>
-</section>
-       
-      <script type="module" src="js/reports_dashboard.js" ></script>
-    
+  </section>
+  
+  <script type="module" src="js/reports_dashboard.js"></script>
 </body>
 </html>
