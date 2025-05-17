@@ -4,7 +4,8 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/fir
 import { getPieChartData } from './piechart_issues.js';
 import { getBookingsData } from './linegraph_bookings.js';
 import { totalUsers,getTotalUsers } from './tot_users.js';
-import { getMonthlyIssueData } from './issuesBargraph.js';
+import { totalReports,no } from './issuesreport.js';
+import { getMonthlyIssueData} from './issuesBargraph.js';
 
 document.addEventListener("DOMContentLoaded",async function () {
   await getTotalUsers()
@@ -40,7 +41,11 @@ document.addEventListener("DOMContentLoaded",async function () {
   chart.render();
 });
 
-
+document.addEventListener("DOMContentLoaded",async function () {
+  // document.querySelector("#main-heading")
+  await totalReports();
+  document.getElementById("main-heading").textContent = no;
+})
  document.addEventListener("DOMContentLoaded", async function () {
       const stats=await loadActiveUsers();
       const weekly=(stats.lastWeek/stats.totalUsers)*100;
@@ -100,7 +105,8 @@ document.addEventListener("DOMContentLoaded",async function () {
         chart.render();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+
+ document.addEventListener("DOMContentLoaded", function () {
   var options = {
     chart: {
       type: 'bar',
@@ -115,9 +121,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector(".facility-bargraph"), options);
-  chart.render();
 });
+
+
+
+
+
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   var options = {
+//     chart: {
+//       type: 'bar',
+//       height: 350
+//     },
+//     series: [{
+//       name: 'Sales',
+//       data: [30, 40, 45, 50, 49, 60, 70]
+//     }],
+//     xaxis: {
+//       categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+//     }
+//   };
+
+//   var chart = new ApexCharts(document.querySelector(".facility-bargraph"), options);
+//   chart.render();
+// });
+
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
   onAuthStateChanged(auth, async (user) => {

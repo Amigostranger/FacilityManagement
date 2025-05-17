@@ -79,6 +79,20 @@ const router = express.Router();
 
   });
 
+   router.get('/api/get-reports',async (req,res)=>{
+        try {
+        const getIt=await db.collection("Issues").get();
+        const reports = getIt.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        res.status(200).send(reports);
+      } catch (error) {
+        console.error(error);
+        
+      }
+  });
+
   router.get("/api/staff-bookings",async (req,res) => {
     
     try {
