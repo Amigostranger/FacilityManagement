@@ -92,7 +92,7 @@ const router = express.Router();
   }
   });
 
-  router.get('api/issues/all', verifyToken(admin.auth()), async (req, res) => {
+  router.get('/api/issues/all', async (req, res) => {
     try{
       const snapshot = await db.collection("Issues").get();
       const issues = snapshot.docs.map(doc => {

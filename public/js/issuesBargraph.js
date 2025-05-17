@@ -5,7 +5,7 @@ async function getMonthlyIssueData(){
         const res = await fetch('https://sports-management.azurewebsites.net/api/issues/all');
         const { issues } = await res.json();
         
-        const currYear = new Date().getFullYear();
+        const currentYear = new Date().getFullYear();
         const solvedIssues = Array(12).fill(0);
         const unsolvedIssues = Array(12).fill(0);
 

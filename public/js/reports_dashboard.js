@@ -239,21 +239,43 @@ document.addEventListener("DOMContentLoaded", async function () {
   const options = {
     chart: {
       type: 'bar',
-      height: 350,
-       stacked: true
+      height: 350
     },
     series: [
-        {
-          name: 'Solved',
-          data: solvedIssues
-        },
-        {
-          name: 'Unsolved',
-          data: unsolvedIssues
-        }
-      ],
+      {
+        name: 'Solved',
+        data: solvedIssues
+      },
+      {
+        name: 'Unsolved',
+        data: unsolvedIssues
+      }
+    ],
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '50%',  
+        endingShape: 'rounded'
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    fill: {
+      opacity: 1
+    },
+    tooltip: {
+      y: {
+        formatter: val => val + " issues"
+      }
     }
   };
 
