@@ -13,6 +13,7 @@ const createUserRoutes = (db, admin) => {
         bookId:doc.id,
         ...doc.data()
       }))
+
       const usersSnapshot = await db.collection("users").get();
       const totalUsers = usersSnapshot.docs.length; 
 
@@ -46,7 +47,12 @@ const createUserRoutes = (db, admin) => {
         return createdAt >= lastMonthStart && createdAt <= lastMonthEnd;
       });
 
-      
+      // lastWeekIssues.forEach(issue=>{
+      //   let currentIssue=issue.submittedBy;
+      //   lastWeekEnd.forEach(i=>{
+      //     if(currentIssue=issue);
+      //   })
+      // })
 
       res.status(200).send({
               lastWeek: lastWeekIssues.length,
