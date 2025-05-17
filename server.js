@@ -87,8 +87,11 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection:', reason);
 });
 
-const PORT = process.env.PORT || 3000||5173;
-
+const PORT = process.env.PORT;
+if (!process.env.PORT) {
+  console.error('PORT environment variable not set!');
+  process.exit(1);
+}
 app.listen(PORT, () => {
   console.log(` Server running on port: ${PORT}`);
 });
