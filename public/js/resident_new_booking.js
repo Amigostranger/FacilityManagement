@@ -4,7 +4,6 @@ import { db } from '../../utils/firebase.js';
 import { collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-
 // Elements
 const addBookingBtn = document.getElementById('addBookingBtn');
 const viewBookingsBtn = document.getElementById('viewBookingsBtn');

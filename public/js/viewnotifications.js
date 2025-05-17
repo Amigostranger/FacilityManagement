@@ -67,10 +67,10 @@ async function loadnotifications(user) {
     });
     events.forEach(async (event) => {
       const row = document.createElement("tr");
-      const resAdmin= await fetch(`https://sports-management.azurewebsites.net/api/adminInfo/${event.id}`)
-      const adminInfo=await resAdmin.json();
+      // const resAdmin= await fetch(`http://localhost:3000/api/adminInfo/${event.id}`)
+      // const adminInfo=await resAdmin.json();
 
-      console.log(adminInfo);
+      // console.log(adminInfo);
       const from = "Kathaza";
       const recDate="2025/02/01"
       const eventCell = document.createElement('td');

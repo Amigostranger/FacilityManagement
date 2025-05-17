@@ -1,25 +1,13 @@
+import {loadActiveUsers} from './active_users.js';
 import { auth } from '../../utils/firebase.js';
-
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-
-
-
 import { getPieChartData } from './piechart_issues.js';
 import { getBookingsData } from './linegraph_bookings.js';
-
-
-
 import { totalUsers,getTotalUsers } from './tot_users.js';
+import { totalReports,no } from './issuesreport.js';
 
 document.addEventListener("DOMContentLoaded",async function () {
-   
   await getTotalUsers()
-
-
-
-
-  
   var options = {
     chart: {
       type: 'radialBar',
@@ -52,6 +40,70 @@ document.addEventListener("DOMContentLoaded",async function () {
   chart.render();
 });
 
+document.addEventListener("DOMContentLoaded",async function () {
+  // document.querySelector("#main-heading")
+  await totalReports();
+  document.getElementById("main-heading").textContent = no;
+})
+ document.addEventListener("DOMContentLoaded", async function () {
+      const stats=await loadActiveUsers();
+      const weekly=(stats.lastWeek/stats.totalUsers)*100;
+      const monthly=(stats.lastMonth/stats.totalUsers)*100;
+      const activeCard=document.querySelector("#median-ratio");
+     
+      document.getElementById("week-count").textContent = `Last week: ${stats.lastWeek}`;
+      document.getElementById("month-count").textContent = `Last month: ${stats.lastMonth}`;
+       var options = {
+          series: [weekly],
+          chart: {
+          color:"red",
+          height: 250,
+          type: 'radialBar',
+          offsetY: -30
+        },
+        plotOptions: {
+          radialBar: {
+            startAngle: -135,
+            endAngle: 135,
+            color:"blue",
+            dataLabels: {
+              name: {
+                fontSize: '16px',
+                color: "blue",
+                offsetY: 120
+              },
+              value: {
+                offsetY: 76,
+                fontSize: '22px',
+                color: "blue",
+                formatter: function (val) {
+                  return val + "%";
+                }
+              }
+            }
+          }
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+              shade: 'dark',
+              shadeIntensity: 0.9,
+              inverseColors: false,
+              opacityFrom: 1,
+              opacityTo: 0.7,
+              stops: [0, 50, 30, 9]
+          },
+        },
+        stroke: {
+          dashArray: 4
+        },
+        labels: ['Active users'],
+        };
+
+        var chart = new ApexCharts(activeCard, options);
+        chart.render();
+});
+
 
  document.addEventListener("DOMContentLoaded", function () {
   var options = {
@@ -68,28 +120,9 @@ document.addEventListener("DOMContentLoaded",async function () {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector(".active-users"), options);
-  chart.render();
 });
 
- document.addEventListener("DOMContentLoaded", function () {
-  var options = {
-    chart: {
-      type: 'bar',
-      height: 350
-    },
-    series: [{
-      name: 'Sales',
-      data: [30, 40, 45, 50, 49, 60, 70]
-    }],
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    }
-  };
 
-  var chart = new ApexCharts(document.querySelector(".report"), options);
-  chart.render();
-});
 
 
 
@@ -146,54 +179,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Initialize the chart with empty data first
-    var options = {
-        series: [{
-            name: "Bookings",
-            data: [] // Empty initially
-        }],
-        chart: {
-            height: 350,
-            type: 'line',
-            zoom: {
-                enabled: false
-            }
+document.addEventListener("DOMContentLoaded", async function () {
+  try {
+    const monthlyData = await getBookingsData();
+
+    const options = {
+      series: [{
+        name: "Bookings",
+        data: monthlyData
+      }],
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: { enabled: false }
+      },
+      dataLabels: { enabled: false },
+      stroke: { curve: 'straight' },
+      title: {
+        text: 'Overall Bookings per Month',
+        align: 'left'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
         },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: 'straight'
-        },
-        title: {
-            text: 'Overall Bookings per Month',
-            align: 'left'
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'],
-                opacity: 0.5
-            },
-        },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        }
+      },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      }
     };
 
-    var chart = new ApexCharts(document.querySelector(".line-graph"), options);
+    const chart = new ApexCharts(document.querySelector(".line-graph"), options);
     chart.render();
 
-    // Now fetch the data and update the chart
-    getBookingsData().then(monthlyData => {
-        chart.updateSeries([{
-            name: "Bookings",
-            data: monthlyData
-        }]);
-    }).catch(error => {
-        console.error("Error loading booking data:", error);
-        document.querySelector(".line-graph").textContent = "Could not load booking data";
-    });
+  } catch (err) {
+    console.error("Error rendering chart:", err);
+  }
 });
 
 
