@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/fir
 import { getPieChartData } from './piechart_issues.js';
 import { getBookingsData } from './linegraph_bookings.js';
 import { totalUsers,getTotalUsers } from './tot_users.js';
+import { getMonthlyIssueData } from './issuesBargraph.js';
 
 document.addEventListener("DOMContentLoaded",async function () {
   await getTotalUsers()
@@ -231,18 +232,28 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  var options = {
+document.addEventListener("DOMContentLoaded", async function () {
+  
+  const { solvedIssues, unsolvedIssues } = await getMonthlyIssueData();
+
+  const options = {
     chart: {
       type: 'bar',
-      height: 350
+      height: 350,
+       stacked: true
     },
-    series: [{
-      name: 'Sales',
-      data: [30, 40, 45, 50, 49, 60, 70]
-    }],
+    series: [
+        {
+          name: 'Solved',
+          data: solvedIssues
+        },
+        {
+          name: 'Unsolved',
+          data: unsolvedIssues
+        }
+      ],
     xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     }
   };
 
