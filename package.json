@@ -16,7 +16,8 @@
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
     "firebase": "^11.6.1",
-    "firebase-admin": "^13.2.0"
+    "firebase-admin": "^13.2.0",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.27.2",
@@ -29,7 +30,10 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-junit": "^16.0.0",
     "node-fetch": "^3.3.2",
-    "supertest": "^7.1.0"
+    "supertest": "^7.1.0",
+    "jsdom": "^26.1.0",
+    "whatwg-fetch": "^3.6.20"
+
   },
   "repository": {
     "type": "git",

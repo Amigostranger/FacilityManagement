@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/49</span>
+                <span class='fraction'>0/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/49</span>
+                <span class='fraction'>0/28</span>
             </div>
         
             
@@ -209,43 +209,43 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -307,46 +307,46 @@ const issueForm = <span class="cstat-no" title="statement not covered" >document
 &nbsp;
     const data = <span class="cstat-no" title="statement not covered" >await res.json();</span>
     
-    async function <span class="fstat-no" title="function not covered" >loadIssues(</span>user) {
-<span class="cstat-no" title="statement not covered" >      try {</span>
-        const token = <span class="cstat-no" title="statement not covered" >await user.getIdToken();</span>
+    // async function loadIssues(user) {
+    //   try {
+    //     const token = await user.getIdToken();
     
-        const res = <span class="cstat-no" title="statement not covered" >await fetch("https://sports-management.azurewebsites.net/api/issues", {</span>
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-        const data = <span class="cstat-no" title="statement not covered" >await res.json();</span>
-        const issues = <span class="cstat-no" title="statement not covered" >data.issues;</span>
-        //const issues = await res.json();
-        //tableBody.innerHTML = "";
-<span class="cstat-no" title="statement not covered" >        console.log(issues);</span>
-<span class="cstat-no" title="statement not covered" >        issues.forEach(<span class="fstat-no" title="function not covered" >is</span>sue =&gt; {</span>
-          const row = <span class="cstat-no" title="statement not covered" >document.createElement("tr");</span>
+    //     const res = await fetch("https://sports-management.azurewebsites.net/api/issues", {
+    //       headers: {
+    //         "Authorization": `Bearer ${token}`
+    //       }
+    //     });
+    //     const data = await res.json();
+    //     const issues = data.issues;
+    //     //const issues = await res.json();
+    //     //tableBody.innerHTML = "";
+    //     console.log(issues);
+    //     issues.forEach(issue =&gt; {
+    //       const row = document.createElement("tr");
     
-          const viewBtn = <span class="cstat-no" title="statement not covered" >document.createElement("button");</span>
-<span class="cstat-no" title="statement not covered" >          viewBtn.textContent = "View";</span>
-<span class="cstat-no" title="statement not covered" >          viewBtn.type = "button";</span>
-<span class="cstat-no" title="statement not covered" >          viewBtn.className = "actionBtn";</span>
-<span class="cstat-no" title="statement not covered" >          viewBtn.addEventListener("click", <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            viewDescription.textContent = issue.description || "No description.";</span>
-<span class="cstat-no" title="statement not covered" >            viewFeedback.textContent = issue.feedback || "No feedback yet.";</span>
-<span class="cstat-no" title="statement not covered" >            viewModal.hidden = false;</span>
-          });
+    //       const viewBtn = document.createElement("button");
+    //       viewBtn.textContent = "View";
+    //       viewBtn.type = "button";
+    //       viewBtn.className = "actionBtn";
+    //       viewBtn.addEventListener("click", () =&gt; {
+    //         viewDescription.textContent = issue.description || "No description.";
+    //         viewFeedback.textContent = issue.feedback || "No feedback yet.";
+    //         viewModal.hidden = false;
+    //       });
     
-<span class="cstat-no" title="statement not covered" >          row.innerHTML = `</span>
-            &lt;td&gt;${issue.title}&lt;/td&gt;
-            &lt;td&gt;&lt;/td&gt;
-            &lt;td&gt;${issue.status}&lt;/td&gt;`;
-<span class="cstat-no" title="statement not covered" >          row.children[1].appendChild(viewBtn);</span>
+    //       row.innerHTML = `
+    //         &lt;td&gt;${issue.title}&lt;/td&gt;
+    //         &lt;td&gt;&lt;/td&gt;
+    //         &lt;td&gt;${issue.status}&lt;/td&gt;`;
+    //       row.children[1].appendChild(viewBtn);
     
-<span class="cstat-no" title="statement not covered" >          tableBody.appendChild(row);</span>
-        });
-      } catch (err) {
-<span class="cstat-no" title="statement not covered" >        console.log("Something is wrong");</span>
-<span class="cstat-no" title="statement not covered" >        console.error("Error loading issues:", err);</span>
-      }
-    }
+    //       tableBody.appendChild(row);
+    //     });
+    //   } catch (err) {
+    //     console.log("Something is wrong");
+    //     console.error("Error loading issues:", err);
+    //   }
+    // }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (res.ok) {</span>
 <span class="cstat-no" title="statement not covered" >      alert("Issue submitted successfully!");</span>
@@ -367,7 +367,7 @@ const issueForm = <span class="cstat-no" title="statement not covered" >document
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-18T22:39:11.329Z
+                at 2025-05-18T22:45:49.196Z
             </div>
         <script src="prettify.js"></script>
         <script>

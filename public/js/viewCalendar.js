@@ -1,51 +1,44 @@
-import { db } from '../../utils/firebase.js';
-import { collection, getDocs, query, where  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-function mapDocsToEvents(docs){
-  return docs.map(doc => {
-    const data = doc.data();
-    
-    return {
-      title: data.title,
-      start: data.start.toDate().toISOString(),
-      end: data.end.toDate().toISOString(),
-      extendedProps: {
-        facility: data.facility,
-        description: data.description
-      }
-    };
-  });
+function mapDataToEvents(dataArray) {
+  return dataArray.map(data => ({
+    title: data.title,
+    start: new Date(data.start).toISOString(),
+    end: new Date(data.end).toISOString(),
+    extendedProps: {
+      facility: data.facility,
+      description: data.description
+    }
+  }));
 }
 
-async function fetchEvents(fetchInfo, successCallback, failureCallback){
-  try{
-    const eventsQuery = query(collection(db, "bookings"), where("status", "==", "Approved"));
-    const snapshot = await getDocs(eventsQuery);
-    const events = mapDocsToEvents(snapshot.docs);
+async function fetchEvents(fetchInfo, successCallback, failureCallback) {
+  try {
+    const response = await fetch('https://sports-management.azurewebsites.net/api/bookings/approved');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const approvedBookings = data.filter(item => item.status === 'Approved');
+    const events = mapDataToEvents(approvedBookings);
     successCallback(events);
-  }
-  catch (error){
-    console.error("Error fetching calendar events:",error);
+  } 
+  catch (error) {
+    console.error("Error fetching calendar events:", error);
     failureCallback(error);
   }
 }
 
 function setupCalendar(calendarEl){
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-      
+  const calendar = new FullCalendar.Calendar(calendarEl, {   
     events: fetchEvents,
-
     height: "auto",
-
-
     initialView: 'dayGridMonth',
-
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,listWeek'
     },
-
     eventClick: function(info) {
       const event = info.event;
       const title = event.title;
@@ -53,7 +46,6 @@ function setupCalendar(calendarEl){
       const description = event.extendedProps.description;
       const start = new Date(event.start).toLocaleString();
       const end = new Date(event.end).toLocaleString();
-
       alert(
         `🏟️ ${title}\n` +
         `📍 Facility: ${facility}\n` +
@@ -63,8 +55,6 @@ function setupCalendar(calendarEl){
       );
     }
   });
-
-
   calendar.render()
 }
 
@@ -75,6 +65,4 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 
-export { mapDocsToEvents, fetchEvents, setupCalendar};
-
-
+export { mapDataToEvents, fetchEvents, setupCalendar};
