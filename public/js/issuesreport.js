@@ -32,4 +32,4 @@ function getCurrentMonthIssues(data) {
 }
 
 
-export {totalReports,no}
+export {totalReports,no,getCurrentMonthIssues}
