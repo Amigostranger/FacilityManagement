@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/fir
 import { getPieChartData } from './piechart_issues.js';
 import { getBookingsData } from './linegraph_bookings.js';
 import { totalUsers,getTotalUsers } from './tot_users.js';
-import { totalReports,no } from './issuesreport.js';
+import { totalReports,getNo } from './issuesreport.js';
 import { getMonthlyIssueData} from './issuesBargraph.js';
 
 document.addEventListener("DOMContentLoaded",async function () {
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded",async function () {
 document.addEventListener("DOMContentLoaded",async function () {
   // document.querySelector("#main-heading")
   await totalReports();
-  document.getElementById("main-heading").textContent = no;
+  document.getElementById("main-heading").textContent = getNo;
 })
  document.addEventListener("DOMContentLoaded", async function () {
       const stats=await loadActiveUsers();
