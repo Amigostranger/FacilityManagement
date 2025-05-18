@@ -1,4 +1,4 @@
-import { totalReports, getNo, getCurrentMonthIssues } from '../issuesreport';
+import { totalReports, no ,getCurrentMonthIssues} from '../issuesreport';
 import fetch from 'node-fetch';
 global.fetch = fetch;
 
@@ -38,7 +38,7 @@ describe('Report functions', () => {
 
     await totalReports();
 
-    expect(getNo()).toBe(2);
+    expect(no).toBe(2);
   });
 
   it('totalReports should return 0 on fetch failure', async () => {
@@ -46,7 +46,7 @@ describe('Report functions', () => {
 
     await totalReports();
 
-    expect(getNo()).toBe(0);
+    expect(no).toBe(0);
   });
 
   it('totalReports should return 0 on non-ok response', async () => {
@@ -57,6 +57,6 @@ describe('Report functions', () => {
 
     await totalReports();
 
-    expect(getNo()).toBe(0);
+    expect(no).toBe(0);
   });
 });
