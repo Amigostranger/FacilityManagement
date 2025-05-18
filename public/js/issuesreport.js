@@ -30,4 +30,6 @@ function getCurrentMonthIssues(data) {
 
   return currentMonthIssues.length;
 }
-export {totalReports,no}
+
+
+export {totalReports,no,getCurrentMonthIssues}
