@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/13</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/13</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -97,64 +97,64 @@
 <a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { auth } from '../../utils/firebase.js';
 &nbsp;
-export async function getPieChartData() {
-    const user = auth.currentUser;
-    if (!user) {
-        alert("Please log in first.");
-        return { series: [], labels: [] };
+export async function <span class="fstat-no" title="function not covered" >getPieChartData(</span>) {
+    const user = <span class="cstat-no" title="statement not covered" >auth.currentUser;</span>
+<span class="cstat-no" title="statement not covered" >    if (!user) {</span>
+<span class="cstat-no" title="statement not covered" >        alert("Please log in first.");</span>
+<span class="cstat-no" title="statement not covered" >        return { series: [], labels: [] };</span>
     }
-    try {
-        const idToken = await user.getIdToken();
-        const response = await fetch('https://sports-management.azurewebsites.net/api/status-counts', {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+        const idToken = <span class="cstat-no" title="statement not covered" >await user.getIdToken();</span>
+        const response = <span class="cstat-no" title="statement not covered" >await fetch('https://sports-management.azurewebsites.net/api/status-counts', {</span>
             headers: {
                 "Authorization": `Bearer ${idToken}`
             }
         });
 &nbsp;
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (!response.ok) {
+<span class="cstat-no" title="statement not covered" >        if (!response.ok) {</span>
 <span class="cstat-no" title="statement not covered" >            throw new Error(`HTTP error! status: ${response.status}`);</span>
         }
 &nbsp;
-        const result = await response.json();
+        const result = <span class="cstat-no" title="statement not covered" >await response.json();</span>
         
         // Handle both possible response structures
-        return {
-            series: result.data?.series || result.series || <span class="branch-2 cbranch-no" title="branch not covered" >[],</span>
-            labels: result.data?.labels || result.labels || <span class="branch-2 cbranch-no" title="branch not covered" >[]</span>
+<span class="cstat-no" title="statement not covered" >        return {</span>
+            series: result.data?.series || result.series || [],
+            labels: result.data?.labels || result.labels || []
         };
     } catch (error) {
-        console.error("Error fetching pie chart data:", error);
-        return { series: [], labels: [] };
+<span class="cstat-no" title="statement not covered" >        console.error("Error fetching pie chart data:", error);</span>
+<span class="cstat-no" title="statement not covered" >        return { series: [], labels: [] };</span>
     }
 }</pre></td></tr></table></pre>
 
@@ -163,7 +163,7 @@ export async function getPieChartData() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-18T20:03:32.420Z
+                at 2025-05-18T20:24:58.769Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
