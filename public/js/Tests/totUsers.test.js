@@ -1,4 +1,8 @@
-import { getTotalUsers } from '../tot_users'; // Adjust this path
+
+
+
+
+import { getTotalUsers } from '../tot_users'; // Adjust path as needed
 import fetch from 'node-fetch';
 
 jest.mock('node-fetch', () => jest.fn());
@@ -6,6 +10,16 @@ jest.mock('node-fetch', () => jest.fn());
 global.fetch = fetch;
 
 describe('getTotalUsers', () => {
+  const originalConsoleError = console.error;
+
+  beforeAll(() => {
+    console.error = jest.fn(); // Silence error logs
+  });
+
+  afterAll(() => {
+    console.error = originalConsoleError; // Restore original
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -20,7 +34,6 @@ describe('getTotalUsers', () => {
 
     await getTotalUsers();
     const { totalUsers } = await import('../tot_users');
-
     expect(totalUsers).toBe(4);
   });
 
@@ -29,7 +42,6 @@ describe('getTotalUsers', () => {
 
     await getTotalUsers();
     const { totalUsers } = await import('../tot_users');
-
     expect(totalUsers).toBe(0);
   });
 
@@ -38,7 +50,7 @@ describe('getTotalUsers', () => {
 
     await getTotalUsers();
     const { totalUsers } = await import('../tot_users');
-
     expect(totalUsers).toBe(0);
   });
 });
+
