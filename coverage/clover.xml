@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1747598473941" clover="3.2.0">
-  <project timestamp="1747598473941" name="All files">
-    <metrics statements="1089" coveredstatements="34" conditionals="275" coveredconditionals="12" methods="171" coveredmethods="4" elements="1535" coveredelements="50" complexity="0" loc="1089" ncloc="1089" packages="2" files="31" classes="31"/>
+<coverage generated="1747598612547" clover="3.2.0">
+  <project timestamp="1747598612548" name="All files">
+    <metrics statements="1090" coveredstatements="61" conditionals="275" coveredconditionals="18" methods="172" coveredmethods="10" elements="1537" coveredelements="89" complexity="0" loc="1090" ncloc="1090" packages="2" files="31" classes="31"/>
     <package name="public.js">
-      <metrics statements="801" coveredstatements="34" conditionals="200" coveredconditionals="12" methods="128" coveredmethods="4"/>
+      <metrics statements="802" coveredstatements="61" conditionals="200" coveredconditionals="18" methods="129" coveredmethods="10"/>
       <file name="active_users.js" path="C:\Users\janmo\OneDrive - University of Witwatersrand\Documents\YOS 03\SOFTWARE DESIGN\Projects\Project 1\testing\FacilityManagement\public\js\active_users.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="3" count="2" type="stmt"/>
@@ -123,24 +123,25 @@
         <line num="33" count="1" type="stmt"/>
       </file>
       <file name="issuesreport.js" path="C:\Users\janmo\OneDrive - University of Witwatersrand\Documents\YOS 03\SOFTWARE DESIGN\Projects\Project 1\testing\FacilityManagement\public\js\issuesreport.js">
-        <metrics statements="17" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="6" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="31" count="0" type="stmt"/>
+        <metrics statements="18" coveredstatements="18" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="6" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="27" count="8" type="stmt"/>
+        <line num="28" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
       </file>
       <file name="linegraph_bookings.js" path="C:\Users\janmo\OneDrive - University of Witwatersrand\Documents\YOS 03\SOFTWARE DESIGN\Projects\Project 1\testing\FacilityManagement\public\js\linegraph_bookings.js">
         <metrics statements="8" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -692,16 +693,16 @@
         <line num="87" count="0" type="stmt"/>
       </file>
       <file name="tot_users.js" path="C:\Users\janmo\OneDrive - University of Witwatersrand\Documents\YOS 03\SOFTWARE DESIGN\Projects\Project 1\testing\FacilityManagement\public\js\tot_users.js">
-        <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="8" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
       </file>
       <file name="viewBookings.js" path="C:\Users\janmo\OneDrive - University of Witwatersrand\Documents\YOS 03\SOFTWARE DESIGN\Projects\Project 1\testing\FacilityManagement\public\js\viewBookings.js">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
