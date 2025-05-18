@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1747602491840" clover="3.2.0">
-  <project timestamp="1747602491840" name="All files">
-    <metrics statements="1088" coveredstatements="8" conditionals="275" coveredconditionals="4" methods="172" coveredmethods="2" elements="1535" coveredelements="14" complexity="0" loc="1088" ncloc="1088" packages="2" files="32" classes="32"/>
+<coverage generated="1747607182090" clover="3.2.0">
+  <project timestamp="1747607182091" name="All files">
+    <metrics statements="1066" coveredstatements="0" conditionals="271" coveredconditionals="0" methods="168" coveredmethods="0" elements="1505" coveredelements="0" complexity="0" loc="1066" ncloc="1066" packages="2" files="32" classes="32"/>
     <package name="public.js">
-      <metrics statements="800" coveredstatements="8" conditionals="200" coveredconditionals="4" methods="129" coveredmethods="2"/>
+      <metrics statements="778" coveredstatements="0" conditionals="196" coveredconditionals="0" methods="125" coveredmethods="0"/>
       <file name="active_users.js" path="C:\Users\KANANELO\OneDrive\Documents\Facility Management\FacilityManagement\public\js\active_users.js">
         <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="3" count="0" type="stmt"/>
@@ -123,7 +123,7 @@
         <line num="33" count="0" type="stmt"/>
       </file>
       <file name="issuesreport.js" path="C:\Users\KANANELO\OneDrive\Documents\Facility Management\FacilityManagement\public\js\issuesreport.js">
-        <metrics statements="18" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <metrics statements="17" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
@@ -141,18 +141,17 @@
         <line num="27" count="0" type="stmt"/>
         <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="31" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
       </file>
       <file name="linegraph_bookings.js" path="C:\Users\KANANELO\OneDrive\Documents\Facility Management\FacilityManagement\public\js\linegraph_bookings.js">
-        <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
-        <line num="2" count="4" type="stmt"/>
-        <line num="3" count="4" type="stmt"/>
-        <line num="5" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="13" count="3" type="stmt"/>
-        <line num="17" count="3" type="stmt"/>
+        <metrics statements="8" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="5" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
       </file>
       <file name="list_residents.js" path="C:\Users\KANANELO\OneDrive\Documents\Facility Management\FacilityManagement\public\js\list_residents.js">
         <metrics statements="31" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="5" coveredmethods="0"/>
@@ -476,7 +475,7 @@
         <line num="184" count="0" type="stmt"/>
       </file>
       <file name="resident_report_issue.js" path="C:\Users\KANANELO\OneDrive\Documents\Facility Management\FacilityManagement\public\js\resident_report_issue.js">
-        <metrics statements="49" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
@@ -498,34 +497,13 @@
         <line num="34" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
+        <line num="47" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="48" count="0" type="stmt"/>
         <line num="49" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="64" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="70" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
-        <line num="78" count="0" type="stmt"/>
-        <line num="80" count="0" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
-        <line num="84" count="0" type="stmt"/>
-        <line num="88" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
-        <line num="93" count="0" type="stmt"/>
-        <line num="96" count="0" type="stmt"/>
-        <line num="97" count="0" type="stmt"/>
       </file>
       <file name="signInCore.js" path="C:\Users\KANANELO\OneDrive\Documents\Facility Management\FacilityManagement\public\js\signInCore.js">
         <metrics statements="22" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="2" coveredmethods="0"/>
