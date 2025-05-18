@@ -25,7 +25,7 @@ export async function signInCore(user) {
     return { success: true, serverData: data };
   }
   
-  async function check(email) {
+export  async function check(email) {
     try {
       const response = await fetch("https://sports-management.azurewebsites.net/api/check-users", {
         method: "POST",

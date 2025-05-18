@@ -2,7 +2,6 @@ export default {
   collectCoverage: true,
 collectCoverageFrom: [
   "public/js/**/*.js",
-  "routes/**/*.js",
   "!**/node_modules/**",
   "!**/Tests/**"
 ],
