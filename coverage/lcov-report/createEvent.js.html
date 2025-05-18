@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for login.js</title>
+    <title>Code coverage report for createEvent.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> login.js</h1>
+        <h1><a href="index.html">All files</a> createEvent.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>0/34</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>0/34</span>
             </div>
         
             
@@ -123,53 +123,13 @@
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -183,67 +143,119 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// login.js
-import { signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { auth } from '../../utils/firebase.js';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { auth } from '../../utils/firebase.js';
 &nbsp;
-//const loginForm = document.getElementById("btnlog");
-const googleLoginBtn = <span class="cstat-no" title="statement not covered" >document.getElementById("googleLoginBtn");</span>
-const message = <span class="cstat-no" title="statement not covered" >document.getElementById("message");</span>
-const signup=<span class="cstat-no" title="statement not covered" >document.getElementById('sign-up');</span>
-let hy=<span class="cstat-no" title="statement not covered" >null;</span>
+const eventBtn = <span class="cstat-no" title="statement not covered" >document.getElementById('eventBtn');</span>
+const Modal = <span class="cstat-no" title="statement not covered" >document.getElementById('addModal');</span>
+const cancelBtn = <span class="cstat-no" title="statement not covered" >document.getElementById('cancelEventBtn');</span>
+const bookingForm = <span class="cstat-no" title="statement not covered" >document.getElementById('bookingForm');</span>
 &nbsp;
+// Show modal
+<span class="cstat-no" title="statement not covered" >eventBtn.addEventListener('click', <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  Modal.hidden = false;</span>
+});
 &nbsp;
-//https://sports-management.azurewebsites.net
+// Hide modal
+<span class="cstat-no" title="statement not covered" >cancelBtn.addEventListener('click', <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  Modal.hidden = true;</span>
+});
 &nbsp;
-// Handle Google Sign-In
-<span class="cstat-no" title="statement not covered" >googleLoginBtn.addEventListener("click", <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
-  const provider = <span class="cstat-no" title="statement not covered" >new GoogleAuthProvider();</span>
+// Submit form
+<span class="cstat-no" title="statement not covered" >bookingForm.addEventListener('submit', <span class="fstat-no" title="function not covered" >as</span>ync (e) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  e.preventDefault();</span>
+&nbsp;
+  const title = <span class="cstat-no" title="statement not covered" >document.getElementById("bookingTitle").value.trim();</span>
+  const description = <span class="cstat-no" title="statement not covered" >document.getElementById("bookingDescription").value.trim();</span>
+  const facility = <span class="cstat-no" title="statement not covered" >document.getElementById("facilitySelect").value.trim();</span>
+  const date = <span class="cstat-no" title="statement not covered" >document.getElementById("bookingDate").value.trim();</span>
+  const startTime = <span class="cstat-no" title="statement not covered" >document.getElementById("startTime").value.trim();</span>
+  const endTime = <span class="cstat-no" title="statement not covered" >document.getElementById("endTime").value.trim();</span>
+  const who = <span class="cstat-no" title="statement not covered" >"admin";</span>
+&nbsp;
+  // Construct consistent datetime strings
+  const start = <span class="cstat-no" title="statement not covered" >`${date}T${startTime}:00`;</span> // e.g. "2025-05-04T10:00:00"
+  const end = <span class="cstat-no" title="statement not covered" >`${date}T${endTime}:00`;</span>
+&nbsp;
+  const user = <span class="cstat-no" title="statement not covered" >auth.currentUser;</span>
+<span class="cstat-no" title="statement not covered" >  if (!user) {</span>
+<span class="cstat-no" title="statement not covered" >    alert("Please log in first.");</span>
+<span class="cstat-no" title="statement not covered" >    return;</span>
+  }
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  try {</span>
-    const result = <span class="cstat-no" title="statement not covered" >await signInWithPopup(auth, provider);</span>
-    const token = <span class="cstat-no" title="statement not covered" >await result.user.getIdToken();</span>
+    const idToken = <span class="cstat-no" title="statement not covered" >await user.getIdToken();</span>
 &nbsp;
-    //http://localhost:3000/
-       const response = <span class="cstat-no" title="statement not covered" >await fetch('https://sports-management.azurewebsites.net/api/get-user', {</span>
+    const res = <span class="cstat-no" title="statement not covered" >await fetch("https://sports-management.azurewebsites.net/api/createEvent", {</span>
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Authorization": `Bearer ${idToken}`
       },
+      body: JSON.stringify({ title, description, facility, start, end, who })
     });
 &nbsp;
-    const data = <span class="cstat-no" title="statement not covered" >await response.json();</span>
-<span class="cstat-no" title="statement not covered" >    console.log(data);</span>
-<span class="cstat-no" title="statement not covered" >    if (response.ok) {</span>
-<span class="cstat-no" title="statement not covered" >      message.textContent = `Welcome, ${data.username}! Role: ${data.role}`;</span>
-<span class="cstat-no" title="statement not covered" >      setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-        const the=<span class="cstat-no" title="statement not covered" >data.role.toUpperCase();</span>
-<span class="cstat-no" title="statement not covered" >        if(the==="RESIDENT"){</span>
-<span class="cstat-no" title="statement not covered" >          window.location.href = 'resident_home.html';</span>
-        }
-        else <span class="cstat-no" title="statement not covered" >if(the=="STAFF"){</span>
-<span class="cstat-no" title="statement not covered" >          window.location.href = 'staff_home.html';</span>
-        }
-        else <span class="cstat-no" title="statement not covered" >if(the==="ADMIN"){</span>
-<span class="cstat-no" title="statement not covered" >          window.location.href = 'admin_home.html'</span>
-        }
-       
-      }, 2000);
-    } else {
-<span class="cstat-no" title="statement not covered" >      message.textContent = `Error: ${data.error}`;</span>
-<span class="cstat-no" title="statement not covered" >      message.style.color = "red";</span>
-<span class="cstat-no" title="statement not covered" >      signup.textContent='Sign up';</span>
-    }
-  } catch (error) {
-<span class="cstat-no" title="statement not covered" >    message.textContent = "Google login failed: " + error.message;</span>
-<span class="cstat-no" title="statement not covered" >    message.style.color = "red";</span>
-  }
-});
+    const data = <span class="cstat-no" title="statement not covered" >await res.json();</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >signup.addEventListener('click',<span class="fstat-no" title="function not covered" >ev</span>ent=&gt;{</span>
-<span class="cstat-no" title="statement not covered" >  window.location.href='register.html';</span>
-})
-&nbsp;</pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >    if (res.ok) {</span>
+<span class="cstat-no" title="statement not covered" >      alert("Event submitted successfully!");</span>
+<span class="cstat-no" title="statement not covered" >      bookingForm.reset();</span>
+<span class="cstat-no" title="statement not covered" >      Modal.hidden = true;</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      alert("Error: " + data.error);</span>
+    }
+  } catch (err) {
+<span class="cstat-no" title="statement not covered" >    console.error("Failed to submit:", err);</span>
+<span class="cstat-no" title="statement not covered" >    alert("Something went wrong. Please try again.");</span>
+  }
+});</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
