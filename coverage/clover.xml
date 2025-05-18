@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1747596953914" clover="3.2.0">
-  <project timestamp="1747596953914" name="All files">
+<coverage generated="1747597642894" clover="3.2.0">
+  <project timestamp="1747597642894" name="All files">
     <metrics statements="802" coveredstatements="56" conditionals="200" coveredconditionals="18" methods="129" coveredmethods="9" elements="1131" coveredelements="83" complexity="0" loc="802" ncloc="802" packages="1" files="27" classes="27"/>
     <file name="active_users.js" path="C:\Users\mulau\OneDrive\Desktop\StrangerStore\YOS3\me\SD\sprint 4\final\FacilityManagement\public\js\active_users.js">
       <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>

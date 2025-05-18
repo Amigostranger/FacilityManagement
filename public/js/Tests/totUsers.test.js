@@ -1,39 +1,43 @@
-import { getTotalUsers } from '../tot_users.js'; // adjust the path
+import { getTotalUsers } from '../tot_users'; // Adjust this path
 import fetch from 'node-fetch';
 
-global.fetch = fetch;
 jest.mock('node-fetch', () => jest.fn());
 
+global.fetch = fetch;
+
 describe('getTotalUsers', () => {
-  it('should set totalUsers to data length on successful fetch', async () => {
-    const mockUsers = [{}, {}, {}]; // 3 users
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('sets totalUsers to correct length on success', async () => {
+    const mockUsers = [{}, {}, {}, {}]; // 4 users
+
     fetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => mockUsers,
+      json: jest.fn().mockResolvedValueOnce(mockUsers),
     });
 
     await getTotalUsers();
-    const { totalUsers } = await import('../path-to-your-module'); // re-import to get updated value
+    const { totalUsers } = await import('../tot_users');
 
-    expect(totalUsers).toBe(3);
+    expect(totalUsers).toBe(4);
   });
 
-  it('should set totalUsers to 0 on fetch failure', async () => {
-    fetch.mockRejectedValueOnce(new Error('API failure'));
+  it('sets totalUsers to 0 on failed response (ok=false)', async () => {
+    fetch.mockResolvedValueOnce({ ok: false });
 
     await getTotalUsers();
-    const { totalUsers } = await import('../path-to-your-module');
+    const { totalUsers } = await import('../tot_users');
 
     expect(totalUsers).toBe(0);
   });
 
-  it('should set totalUsers to 0 when response is not ok', async () => {
-    fetch.mockResolvedValueOnce({
-      ok: false,
-    });
+  it('sets totalUsers to 0 on network error', async () => {
+    fetch.mockRejectedValueOnce(new Error('Network error'));
 
     await getTotalUsers();
-    const { totalUsers } = await import('../path-to-your-module');
+    const { totalUsers } = await import('../tot_users');
 
     expect(totalUsers).toBe(0);
   });
