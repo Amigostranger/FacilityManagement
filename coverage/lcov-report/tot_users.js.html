@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for approveBooking.js</title>
+    <title>Code coverage report for tot_users.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> approveBooking.js</h1>
+        <h1><a href="index.html">All files</a> tot_users.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
@@ -84,76 +84,49 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// approveBooking.js
-async function <span class="fstat-no" title="function not covered" >approveBooking(</span>db, bookId, status) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      
-<span class="cstat-no" title="statement not covered" >      if (!bookId || !status || !["Approved", "Declined"].includes(status)) {</span>
-<span class="cstat-no" title="statement not covered" >        return { status: 400, body: { error: "Invalid status provided" } };</span>
-      }
-  
-      const bookingRef = <span class="cstat-no" title="statement not covered" >db.collection("bookings").doc(bookId);</span>
-  
-      
-      const bookingDoc = <span class="cstat-no" title="statement not covered" >await bookingRef.get();</span>
-<span class="cstat-no" title="statement not covered" >      if (!bookingDoc.exists) {</span>
-<span class="cstat-no" title="statement not covered" >        return { status: 404, body: { error: "Booking not found" } };</span>
-      }
-  
-      // Update the booking status
-<span class="cstat-no" title="statement not covered" >      await bookingRef.update({ status: status });</span>
-  
-<span class="cstat-no" title="statement not covered" >      return {</span>
-        status: 200,
-        body: { message: `Booking ${bookId} status updated to ${status}`, status: status },
-      };
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error(error);</span>
-<span class="cstat-no" title="statement not covered" >      return { status: 500, body: { error: "Server error" } };</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+// import fetch from 'node-fetch';  
+let totalUsers=<span class="cstat-no" title="statement not covered" >0</span>
+async function <span class="fstat-no" title="function not covered" >getTotalUsers(</span>) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const response = <span class="cstat-no" title="statement not covered" >await fetch('https://sports-management.azurewebsites.net/api/get-users')</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!response.ok) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      totalUsers= 0;</span>
     }
+&nbsp;
+    const data = <span class="cstat-no" title="statement not covered" >await response.json();</span>
+<span class="cstat-no" title="statement not covered" >    totalUsers= data.length;</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error('Fetch error:', error);</span>
+<span class="cstat-no" title="statement not covered" >    totalUsers= 0;</span>
   }
-  
-<span class="cstat-no" title="statement not covered" >  module.exports = approveBooking;</span>
-  </pre></td></tr></table></pre>
+}
+&nbsp;
+export {totalUsers,getTotalUsers}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
