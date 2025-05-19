@@ -1,5 +1,13 @@
 import express from 'express';
 import { verifyToken } from '../middleware/verifyToken.js'
+import cron from 'node-cron';
+import fetch from 'node-fetch'; // or `import('node-fetch')` if ESM
+const OPENWEATHER_API_KEY = 'ba2e8aa8a77b82b805ab1784816de5a8';
+const LOCATION = {
+  lat: -26.2041, // Johannesburg example
+  lon: 28.0473,
+};
+let latestWeatherNotification = null; // In-memory storage
 
 const createUserRoutes = (db, admin) => {
 
@@ -286,6 +294,47 @@ const createUserRoutes = (db, admin) => {
       res.status(500).send("Server error");
     }
   });
+
+
+  cron.schedule('44 10 * * *', async () => {
+  try {
+    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${LOCATION.lat}&lon=${LOCATION.lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=${OPENWEATHER_API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const forecast = data.daily;
+
+    if (!forecast || forecast.length < 6) {
+      console.error('Not enough forecast data');
+      return;
+    }
+
+    const target = forecast[5]; // Today + 5 days
+    latestWeatherNotification = {
+      date: new Date(target.dt * 1000).toDateString(),
+      condition: target.weather[0].main,
+      description: target.weather[0].description,
+      temp: {
+        min: target.temp.min,
+        max: target.temp.max,
+      },
+      icon: `https://openweathermap.org/img/wn/${target.weather[0].icon}@2x.png`,
+    };
+
+    console.log('Updated weather notification:', latestWeatherNotification);
+  } catch (err) {
+    console.error('Scheduled weather fetch failed:', err);
+  }
+});
+
+router.get('/api/weather', (req, res) => {
+  if (latestWeatherNotification) {
+    res.json(latestWeatherNotification);
+  } else {
+    res.status(503).json({ error: 'Weather notification not ready yet' });
+  }
+});
+
 
     return router;
 };
