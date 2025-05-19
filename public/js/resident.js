@@ -39,7 +39,7 @@ notificationImg.addEventListener("animationend", () => {
 
 async function loadWeather() {
   try {
-    const res = await fetch('http://localhost:3000/api/weather');
+    const res = await fetch('https://sports-management.azurewebsites.net/api/weather');
     const day = await res.json(); // Single object now
 
     const section = document.getElementById('weather-forecast');
