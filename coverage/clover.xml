@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1747652687967" clover="3.2.0">
-  <project timestamp="1747652687967" name="All files">
-    <metrics statements="160" coveredstatements="118" conditionals="53" coveredconditionals="34" methods="29" coveredmethods="19" elements="242" coveredelements="171" complexity="0" loc="160" ncloc="160" packages="1" files="13" classes="13"/>
+<coverage generated="1747654357453" clover="3.2.0">
+  <project timestamp="1747654357453" name="All files">
+    <metrics statements="155" coveredstatements="126" conditionals="53" coveredconditionals="38" methods="28" coveredmethods="21" elements="236" coveredelements="185" complexity="0" loc="155" ncloc="155" packages="1" files="12" classes="12"/>
     <file name="active_users.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\active_users.js">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="3" count="2" type="stmt"/>
@@ -37,14 +37,6 @@
       <line num="25" count="1" type="stmt"/>
       <line num="26" count="1" type="stmt"/>
       <line num="30" count="1" type="stmt"/>
-    </file>
-    <file name="googlesignIn.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\googlesignIn.js">
-      <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <line num="7" count="0" type="stmt"/>
-      <line num="8" count="0" type="stmt"/>
-      <line num="9" count="0" type="stmt"/>
-      <line num="10" count="0" type="stmt"/>
-      <line num="11" count="0" type="stmt"/>
     </file>
     <file name="issuesBargraph.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\issuesBargraph.js">
       <metrics statements="17" coveredstatements="17" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
@@ -87,15 +79,15 @@
       <line num="31" count="3" type="stmt"/>
     </file>
     <file name="linegraph_bookings.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\linegraph_bookings.js">
-      <metrics statements="8" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
-      <line num="2" count="0" type="stmt"/>
-      <line num="3" count="0" type="stmt"/>
-      <line num="5" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="6" count="0" type="stmt"/>
-      <line num="7" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="10" count="0" type="stmt"/>
-      <line num="13" count="0" type="stmt"/>
-      <line num="17" count="0" type="stmt"/>
+      <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+      <line num="2" count="4" type="stmt"/>
+      <line num="3" count="4" type="stmt"/>
+      <line num="5" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="6" count="2" type="stmt"/>
+      <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="13" count="3" type="stmt"/>
+      <line num="17" count="3" type="stmt"/>
     </file>
     <file name="piechart_issues.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\piechart_issues.js">
       <metrics statements="13" coveredstatements="12" conditionals="10" coveredconditionals="7" methods="1" coveredmethods="1"/>

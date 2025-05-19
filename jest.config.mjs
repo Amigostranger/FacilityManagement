@@ -9,6 +9,7 @@ collectCoverageFrom: [
   "!public/js/login.js",
   "!public/js/reports_dashboard.js",
   "!public/js/resident.js",
+  "!public/js/googlesignIn.js",
   "!public/js/resident_new_booking.js",
   "!public/js/resident_report_issue.js",
   "!public/js/staff.js",
