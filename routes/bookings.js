@@ -67,7 +67,7 @@ const router = express.Router();
         start:newStart,
         end:newEnd,
         who,
-        //createdAt: new Date(),
+        createdAt: new Date(),
       });
 
       res.status(200).json({ message: "Report submitted" });

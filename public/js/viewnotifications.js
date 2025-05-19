@@ -31,8 +31,8 @@ onAuthStateChanged(auth, async (user) => {
       })();
     }, 5000);
     }
-    else{
-      await loadnotifications(user);
+  else{
+    await loadnotifications(user);      
     }
     
   } else {
@@ -58,8 +58,6 @@ async function loadnotifications(user) {
 
     const data = await res.json();
     const events = data.events;
-    console.log(events)
-    // Sort events by date (latest first, or reverse `<` to `>` for earliest first)
     events.sort((a, b) => {
       const dateA = a.start?._seconds || 0;
       const dateB = b.start?._seconds || 0;
@@ -70,9 +68,16 @@ async function loadnotifications(user) {
       // const resAdmin= await fetch(`http://localhost:3000/api/adminInfo/${event.id}`)
       // const adminInfo=await resAdmin.json();
 
-      // console.log(adminInfo);
-      const from = "Kathaza";
-      const recDate="2025/02/01"
+      
+      const from =event.submittedByInfo.username;
+      let recDate = "5/17/2025, 10:58:02 PM";
+      if (event.createdAt && typeof event.createdAt._seconds === "number") {
+        
+        recDate = new Date(event.createdAt._seconds * 1000).toLocaleString();
+      } else {
+        console.log("createdAt is missing for event:", event.id);
+      }
+      
       const eventCell = document.createElement('td');
       const fromCell = document.createElement('td');
       const receiveDate=document.createElement('td');
@@ -82,8 +87,7 @@ async function loadnotifications(user) {
       updateFromcell(fromCell,from)
       eventCell.textContent = event.title;
       receiveDate.textContent=recDate;
-      // Append cells to the row
-       //row.classList.add("unclicked-row");
+      
       row.appendChild(fromCell);
       row.appendChild(eventCell);
       row.appendChild(receiveDate);
@@ -105,13 +109,14 @@ async function loadnotifications(user) {
     console.error("Error loading issues:", err);
   }
 }
+
 function updateVisibility(countRead) {
     counter.style.visibility = countRead === 0 ? "hidden" : "visible";
 }
 function updateFromcell(fromCell,from){
     // Create the image element
   const img = document.createElement('img');
-  img.src = 'img/randompic.jpg'; // Set image source
+  img.src = 'img/users_icon.png'; // Set image source
   img.alt = 'Avatar';            // Optional alt text
   img.style.width = '24px';      // Optional: adjust size
   img.style.height = '24px';
@@ -120,7 +125,7 @@ function updateFromcell(fromCell,from){
   // Create the text node
   const textNode = document.createTextNode(from);
   // Append both image and text
-  fromCell.appendChild(img);
+  // fromCell.appendChild(img);
   fromCell.appendChild(textNode);
 }
 async function readMore(event,row){
@@ -144,10 +149,10 @@ async function readMore(event,row){
           cell.style.color = "white";
         });
         
-      console.log(event)
+      // console.log(event);
       viewFacility.textContent = event.facility || "No Facility";
-      viewStart.textContent = event.start && event.start._seconds? new Date(event.start._seconds * 1000).toLocaleString(): "No start time";
-      viewEnd.textContent = event.end && event.end._seconds? new Date(event.end._seconds * 1000).toLocaleString(): "No end time";
+      viewStart.textContent = event.start || "No start time";
+      viewEnd.textContent = event.end || "No end time";
       viewDescribe.textContent = event.description || "No description.";
       //viewModal.hidden = false;
       viewModal.hidden = false;
