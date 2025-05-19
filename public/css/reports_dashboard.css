@@ -7,33 +7,61 @@
 html, body {
   height: 100%;
   width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll */
-}
-
-body {
+  overflow-x: hidden;
   font-family: Arial, sans-serif;
   background-color: lightgray;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  padding-top: 100px;
-  display: flex;
-  justify-content: center;
 }
 
-/* Make all-graphs fill viewport width and stack vertically */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top navigation bar */
+nav.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #0a71d1;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  gap: 20px;
+  z-index: 1000;
+}
+
+nav.navbar button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+nav.navbar button:hover {
+  color: #ffcc00;
+  text-decoration: underline;
+}
+
+/* Push content below navbar */
 .all-graphs {
+  margin-top: 70px;
   width: 95%;
-  /* Optional: limit width for better appearance */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 40px;
 }
 
-.upper-graphs .active-users
-{
+.upper-graphs .active-users {
   display: flex;
   flex-direction: column;
   background: #f6f2f2;
@@ -42,19 +70,15 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   width: 220px;
-  height: 110%;
 }
+
 .counts-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center; /* Optional: vertically centers items */
-    width: 100%;
-    margin-top: 10px;
-    font-size: 10px;
-    font-family: Arial, sans-serif; /* Specify a fallback font */
-    font-weight: bold;
-    padding: 0; /* Reset padding if needed */
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .count-item {
@@ -63,23 +87,19 @@ body {
   text-align: center;
 }
 
-/* Each section fills full width and lays out content horizontally */
 section.upper-graphs,
 section.middle-graphs,
 section.lower-graphs {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
   flex-wrap: wrap;
-  width: 100%;
+  justify-content: center;
   gap: 10px;
-  padding: 1px;
-  box-sizing: border-box;
+  width: 100%;
 }
 
 article {
   background-color: #f5f5f5;
-  padding: 160px; /* this shouldn't override the smaller ones */
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   flex: 1;
@@ -91,11 +111,9 @@ article {
 article.facility-bargraph,
 article.months-bargraph,
 article.piechart,
-article.line-graph,
 article.line-graph {
-  padding: 20px;  
-} 
-
+  padding: 20px;
+}
 
 .upper-graphs .total-users,
 .upper-graphs .report {
