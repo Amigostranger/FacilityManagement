@@ -48,21 +48,48 @@ const createNotificationsRouter = (db, admin) => {
   });
 
   //API Endpoint for Listing notifications
-  router.get("/api/notifications", verifyToken(admin.auth()),async (req, res) => {
-    const uid=req.user.uid;
-    try {
-      const snapshot = await db.collection("notifications").where("recipient", "==", uid).get();
-      const events= snapshot.docs.map(doc => ({
+ router.get("/api/notifications", verifyToken(admin.auth()), async (req, res) => {
+  const uid = req.user.uid;
+
+  try {
+    const snapshot = await db
+      .collection("notifications")
+      .where("recipient", "==", uid)
+      .get();
+
+    const events = [];
+
+    for (const doc of snapshot.docs) {
+      const eventData = {
         id: doc.id,
         ...doc.data(),
-      }));
-      res.status(200).json({events});
+      };
 
-    } catch (error) {
-      console.error("Error fetching Events:", error);
-      res.status(500).json({ error: "Failed to get Events" });
+      const submittedById = eventData.submittedBy;
+
+      try {
+        const userDoc = await db.collection("users").doc(submittedById).get();
+
+        if (userDoc.exists) {
+          eventData.submittedByInfo = userDoc.data();
+        } else {
+          eventData.submittedByInfo = null; // or some default value
+        }
+      } catch (userError) {
+        console.warn(`Failed to fetch user ${submittedById}:`, userError);
+        eventData.submittedByInfo = null;
+      }
+
+      events.push(eventData);
     }
-  });
+
+    res.status(200).json({ events });
+
+  } catch (error) {
+    console.error("Error fetching Events:", error);
+    res.status(500).json({ error: "Failed to get Events" });
+  }
+});
 
   router.get('/api/adminInfo/:id',async (req,res)=>{
   try {
