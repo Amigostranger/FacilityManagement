@@ -24,7 +24,7 @@ npm install
 • Download the serviceAccountKey.json file.
 • Place it in the root directory of your project (same level as server.js).
 
-## 4️⃣ Modify Code for Local Use
+## 5️⃣ Modify Code for Local Use
 
 ✅ Comment out the environment variable version:
 constserviceAccount=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
