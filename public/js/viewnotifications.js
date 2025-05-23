@@ -215,10 +215,14 @@ document.addEventListener('mouseup', () => {
     viewModal.hidden = true;
   });
 }
-
-
-
-
-
-
 })
+
+ document.getElementById("homeBtn").addEventListener("click", () => {
+    window.location.href = "./resident_home.html"; 
+  });
+  document.getElementById("bookBtn").addEventListener("click", () => {
+    window.location.href = "./resident_new_booking.html"; 
+  });
+  document.getElementById("issuesBtn").addEventListener("click", () => {
+    window.location.href = "./resident_report_issue.html"; 
+  });

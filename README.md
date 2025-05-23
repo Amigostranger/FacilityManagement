@@ -1,102 +1,46 @@
 # 🏀 Community Sports Facility Management System
 
-A web-based solution for managing shared sports facilities in local communities. This platform streamlines **facility booking**, **user management**, **maintenance reporting**, **event organization**, and **real-time reporting** using Agile, CI/CD, and Test-Driven Development principles.
-
----
-
-## 🚀 Features
-
-### ✅ Facility Booking
-- Real-time booking and availability tracking
-- Role-based access (Residents book, Admins approve/decline)
-
-### ✅ Membership & User Management
-- Admin dashboard for onboarding users, revoking access, and assigning roles
-- 3 User Roles:  
-  - **Resident**: Can book facilities, view events, report issues  
-  - **Facility Staff**: Manages maintenance issues  
-  - **Admin**: Manages users, creates events, and generates reports
-
-### ✅ Maintenance Reporting
-- Users can report issues with facilities
-- Facility Staff can update issue status and leave feedback
-
-### ✅ Event Management & Notifications
-- Admins can schedule events (e.g., tournaments, community classes)
-- Users receive automated notifications about:
-  - Upcoming events
-  - Maintenance closures
-  - (Bonus) Weather disruptions for outdoor venues
-
-### ✅ Reporting Dashboard
-- Visual reports for:
-  - Facility usage trends
-  - Maintenance issue status (open vs closed)
-  - Customizable report views
-- Exportable reports (CSV / PDF)
-
----
-
-## 🛠️ Tech Stack
-
-- **Frontend**: Javascript(vanilla)
+- **Frontend**: Javascript
 - **Backend**: Node.js (Express)
-- **Database**: MongoDB
-- **Authentication**: OAuth 2.0 with Google or GitHub
-- **CI/CD**: GitHub Actions / GitLab CI
-- **Testing**: Jest, Mocha, Chai (unit + integration tests)
-- **Deployment**: (Azure)
----
-
-## 🔐 Authentication & User Roles
-
-Authentication is powered by a **3rd-party identity provider (OAuth2)**. Users are assigned one of the following roles:
-
-| Role          | Description                                   |
-|---------------|-----------------------------------------------|
-| Resident      | Can book facilities, report issues, attend events |
-| Facility Staff| Updates maintenance issues                    |
-| Admin         | Manages users, events, and system settings    |
+- **Database**:Firestore
+- **Authentication**: OAuth 2.0 with Google through firebase
+- **CI/CD**: GitHub Actions
+- **Testing**: Jest(Unit test)
+- **Deployment**: Microsoft Azure
 
 ---
+# How to set up and run application locally
 
-## 🧪 Test-Driven Development (TDD)
+## 1️⃣ Clone the repository
+run command : git clone https://github.com/Sports-Facility-Management-Team1/FacilityManagement.git
+run command : cd FacilityManagement
 
-All features follow a TDD approach:
-- Write failing tests
-- Implement feature
-- Refactor and optimize
+## 2️⃣ Install Dependencies
+npm install
 
-Unit and integration tests cover major functionality to ensure reliability and maintainability.
+## 3️⃣ Firebase Service Account Setup
 
----
+• Go to your Firebase Console and generate a new service account key.
+• Download the serviceAccountKey.json file.
+• Place it in the root directory of your project (same level as server.js).
 
-## 🔄 Agile Methodology
+## 4️⃣ Modify Code for Local Use
 
-Development is broken into sprints with frequent standups, retrospectives, and continuous user feedback loops.
+✅ Comment out the environment variable version:
+constserviceAccount=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
----
+✅ Use the file-based version:
+const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+if (!fs.existsSync(serviceAccountPath)) {
+  console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
+  process.exit(1);
+}
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
-## 📈 Deployment & CI/CD
+## 5️⃣ Run the Application Locally
+node server.js
+🟢 The backend server will be running at :
+http://localhost:3000 (or your defined PORT)
 
-- Continuous Integration: Automated testing on pull requests
-- Continuous Deployment: Auto-deploy to cloud host
-- Environments: Dev, Staging, and Production
-
----
-
-## 📁 Getting Started (For Devs)
-
-```bash
-# Clone repo
-git clone https://github.com/your-org/community-sports-facility.git
-
-# Install dependencies
-cd backend && npm install
-cd ../frontend && npm install
-
-# Run backend
-cd backend && npm run dev
-
-# Run frontend
-cd ../frontend && npm run dev
+🧪 Running Tests
+To run unit tests using Jest : npm test

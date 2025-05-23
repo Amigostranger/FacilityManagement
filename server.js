@@ -20,14 +20,14 @@ const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
 
 
-if (!fs.existsSync(serviceAccountPath)) {
-  console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
-  process.exit(1);
-}
+// if (!fs.existsSync(serviceAccountPath)) {
+//   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
+//   process.exit(1);
+// }
 
 
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-//const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
