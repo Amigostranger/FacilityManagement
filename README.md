@@ -12,20 +12,24 @@
 # How to set up and run application locally
 
 ## 1️⃣ Clone the repository
-run command : git clone https://github.com/Sports-Facility-Management-Team1/FacilityManagement.git .
-cd FacilityManagement
+run command : git clone https://github.com/Sports-Facility-Management-Team1/FacilityManagement.git
+run command : cd FacilityManagement
 
 ## 2️⃣ Install Dependencies
-run command : npm install
+npm install
 
 ## 3️⃣ Firebase Service Account Setup
-There is a provided file called ./serviceAccountKey.json.
-It should be in the same folder as server.js
+
+• Go to your Firebase Console and generate a new service account key.
+• Download the serviceAccountKey.json file.
+• Place it in the root directory of your project (same level as server.js).
 
 ## 4️⃣ Modify Code for Local Use
-### Comment out the environment variable method (used for production):
-//constserviceAccount=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-### Uncomment and use the file-based version:
+
+✅ Comment out the environment variable version:
+constserviceAccount=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
+✅ Use the file-based version:
 const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 if (!fs.existsSync(serviceAccountPath)) {
   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);
@@ -34,5 +38,9 @@ if (!fs.existsSync(serviceAccountPath)) {
 const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
 ## 4️⃣ Run the Application Locally
-run command : node server.js
-Backend server should now be running locally at http://localhost:PORT (default is likely 3000).
+node server.js
+🟢 The backend server will be running at :
+http://localhost:3000 (or your defined PORT)
+
+🧪 Running Tests
+To run unit tests using Jest : npm test
