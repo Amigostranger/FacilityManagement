@@ -1,4 +1,6 @@
 import { auth } from '../../utils/firebase.js';
+import { postEvent } from './postEvent.js'; 
+
 
 const eventBtn = document.getElementById('eventBtn');
 const Modal = document.getElementById('addModal');
@@ -37,29 +39,17 @@ bookingForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  try {
-    const idToken = await user.getIdToken();
 
-    const res = await fetch("https://sports-management.azurewebsites.net/api/createEvent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${idToken}`
-      },
-      body: JSON.stringify({ title, description, facility, start, end, who })
-    });
 
-    const data = await res.json();
+  const { res, data } = await postEvent({ user, title, description, facility, start, end, who });
 
-    if (res.ok) {
-      alert("Event submitted successfully!");
-      bookingForm.reset();
-      Modal.hidden = true;
-    } else {
-      alert("Error: " + data.error);
-    }
-  } catch (err) {
-    console.error("Failed to submit:", err);
-    alert("Something went wrong. Please try again.");
+  if (res.ok) {
+    alert("Event submitted successfully!");
+    bookingForm.reset();
+    Modal.hidden = true;
+  } else {
+    alert("Error: " + data.error);
   }
+
+
 });

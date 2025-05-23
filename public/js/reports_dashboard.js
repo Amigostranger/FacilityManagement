@@ -1,19 +1,21 @@
-import {loadActiveUsers} from './active_users.js';
+import { loadActiveUsers } from './active_users.js';
 import { auth } from '../../utils/firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { getPieChartData } from './piechart_issues.js';
 import { getBookingsData } from './linegraph_bookings.js';
-import { totalUsers,getTotalUsers } from './tot_users.js';
-import { totalReports,no } from './issuesreport.js';
-import { getMonthlyIssueData} from './issuesBargraph.js';
+import { totalUsers, getTotalUsers } from './tot_users.js';
+import { totalReports, no } from './issuesreport.js';
+import { getMonthlyIssueData } from './issuesBargraph.js';
+import { updateChart } from './barGraph.js';
 
 let currentUserRole = null;
 
 // Initialize the page
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async function () {
   await checkAuthState();
   setupNavigation();
-  initializeCharts();
+  await initializeCharts();
+  await initializeGraphs();
 });
 
 // Check authentication state and get user role
@@ -57,21 +59,20 @@ function setupNavigation() {
     const button = document.createElement('button');
     button.id = item.id;
     button.textContent = item.text;
-    
+
     button.addEventListener('click', () => {
       window.location.href = item.path;
     });
-    
+
     button.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         window.location.href = item.path;
       }
     });
-    
+
     navbar.appendChild(button);
   });
 
-  // Highlight current page
   const currentPage = window.location.pathname.split('/').pop();
   config.forEach(item => {
     const button = document.getElementById(item.id);
@@ -83,7 +84,6 @@ function setupNavigation() {
 
 // Initialize all charts
 async function initializeCharts() {
-  // Total Users Chart
   await getTotalUsers();
   var totUsersOptions = {
     chart: {
@@ -105,7 +105,7 @@ async function initializeCharts() {
             show: true,
             label: 'Total Users ',
             formatter: function () {
-              return totalUsers.toString(); 
+              return totalUsers.toString();
             }
           }
         }
@@ -114,23 +114,21 @@ async function initializeCharts() {
   };
   new ApexCharts(document.querySelector("#tot_users"), totUsersOptions).render();
 
-  // Total Reports
   await totalReports();
   document.getElementById("main-heading").textContent = no;
 
-  // Active Users Chart
   const stats = await loadActiveUsers();
-  const weekly = (stats.lastWeek/stats.totalUsers)*100;
-  const monthly = (stats.lastMonth/stats.totalUsers)*100;
+  const weekly = (stats.lastWeek / stats.totalUsers) * 100;
+  const monthly = (stats.lastMonth / stats.totalUsers) * 100;
   const activeCard = document.querySelector("#median-ratio");
-  
+
   document.getElementById("week-count").textContent = `Last week: ${stats.lastWeek}`;
   document.getElementById("month-count").textContent = `Last month: ${stats.lastMonth}`;
-  
+
   var activeUsersOptions = {
     series: [weekly],
     chart: {
-      color:"red",
+      color: "red",
       height: 250,
       type: 'radialBar',
       offsetY: -30
@@ -139,7 +137,7 @@ async function initializeCharts() {
       radialBar: {
         startAngle: -135,
         endAngle: 135,
-        color:"blue",
+        color: "blue",
         dataLabels: {
           name: {
             fontSize: '16px',
@@ -160,12 +158,12 @@ async function initializeCharts() {
     fill: {
       type: 'gradient',
       gradient: {
-          shade: 'dark',
-          shadeIntensity: 0.9,
-          inverseColors: false,
-          opacityFrom: 1,
-          opacityTo: 0.7,
-          stops: [0, 50, 30, 9]
+        shade: 'dark',
+        shadeIntensity: 0.9,
+        inverseColors: false,
+        opacityFrom: 1,
+        opacityTo: 0.7,
+        stops: [0, 50, 30, 9]
       },
     },
     stroke: {
@@ -175,14 +173,13 @@ async function initializeCharts() {
   };
   new ApexCharts(activeCard, activeUsersOptions).render();
 
-  // Facility Bookings Chart
   const monthSelect = document.getElementById("monthSelect");
   var bookingsOptions = {
     chart: {
       height: 300,
       type: 'bar',
     },
-    series: [{name: 'Bookings', data: []}],
+    series: [{ name: 'Bookings', data: [] }],
     annotations: {
       points: [{
         x: 'Bananas',
@@ -219,7 +216,7 @@ async function initializeCharts() {
       labels: {
         rotate: -45
       },
-      categories: ['Soccer Field', 'Basketball Court','Cricket Field', 'Netball Court','EsportsHall ', 'Chess Hall'],
+      categories: ['Soccer Field', 'Basketball Court', 'Cricket Field', 'Netball Court', 'EsportsHall ', 'Chess Hall'],
       tickPlacement: 'on'
     },
     yaxis: {
@@ -244,29 +241,14 @@ async function initializeCharts() {
 
   const bookingsChart = new ApexCharts(document.querySelector("#bookingsChart"), bookingsOptions);
   bookingsChart.render();
+  updateChart(bookingsChart, monthSelect.value);
 
-  async function updateChart(month) {
-    try {
-      const response = await fetch(`https://sports-management.azurewebsites.net/api/bookings-per-facility?month=${month}`);
-      const data = await response.json();
-      const categories =  ['Basketball Court','Cricket Field', 'Netball Court','EsportsHall ', 'Chess Hall', 'Soccer Field'];
-      const counts = Object.values(data);
-      
-      bookingsChart.updateOptions({
-        xaxis: { categories },
-        series: [{ name: 'Bookings', data: counts }]
-      });
-    } catch (error) {
-      console.error("Error loading chart data:", error);
-    }
-  }
-
-  updateChart(monthSelect);
   monthSelect.addEventListener('change', () => {
-    updateChart(monthSelect.value);
+    updateChart(bookingsChart, monthSelect.value);
   });
+}
 
-  // Pie Chart for Issues
+async function initializeGraphs() {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       try {
@@ -290,7 +272,6 @@ async function initializeCharts() {
     }
   });
 
-  // Line Graph for Monthly Bookings
   try {
     const monthlyData = await getBookingsData();
     const lineGraphOptions = {
@@ -324,7 +305,6 @@ async function initializeCharts() {
     console.error("Error rendering line graph:", err);
   }
 
-  // Monthly Issues Bar Graph
   try {
     const { solvedIssues, unsolvedIssues } = await getMonthlyIssueData();
     const barGraphOptions = {
@@ -343,12 +323,12 @@ async function initializeCharts() {
         }
       ],
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       },
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '50%',  
+          columnWidth: '50%',
           endingShape: 'rounded'
         }
       },
