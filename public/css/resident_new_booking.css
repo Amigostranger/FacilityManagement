@@ -1,22 +1,21 @@
-/* Reset */
+/* Reset default margins/padding */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body Styling */
+/* Body Styles */
 body {
   font-family: Arial, sans-serif;
-  height: 100vh;
+  min-height: 100vh;
   background-image: url("../img/background_light.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   display: flex;
   flex-direction: column;
-  padding: 50px 20px;
-  gap: 30px;
+  padding-top: 80px; /* For fixed navbar */
   position: relative;
   color: white;
 }
@@ -30,99 +29,118 @@ body::before {
   z-index: -1;
 }
 
+/* Navbar */
+nav.navbar {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 60%;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 30px;
+  gap: 20px;
+  z-index: 1000;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+nav.navbar button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+nav.navbar button:hover {
+  color: blue;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+nav.navbar button:active {
+  transform: translateY(0);
+}
+
+.active-nav-button {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Header */
 header {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   align-items: center;
-}
-
-nav {
-  display: flex;
   gap: 20px;
-}
-
-nav button {
-  font-size: 16px;
-  padding: 12px 20px;
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 12px;
-  color: white;
-  backdrop-filter: blur(4px);
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-nav button:hover {
-  background-color: #005fa3;
-  transform: scale(1.02);
 }
 
 /* Filter Section */
 #filterSection {
-  width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
+#filterSection input,
+#filterSection button,
 #filterSection select {
-  background-color: #333;
-  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
   border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
 }
 
 #filterSection select option {
   background-color: #333;
-  color: white;
-}
-
-#filterSection input,
-#filterSection button {
-  padding: 10px;
-  border: 1px solid white;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  font-size: 14px;
-  outline: none;
 }
 
 #filterSection button {
+  background: transparent;
   border: 2px solid white;
-  background-color: transparent;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 
 #filterSection button:hover {
   background-color: #005fa3;
 }
 
-/* No Bookings Message */
+/* Message */
 #noBookingsMessage {
   text-align: center;
-  margin-top: 20px;
   font-size: 18px;
+  margin-top: 20px;
   backdrop-filter: blur(4px);
   padding: 15px;
 }
 
-/* Table Styling */
+/* Table Styles */
 table {
   width: 100%;
   max-width: 900px;
-  margin: 20px auto;
+  margin: 30px auto;
   border-collapse: collapse;
+  border-radius: 12px;
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
-  border-radius: 12px;
-  overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
 th, td {
@@ -141,7 +159,8 @@ tr:hover {
 }
 
 /* Modal Styling */
-#addModal, #viewModal {
+#addModal,
+#viewModal {
   position: fixed;
   top: 0;
   left: 0;
@@ -155,7 +174,13 @@ tr:hover {
   z-index: 1000;
 }
 
-#addModal article, #viewModal article {
+#addModal[hidden],
+#viewModal[hidden] {
+  display: none;
+}
+
+#addModal article,
+#viewModal article {
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   padding: 30px;
@@ -166,35 +191,30 @@ tr:hover {
   backdrop-filter: blur(10px);
 }
 
-/* Form inside Modal */
+/* Modal Form */
 form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-form select {
-  background-color: #333;
-  color: white;
-  border: 1px solid white;
-}
-
-form select option {
-  background-color: #333;
-  color: white;
-}
 form input,
-form textarea {
+form textarea,
+form select {
   padding: 10px;
+  font-size: 14px;
   border-radius: 8px;
   border: 1px solid white;
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
   outline: none;
-  font-size: 14px;
 }
 
-/* Footer inside Modal */
+form select option {
+  background-color: #333;
+}
+
+/* Modal Footer Buttons */
 footer {
   display: flex;
   justify-content: space-between;
@@ -204,11 +224,11 @@ footer {
 footer button {
   padding: 10px 20px;
   border: 2px solid white;
-  background-color: transparent;
+  background: transparent;
   border-radius: 10px;
   color: white;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: 0.2s;
 }
 
 footer button:hover {
@@ -216,10 +236,53 @@ footer button:hover {
   transform: scale(1.02);
 }
 
-/* Hide Modal when Hidden */
-#addModal[hidden],
-#viewModal[hidden] {
-  display: none;
+/* Calendar Styles */
+#calendar {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* FullCalendar Day Numbers */
+.fc-daygrid-day-number {
+  color: #002f50;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+/* FullCalendar Events */
+.fc-event {
+  background-color: #005fa3;
+  border: none;
+  border-radius: 8px;
+  padding: 2px 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.fc-event:hover {
+  background-color: #007bff;
+}
+
+/* FullCalendar Toolbar Title */
+.fc-toolbar-title {
+  color: white;
+  font-size: 20px;
+}
+
+/* FullCalendar Buttons */
+.fc-button {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+/* FullCalendar List Day Header */
+.fc .fc-list-day-cushion {
+  background-color: rgba(182, 182, 182, 0.1);
+  backdrop-filter: blur(6px);
+  color: #024b80;
 }
 
 /* Responsive */
@@ -239,51 +302,52 @@ footer button:hover {
   }
 }
 
-
-#calendar {
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
-  padding: 20px;
-  border-radius: 16px;
-  
-}
-
-
-.fc-daygrid-day-number {
-  color: #002f50;
-  font-family:Arial, Helvetica, sans-serif;
-  font-weight:bold;
-}
-
-/* Style event blocks */
-.fc-event {
-  background-color: #005fa3;
-  border: none;
-  border-radius: 8px;
-  padding: 2px 4px;
-  font-size: 14px;
-}
-
-.fc-event:hover {
-  background-color: #007bff;
+.actionBtn,
+#addBookingBtn {
+  font-size: 16px;
+  padding: 12px 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 2px solid white;
+  border-radius: 12px;
   cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+.actionBtn:hover,
+#addBookingBtn:hover {
+  background-color: #005fa3;
+  transform: scale(1.05);
+}
 
-.fc-toolbar-title {
+.actionBtn:active,
+#addBookingBtn:active {
+  transform: scale(1);
+}
+
+.actionBtn,
+#viewBookingsBtn {
+  font-size: 16px;
+  padding: 12px 24px;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  font-size: 20px;
+  border: 2px solid white;
+  border-radius: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.fc-button {
-  background-color: transparent;
-  border: 1px solid white;
-  color: white;
+.actionBtn:hover,
+#viewBookingsBtn:hover {
+  background-color: #005fa3;
+  transform: scale(1.05);
 }
 
-.fc .fc-list-day-cushion {
-  background-color:rgba(182, 182, 182, 0.1);
-  backdrop-filter: blur(6px);
-  color: #024b80; 
+.actionBtn:active,
+#viewBookingsBtn:active {
+  transform: scale(1);
 }
-

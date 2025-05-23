@@ -97,3 +97,13 @@ issueForm.addEventListener('submit', async (e) => {
     alert("Something went wrong. Please try again.");
   }
 });
+
+ document.getElementById("homeBtn").addEventListener("click", () => {
+    window.location.href = "./resident_home.html"; 
+  });
+  document.getElementById("bookBtn").addEventListener("click", () => {
+    window.location.href = "./resident_new_booking.html"; 
+  });
+  document.getElementById("notifyBtn").addEventListener("click", () => {
+    window.location.href = "./resident_notifications.html"; 
+  });
