@@ -12,7 +12,7 @@
 # How to set up and run application locally
 
 ## 1️⃣ Clone the repository
-run command : git clone https://github.com/Sports-Facility-Management-Team1/FacilityManagement.git
+run command : git clone https://github.com/Sports-Facility-Management-Team1/FacilityManagement.git .
 cd FacilityManagement
 
 ## 2️⃣ Install Dependencies
