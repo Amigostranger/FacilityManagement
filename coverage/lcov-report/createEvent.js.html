@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/34</span>
+                <span class='fraction'>0/29</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/34</span>
+                <span class='fraction'>0/29</span>
             </div>
         
             
@@ -117,17 +117,9 @@
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -166,16 +158,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -188,10 +170,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { auth } from '../../utils/firebase.js';
+import { postEvent } from './postEvent.js'; 
+&nbsp;
 &nbsp;
 const eventBtn = <span class="cstat-no" title="statement not covered" >document.getElementById('eventBtn');</span>
 const Modal = <span class="cstat-no" title="statement not covered" >document.getElementById('addModal');</span>
@@ -230,31 +212,19 @@ const bookingForm = <span class="cstat-no" title="statement not covered" >docume
 <span class="cstat-no" title="statement not covered" >    return;</span>
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const idToken = <span class="cstat-no" title="statement not covered" >await user.getIdToken();</span>
 &nbsp;
-    const res = <span class="cstat-no" title="statement not covered" >await fetch("https://sports-management.azurewebsites.net/api/createEvent", {</span>
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${idToken}`
-      },
-      body: JSON.stringify({ title, description, facility, start, end, who })
-    });
 &nbsp;
-    const data = <span class="cstat-no" title="statement not covered" >await res.json();</span>
+  const { res, data } = <span class="cstat-no" title="statement not covered" >await postEvent({ user, title, description, facility, start, end, who });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (res.ok) {</span>
-<span class="cstat-no" title="statement not covered" >      alert("Event submitted successfully!");</span>
-<span class="cstat-no" title="statement not covered" >      bookingForm.reset();</span>
-<span class="cstat-no" title="statement not covered" >      Modal.hidden = true;</span>
-    } else {
-<span class="cstat-no" title="statement not covered" >      alert("Error: " + data.error);</span>
-    }
-  } catch (err) {
-<span class="cstat-no" title="statement not covered" >    console.error("Failed to submit:", err);</span>
-<span class="cstat-no" title="statement not covered" >    alert("Something went wrong. Please try again.");</span>
+<span class="cstat-no" title="statement not covered" >  if (res.ok) {</span>
+<span class="cstat-no" title="statement not covered" >    alert("Event submitted successfully!");</span>
+<span class="cstat-no" title="statement not covered" >    bookingForm.reset();</span>
+<span class="cstat-no" title="statement not covered" >    Modal.hidden = true;</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    alert("Error: " + data.error);</span>
   }
+&nbsp;
+&nbsp;
 });</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -262,7 +232,7 @@ const bookingForm = <span class="cstat-no" title="statement not covered" >docume
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-19T07:58:05.907Z
+                at 2025-05-23T16:22:42.652Z
             </div>
         <script src="prettify.js"></script>
         <script>

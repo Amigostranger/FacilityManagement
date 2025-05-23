@@ -282,7 +282,12 @@
 <a name='L217'></a><a href='#L217'>217</a>
 <a name='L218'></a><a href='#L218'>218</a>
 <a name='L219'></a><a href='#L219'>219</a>
-<a name='L220'></a><a href='#L220'>220</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -343,11 +348,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -355,18 +358,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -387,6 +396,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -404,7 +414,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -428,7 +438,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -534,8 +544,8 @@ const closeViewBtn = <span class="cstat-no" title="statement not covered" >docum
       })();
     }, 5000);
     }
-    else{
-<span class="cstat-no" title="statement not covered" >      await loadnotifications(user);</span>
+  else{
+<span class="cstat-no" title="statement not covered" >    await loadnotifications(user);      </span>
     }
     
   } else {
@@ -561,8 +571,6 @@ async function <span class="fstat-no" title="function not covered" >loadnotifica
 &nbsp;
     const data = <span class="cstat-no" title="statement not covered" >await res.json();</span>
     const events = <span class="cstat-no" title="statement not covered" >data.events;</span>
-<span class="cstat-no" title="statement not covered" >    console.log(events)</span>
-    // Sort events by date (latest first, or reverse `&lt;` to `&gt;` for earliest first)
 <span class="cstat-no" title="statement not covered" >    events.sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; {</span>
       const dateA = <span class="cstat-no" title="statement not covered" >a.start?._seconds || 0;</span>
       const dateB = <span class="cstat-no" title="statement not covered" >b.start?._seconds || 0;</span>
@@ -573,9 +581,16 @@ async function <span class="fstat-no" title="function not covered" >loadnotifica
       // const resAdmin= await fetch(`http://localhost:3000/api/adminInfo/${event.id}`)
       // const adminInfo=await resAdmin.json();
 &nbsp;
-      // console.log(adminInfo);
-      const from = <span class="cstat-no" title="statement not covered" >"Kathaza";</span>
-      const recDate=<span class="cstat-no" title="statement not covered" >"2025/02/01"</span>
+      
+      const from =<span class="cstat-no" title="statement not covered" >event.submittedByInfo.username;</span>
+      let recDate = <span class="cstat-no" title="statement not covered" >"5/17/2025, 10:58:02 PM";</span>
+<span class="cstat-no" title="statement not covered" >      if (event.createdAt &amp;&amp; typeof event.createdAt._seconds === "number") {</span>
+        
+<span class="cstat-no" title="statement not covered" >        recDate = new Date(event.createdAt._seconds * 1000).toLocaleString();</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        console.log("createdAt is missing for event:", event.id);</span>
+      }
+      
       const eventCell = <span class="cstat-no" title="statement not covered" >document.createElement('td');</span>
       const fromCell = <span class="cstat-no" title="statement not covered" >document.createElement('td');</span>
       const receiveDate=<span class="cstat-no" title="statement not covered" >document.createElement('td');</span>
@@ -585,8 +600,7 @@ async function <span class="fstat-no" title="function not covered" >loadnotifica
 <span class="cstat-no" title="statement not covered" >      updateFromcell(fromCell,from)</span>
 <span class="cstat-no" title="statement not covered" >      eventCell.textContent = event.title;</span>
 <span class="cstat-no" title="statement not covered" >      receiveDate.textContent=recDate;</span>
-      // Append cells to the row
-       //row.classList.add("unclicked-row");
+      
 <span class="cstat-no" title="statement not covered" >      row.appendChild(fromCell);</span>
 <span class="cstat-no" title="statement not covered" >      row.appendChild(eventCell);</span>
 <span class="cstat-no" title="statement not covered" >      row.appendChild(receiveDate);</span>
@@ -608,13 +622,14 @@ async function <span class="fstat-no" title="function not covered" >loadnotifica
 <span class="cstat-no" title="statement not covered" >    console.error("Error loading issues:", err);</span>
   }
 }
+&nbsp;
 function <span class="fstat-no" title="function not covered" >updateVisibility(</span>countRead) {
 <span class="cstat-no" title="statement not covered" >    counter.style.visibility = countRead === 0 ? "hidden" : "visible";</span>
 }
 function <span class="fstat-no" title="function not covered" >updateFromcell(</span>fromCell,from){
     // Create the image element
   const img = <span class="cstat-no" title="statement not covered" >document.createElement('img');</span>
-<span class="cstat-no" title="statement not covered" >  img.src = 'img/randompic.jpg'; </span>// Set image source
+<span class="cstat-no" title="statement not covered" >  img.src = 'img/users_icon.png'; </span>// Set image source
 <span class="cstat-no" title="statement not covered" >  img.alt = 'Avatar'; </span>           // Optional alt text
 <span class="cstat-no" title="statement not covered" >  img.style.width = '24px'; </span>     // Optional: adjust size
 <span class="cstat-no" title="statement not covered" >  img.style.height = '24px';</span>
@@ -623,7 +638,7 @@ function <span class="fstat-no" title="function not covered" >updateFromcell(</s
   // Create the text node
   const textNode = <span class="cstat-no" title="statement not covered" >document.createTextNode(from);</span>
   // Append both image and text
-<span class="cstat-no" title="statement not covered" >  fromCell.appendChild(img);</span>
+  // fromCell.appendChild(img);
 <span class="cstat-no" title="statement not covered" >  fromCell.appendChild(textNode);</span>
 }
 async function <span class="fstat-no" title="function not covered" >readMore(</span>event,row){
@@ -647,10 +662,10 @@ async function <span class="fstat-no" title="function not covered" >readMore(</s
 <span class="cstat-no" title="statement not covered" >          cell.style.color = "white";</span>
         });
         
-<span class="cstat-no" title="statement not covered" >      console.log(event)</span>
+      // console.log(event);
 <span class="cstat-no" title="statement not covered" >      viewFacility.textContent = event.facility || "No Facility";</span>
-<span class="cstat-no" title="statement not covered" >      viewStart.textContent = event.start &amp;&amp; event.start._seconds? new Date(event.start._seconds * 1000).toLocaleString(): "No start time";</span>
-<span class="cstat-no" title="statement not covered" >      viewEnd.textContent = event.end &amp;&amp; event.end._seconds? new Date(event.end._seconds * 1000).toLocaleString(): "No end time";</span>
+<span class="cstat-no" title="statement not covered" >      viewStart.textContent = event.start || "No start time";</span>
+<span class="cstat-no" title="statement not covered" >      viewEnd.textContent = event.end || "No end time";</span>
 <span class="cstat-no" title="statement not covered" >      viewDescribe.textContent = event.description || "No description.";</span>
       //viewModal.hidden = false;
 <span class="cstat-no" title="statement not covered" >      viewModal.hidden = false;</span>
@@ -727,7 +742,7 @@ let offsetY = <span class="cstat-no" title="statement not covered" >0;</span>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-19T07:58:05.907Z
+                at 2025-05-23T16:22:42.652Z
             </div>
         <script src="prettify.js"></script>
         <script>

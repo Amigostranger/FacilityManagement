@@ -1,6 +1,7 @@
 const reportBtn=document.getElementById('reportBtn');
 const notificationBtn = document.getElementById('notificationBtn');
 const notificationImg = document.getElementById("notify");
+import { loadWeather } from './weather.js';
 
 
 reportBtn.addEventListener('click',async(e)=>{
@@ -36,45 +37,6 @@ notificationImg.classList.add("shake");
 notificationImg.addEventListener("animationend", () => {
     notificationImg.classList.remove("shake");
   });
-
-async function loadWeather() {
-  try {
-    const res = await fetch('https://sports-management.azurewebsites.net/api/weather');
-    const day = await res.json(); // Single object now
-
-    const section = document.getElementById('weather-forecast');
-    section.innerHTML = ''; // Clear old content if any
-
-    const article = document.createElement('article');
-
-    const header = document.createElement('header');
-    const heading = document.createElement('h3');
-    heading.textContent = day.date;
-    header.appendChild(heading);
-
-    const figure = document.createElement('figure');
-    const img = document.createElement('img');
-    img.src = day.icon;
-    img.alt = day.description;
-
-    const figcaption = document.createElement('figcaption');
-    figcaption.textContent = `${day.condition} (${day.description})`;
-
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-
-    const tempParagraph = document.createElement('p');
-    tempParagraph.textContent = `Temp: ${day.temp.min}°C - ${day.temp.max}°C`;
-
-    article.appendChild(header);
-    article.appendChild(figure);
-    article.appendChild(tempParagraph);
-
-    section.appendChild(article);
-  } catch (error) {
-    console.error('Failed to load weather:', error);
-  }
-}
 
 window.addEventListener('DOMContentLoaded', loadWeather);
 
