@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <coverage generated="1748017362808" clover="3.2.0">
   <project timestamp="1748017362809" name="All files">
     <metrics statements="789" coveredstatements="149" conditionals="196" coveredconditionals="37" methods="124" coveredmethods="20" elements="1109" coveredelements="206" complexity="0" loc="789" ncloc="789" packages="1" files="30" classes="30"/>
     <file name="active_users.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\active_users.js">
+=======
+<coverage generated="1747654357453" clover="3.2.0">
+  <project timestamp="1747654357453" name="All files">
+    <metrics statements="155" coveredstatements="126" conditionals="53" coveredconditionals="38" methods="28" coveredmethods="21" elements="236" coveredelements="185" complexity="0" loc="155" ncloc="155" packages="1" files="12" classes="12"/>
+    <file name="active_users.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\active_users.js">
+>>>>>>> origin/main
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="3" count="2" type="stmt"/>
       <line num="6" count="2" type="stmt"/>
@@ -10,7 +17,11 @@
       <line num="8" count="1" type="stmt"/>
       <line num="10" count="1" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="admin.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\admin.js">
+=======
+    <file name="admin.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\admin.js">
+>>>>>>> origin/main
       <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <line num="3" count="0" type="stmt"/>
       <line num="5" count="0" type="stmt"/>
@@ -23,7 +34,11 @@
       <line num="19" count="0" type="stmt"/>
       <line num="20" count="0" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="approveBooking.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\approveBooking.js">
+=======
+    <file name="approveBooking.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\approveBooking.js">
+>>>>>>> origin/main
       <metrics statements="12" coveredstatements="12" conditionals="7" coveredconditionals="7" methods="1" coveredmethods="1"/>
       <line num="3" count="5" type="stmt"/>
       <line num="5" count="5" type="cond" truecount="5" falsecount="0"/>
@@ -38,6 +53,7 @@
       <line num="26" count="1" type="stmt"/>
       <line num="30" count="1" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="barGraph.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\barGraph.js">
       <metrics statements="7" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="2" count="1" type="stmt"/>
@@ -89,6 +105,9 @@
       <line num="11" count="0" type="stmt"/>
     </file>
     <file name="issuesBargraph.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\issuesBargraph.js">
+=======
+    <file name="issuesBargraph.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\issuesBargraph.js">
+>>>>>>> origin/main
       <metrics statements="17" coveredstatements="17" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
       <line num="4" count="2" type="stmt"/>
       <line num="5" count="2" type="stmt"/>
@@ -108,7 +127,11 @@
       <line num="32" count="1" type="stmt"/>
       <line num="33" count="1" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="issuesreport.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\issuesreport.js">
+=======
+    <file name="issuesreport.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\issuesreport.js">
+>>>>>>> origin/main
       <metrics statements="17" coveredstatements="17" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
       <line num="1" count="1" type="stmt"/>
       <line num="3" count="3" type="stmt"/>
@@ -128,7 +151,11 @@
       <line num="28" count="8" type="cond" truecount="2" falsecount="0"/>
       <line num="31" count="3" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="linegraph_bookings.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\linegraph_bookings.js">
+=======
+    <file name="linegraph_bookings.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\linegraph_bookings.js">
+>>>>>>> origin/main
       <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
       <line num="2" count="4" type="stmt"/>
       <line num="3" count="4" type="stmt"/>
@@ -139,6 +166,7 @@
       <line num="13" count="3" type="stmt"/>
       <line num="17" count="3" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="list_residents.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\list_residents.js">
       <metrics statements="31" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="5" coveredmethods="0"/>
       <line num="6" count="0" type="stmt"/>
@@ -261,6 +289,9 @@
       <line num="59" count="0" type="stmt"/>
     </file>
     <file name="piechart_issues.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\piechart_issues.js">
+=======
+    <file name="piechart_issues.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\piechart_issues.js">
+>>>>>>> origin/main
       <metrics statements="13" coveredstatements="12" conditionals="10" coveredconditionals="7" methods="1" coveredmethods="1"/>
       <line num="4" count="4" type="stmt"/>
       <line num="5" count="4" type="cond" truecount="2" falsecount="0"/>
@@ -276,6 +307,7 @@
       <line num="29" count="1" type="stmt"/>
       <line num="30" count="1" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="postEvent.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\postEvent.js">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="3" count="1" type="stmt"/>
@@ -493,6 +525,13 @@
       <line num="97" count="0" type="stmt"/>
     </file>
     <file name="signInCore.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\signInCore.js">
+=======
+    <file name="register.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\register.js">
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="4" count="0" type="stmt"/>
+    </file>
+    <file name="signInCore.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\signInCore.js">
+>>>>>>> origin/main
       <metrics statements="22" coveredstatements="18" conditionals="12" coveredconditionals="6" methods="2" coveredmethods="2"/>
       <line num="3" count="3" type="stmt"/>
       <line num="4" count="3" type="cond" truecount="2" falsecount="0"/>
@@ -517,6 +556,7 @@
       <line num="47" count="1" type="stmt"/>
       <line num="48" count="1" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="staff.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\staff.js">
       <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <line num="1" count="0" type="stmt"/>
@@ -658,6 +698,9 @@
       <line num="87" count="0" type="stmt"/>
     </file>
     <file name="tot_users.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\tot_users.js">
+=======
+    <file name="tot_users.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\tot_users.js">
+>>>>>>> origin/main
       <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <line num="3" count="1" type="stmt"/>
       <line num="5" count="3" type="stmt"/>
@@ -669,6 +712,7 @@
       <line num="16" count="2" type="stmt"/>
       <line num="17" count="2" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="viewBookings.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\viewBookings.js">
       <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
     </file>
@@ -685,18 +729,35 @@
       <line num="28" count="0" type="stmt"/>
       <line num="29" count="0" type="stmt"/>
       <line num="34" count="0" type="stmt"/>
+=======
+    <file name="viewCalendar.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\viewCalendar.js">
+      <metrics statements="23" coveredstatements="11" conditionals="4" coveredconditionals="1" methods="7" coveredmethods="4"/>
+      <line num="3" count="2" type="stmt"/>
+      <line num="15" count="2" type="stmt"/>
+      <line num="16" count="2" type="stmt"/>
+      <line num="17" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="18" count="0" type="stmt"/>
+      <line num="21" count="1" type="stmt"/>
+      <line num="22" count="2" type="stmt"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="24" count="1" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
+      <line num="33" count="0" type="stmt"/>
+      <line num="49" count="0" type="stmt"/>
+>>>>>>> origin/main
       <line num="50" count="0" type="stmt"/>
       <line num="51" count="0" type="stmt"/>
       <line num="52" count="0" type="stmt"/>
       <line num="53" count="0" type="stmt"/>
       <line num="54" count="0" type="stmt"/>
-      <line num="55" count="0" type="stmt"/>
-      <line num="57" count="0" type="stmt"/>
-      <line num="68" count="0" type="stmt"/>
+      <line num="56" count="0" type="stmt"/>
+      <line num="67" count="0" type="stmt"/>
+      <line num="71" count="1" type="stmt"/>
       <line num="72" count="0" type="stmt"/>
       <line num="73" count="0" type="stmt"/>
-      <line num="74" count="0" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="viewMyIssues.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\viewMyIssues.js">
       <metrics statements="16" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <line num="7" count="0" type="stmt"/>
@@ -717,6 +778,9 @@
       <line num="30" count="0" type="stmt"/>
     </file>
     <file name="viewMyIssuesLogic.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\viewMyIssuesLogic.js">
+=======
+    <file name="viewMyIssuesLogic.js" path="C:\Users\lebop\Desktop\Coding Projects\Sports Facility Management App\FacilityManagement\public\js\viewMyIssuesLogic.js">
+>>>>>>> origin/main
       <metrics statements="18" coveredstatements="17" conditionals="4" coveredconditionals="2" methods="3" coveredmethods="3"/>
       <line num="4" count="2" type="stmt"/>
       <line num="5" count="2" type="stmt"/>
@@ -737,6 +801,7 @@
       <line num="34" count="2" type="stmt"/>
       <line num="37" count="0" type="stmt"/>
     </file>
+<<<<<<< HEAD
     <file name="viewnotifications.js" path="C:\Users\my lenovo\Documents\Keevon Jacobs Wits\Thrid Year\Software design\Tests\3\FacilityManagement\public\js\viewnotifications.js">
       <metrics statements="113" coveredstatements="0" conditionals="32" coveredconditionals="0" methods="21" coveredmethods="0"/>
       <line num="7" count="0" type="stmt"/>
@@ -881,5 +946,7 @@
       <line num="35" count="1" type="stmt"/>
       <line num="37" count="0" type="stmt"/>
     </file>
+=======
+>>>>>>> origin/main
   </project>
 </coverage>
