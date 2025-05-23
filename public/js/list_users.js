@@ -162,3 +162,16 @@ async function loadUsers() {
         
     }
  }
+
+ document.getElementById("homeBtn").addEventListener("click", () => {
+    window.location.href = "./admin_home.html"; 
+  });
+  document.getElementById("reportsBtn").addEventListener("click", () => {
+    window.location.href = "./reports_dashboard.html"; 
+  });
+  document.getElementById("bookBtn").addEventListener("click", () => {
+    window.location.href = "./staff_admin_booking.html"; 
+  });
+  document.getElementById("issuesBtn").addEventListener("click", () => {
+    window.location.href = "./staff_admin_issues.html"; 
+  });
