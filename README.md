@@ -24,7 +24,7 @@ npm install
 • Download the serviceAccountKey.json file.
 • Place it in the root directory of your project (same level as server.js).
 
-## 5️⃣ Modify Code for Local Use
+## 4️⃣ Modify Code for Local Use
 
 ✅ Comment out the environment variable version:
 constserviceAccount=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -37,7 +37,7 @@ if (!fs.existsSync(serviceAccountPath)) {
 }
 const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
 
-## 4️⃣ Run the Application Locally
+## 5️⃣ Run the Application Locally
 node server.js
 🟢 The backend server will be running at :
 http://localhost:3000 (or your defined PORT)
