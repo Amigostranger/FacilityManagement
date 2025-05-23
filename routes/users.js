@@ -296,7 +296,7 @@ const createUserRoutes = (db, admin) => {
   });
 
 
-  cron.schedule('44 10 * * *', async () => {
+  cron.schedule('00 15 * * *', async () => {
   try {
     const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${LOCATION.lat}&lon=${LOCATION.lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=${OPENWEATHER_API_KEY}`;
     const response = await fetch(url);
