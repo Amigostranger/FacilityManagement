@@ -93,24 +93,37 @@ const router = express.Router();
   });
 
   router.get('/api/issues/all', async (req, res) => {
-    try{
-      const snapshot = await db.collection("Issues").get();
-      const issues = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          ...data,
-          createdAt: data.createdAt?.toDate?.() || data.createdAt
-        };
-      });
+  try {
+    const snapshot = await db.collection("Issues").get();
+    const issues = [];
 
-      res.status(200).json({ success: true, issues });
+    for (const docSnap of snapshot.docs) {
+      const data = docSnap.data();
+      const submittedBy = data.submittedBy;
+
+      // Try to get user doc to fetch the username
+      let username = "Unknown";
+      const userDoc = await db.collection("users").doc(submittedBy).get();
+      if (userDoc.exists) {
+        username = userDoc.data().username || username;
+      }
+
+      issues.push({
+        id: docSnap.id,
+        ...data,
+        username,
+        createdAt: data.createdAt?.toDate?.() || data.createdAt
+      });
     }
-    catch (error){
-      console.error("Error fetching all issues:", error);
-      res.status(500).json({ success: false, message: "Failed to fetch issues" });
-    }
-  });
+
+    res.status(200).json({ success: true, issues });
+
+  } catch (error) {
+    console.error("Error fetching all issues:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch issues" });
+  }
+});
+
 
 
 

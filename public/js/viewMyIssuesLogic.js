@@ -1,6 +1,6 @@
 // public/js/viewMyIssuesLogic.js
 
-export async function loadIssues(user, tableBody, viewDescription, viewFeedback, viewModal) {
+export async function fetchIssues(user, tableBody, viewDescription, viewFeedback, viewModal) {
   try {
     const token = await user.getIdToken();
 

@@ -109,9 +109,37 @@ const router = express.Router();
       console.error(error);
       res.status(500).send("Server error");
     }
-  })
+  });
 
-  router.post("/api/bookings", verifyToken(admin.auth()), async (req, res) => {
+  router.get("/api/bookings", verifyToken, async (req, res) => {
+  try {
+    const submittedBy = req.user.uid;
+
+    const snapshot = await db.collection("bookings")
+      .where("submittedBy", "==", submittedBy)
+      .get();
+
+    const bookings = [];
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      bookings.push({
+        title: data.title,
+        facility: data.facility,
+        start: data.start?.toDate?.() ?? data.start,
+        end: data.end?.toDate?.() ?? data.end
+      });
+    });
+
+    res.status(200).json({ success: true, bookings });
+  } catch (error) {
+    console.error("Error fetching user bookings:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
+  router.post("/api/submit-bookings", verifyToken(admin.auth()), async (req, res) => {
     const { title, description, facility, start, end, who } = req.body; // Add `who` to request body
     const uid = req.user.uid; 
 

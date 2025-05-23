@@ -1,8 +1,7 @@
 import { auth } from '../../utils/firebase.js';
+import { fetchBookings } from './viewBookings.js'
+import { submitBooking } from './submitBooking.js';
 
-import { db } from '../../utils/firebase.js';
-import { collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 // Elements
 const addBookingBtn = document.getElementById('addBookingBtn');
@@ -47,7 +46,7 @@ viewBookingsBtn.addEventListener('click', () => {
   } else {
     // Show table and fetch data
     bookingsTable.hidden = false;
-    fetchBookings();
+    fetchBookings(bookingsTable, bookingsTableBody, noBookingsMessage);
     viewBookingsBtn.textContent = "Close My Bookings";
   }
 });
@@ -58,72 +57,6 @@ closeViewBtn.addEventListener('click', () => {
   bookingsTable.hidden = true;
 });
 
-
-
-
-
-
-
-// Fetch and display user's own bookings
-async function fetchBookings() {
-  bookingsTableBody.innerHTML = ""; // Clear old bookings
-
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      alert("You must be logged in to view bookings.");
-      return;
-    }
-
-    const submittedBy = user.uid;
-    console.log(submittedBy);
-    
-    const bookingsRef = collection(db, "bookings");
-    const q = query(bookingsRef, where("submittedBy", "==", submittedBy));
-
-    try {
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        console.log("empty");
-        
-        bookingsTable.hidden = true;
-        noBookingsMessage.hidden = false;
-      } else {
-        console.log("not");
-
-        noBookingsMessage.hidden = true;
-        bookingsTable.hidden = false;
-
-        querySnapshot.forEach((doc) => {
-          const booking = doc.data();
-        
-          const start = booking.start?.toDate?.() ?? new Date(booking.start);
-          const end = booking.end?.toDate?.() ?? new Date(booking.end);
-        
-          // Skip if invalid dates
-          if (isNaN(start) || isNaN(end)) {
-            console.warn("Invalid date found in booking:", booking);
-            return;
-          }
-        
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${booking.title}</td>
-            <td>${booking.facility || '-'}</td>
-            <td>${start.toLocaleDateString()}</td>
-            <td>${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-            <td>${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-          `;
-          bookingsTableBody.appendChild(row);
-        });
-        
-      }
-    } catch (err) {
-      console.error("Error fetching bookings:", err);
-      alert("Failed to fetch bookings. Please try again later.");
-    }
-  });
-}
 
 
 
@@ -156,31 +89,21 @@ bookingForm.addEventListener('submit', async (e) => {
 
   try {
     const idToken = await user.getIdToken();
-
     const who = "resident";
-    
-    // Send booking details to server
-    // http://localhost:3000
-    const res = await fetch("https://sports-management.azurewebsites.net/api/bookings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${idToken}`
-      },
-      body: JSON.stringify({ title, description, facility, start, end, who })
-    });
 
-    const data = await res.json();
-    
-    if (res.ok) {
+    const bookingData = { title, facility, description, start, end, who };
+    const result = await submitBooking(bookingData, idToken);
+
+    if (result.success) {
       alert("Booking added successfully!");
       bookingForm.reset();
-      addModal.hidden = true;
+      document.getElementById('addModal').hidden = true;
     } else {
-      alert("Error: " + data.error);
+      alert("Error: " + result.error);
     }
   } catch (err) {
-    console.error("Failed to submit booking:", err);
+    console.error("Booking submission failed:", err);
     alert("Something went wrong. Please try again.");
   }
 });
+
