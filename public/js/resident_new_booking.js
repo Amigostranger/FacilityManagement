@@ -107,3 +107,12 @@ bookingForm.addEventListener('submit', async (e) => {
   }
 });
 
+ document.getElementById("homeBtn").addEventListener("click", () => {
+    window.location.href = "./resident_home.html"; 
+  });
+  document.getElementById("issuesBtn").addEventListener("click", () => {
+    window.location.href = "./resident_report_issue.html"; 
+  });
+  document.getElementById("notifyBtn").addEventListener("click", () => {
+    window.location.href = "./resident_notifications.html"; 
+  });

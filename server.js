@@ -16,7 +16,7 @@ dotenv.config();
 
 console.log('Server is starting');
 // const serviceAccountPath = path.resolve('../serviceAccountKey.json');
-// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
+const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
 
 

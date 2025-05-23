@@ -296,7 +296,7 @@ const createUserRoutes = (db, admin) => {
   });
 
 
-  cron.schedule('00 15 * * *', async () => {
+  cron.schedule('00 21 * * *', async () => {
   try {
     const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${LOCATION.lat}&lon=${LOCATION.lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=${OPENWEATHER_API_KEY}`;
     const response = await fetch(url);
@@ -309,7 +309,7 @@ const createUserRoutes = (db, admin) => {
       return;
     }
 
-    const target = forecast[5]; // Today + 5 days
+    const target = forecast[0]; // Today + 5 days
     latestWeatherNotification = {
       date: new Date(target.dt * 1000).toDateString(),
       condition: target.weather[0].main,
