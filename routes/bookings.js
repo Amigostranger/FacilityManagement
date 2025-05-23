@@ -222,6 +222,32 @@ const router = express.Router();
   res.json(facilityCounts);
   });
 
+  router.get("/api/bookings/approved", async (req, res) => {
+  try {
+    const snapshot = await db.collection("bookings")
+      .where("status", "==", "Approved")
+      .get();
+
+    const bookings = snapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        title: data.title,
+        start: data.start.toDate(),
+        end: data.end.toDate(),
+        facility: data.facility,
+        description: data.description,
+        status: data.status
+      };
+    });
+
+    res.status(200).json(bookings);
+  } catch (error) {
+    console.error("Error fetching approved bookings:", error);
+    res.status(500).json({ error: "Failed to fetch approved bookings" });
+  }
+  });
+  
   return router;
 
 };
