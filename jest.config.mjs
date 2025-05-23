@@ -19,4 +19,5 @@ coverageDirectory: "coverage",
 
   // Optional: silence experimental warnings
   moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
+  setupFiles: ['./jest.setup.js']
 };
