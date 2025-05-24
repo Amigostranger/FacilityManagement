@@ -35,14 +35,20 @@ h1 {
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3); /* soft shadow */
 }
 
-#userImgBtn {
-  position: absolute;
+#userImgBtn{
   top: 20px;
   right: 30px;
-  background: none;
-  border: none;
-  padding: 0;
+  position: absolute;
+  font-size: 16px;
+  padding: 12px 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 2px solid white;
+  border-radius: 12px;
   cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 #userImgBtn img {
