@@ -53,7 +53,7 @@ function setupNavigation() {
     staff: [
       { id: 'homeBtn', path: './staff_home.html', text: 'Home' },
       { id: 'residentsBtn', path: './list_residents.html', text: 'Residents' },
-      { id: 'bookBtn', path: './staff_admin_booking.html', text: 'Bookings' },
+      { id: 'bookBtn', path: './staff_admin_issues.html', text: 'Issues' },
       { id: 'reportsBtn', path: './reports_dashboard.html', text: 'Reports' }
     ]
   };
