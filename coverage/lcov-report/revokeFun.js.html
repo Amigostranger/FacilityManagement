@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/13</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -98,61 +98,61 @@
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const API_BASE = 'https://sports-management.azurewebsites.net';
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const API_BASE = <span class="cstat-no" title="statement not covered" >'https://sports-management.azurewebsites.net';</span>
 // const API_BASE='http://localhost:3000'
-export async function fetchUsers() {
-  try {
-    const response = await fetch(`${API_BASE}/api/get-users`, {
+export async function <span class="fstat-no" title="function not covered" >fetchUsers(</span>) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const response = <span class="cstat-no" title="statement not covered" >await fetch(`${API_BASE}/api/get-users`, {</span>
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
     });
-    return await response.json();
+<span class="cstat-no" title="statement not covered" >    return await response.json();</span>
   } catch (err) {
-    console.error("Failed to fetch users:", err);
-    return [];
+<span class="cstat-no" title="statement not covered" >    console.error("Failed to fetch users:", err);</span>
+<span class="cstat-no" title="statement not covered" >    return [];</span>
   }
 }
 &nbsp;
-export async function revokeUser(userId) {
-  try {
-    const response = await fetch(`${API_BASE}/api/user-revoke/${userId}`, {
+export async function <span class="fstat-no" title="function not covered" >revokeUser(</span>userId) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const response = <span class="cstat-no" title="statement not covered" >await fetch(`${API_BASE}/api/user-revoke/${userId}`, {</span>
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -160,12 +160,12 @@ export async function revokeUser(userId) {
       body: JSON.stringify({ status: "revoked" })
     });
 &nbsp;
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.message || <span class="branch-1 cbranch-no" title="branch not covered" >"Failed to revoke")</span>;
-    return result;
+    const result = <span class="cstat-no" title="statement not covered" >await response.json();</span>
+<span class="cstat-no" title="statement not covered" >    if (!response.ok) <span class="cstat-no" title="statement not covered" >throw new Error(result.message || "Failed to revoke");</span></span>
+<span class="cstat-no" title="statement not covered" >    return result;</span>
   } catch (err) {
-    console.error("Error revoking user:", err);
-    throw err;
+<span class="cstat-no" title="statement not covered" >    console.error("Error revoking user:", err);</span>
+<span class="cstat-no" title="statement not covered" >    throw err;</span>
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -175,7 +175,7 @@ export async function revokeUser(userId) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-24T02:41:56.884Z
+                at 2025-05-24T16:50:56.148Z
             </div>
         <script src="prettify.js"></script>
         <script>

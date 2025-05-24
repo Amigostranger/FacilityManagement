@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.47% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/19</span>
+                <span class='fraction'>0/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/18</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -106,37 +106,37 @@
 <a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -145,38 +145,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { revokeUser } from './revokeFun.js';
 &nbsp;
-export function renderUsers(users) {
-  const tbody = document.getElementById("userTableBody");
-  tbody.innerHTML = "";
+export function <span class="fstat-no" title="function not covered" >renderUsers(</span>users) {
+  const tbody = <span class="cstat-no" title="statement not covered" >document.getElementById("userTableBody");</span>
+<span class="cstat-no" title="statement not covered" >  tbody.innerHTML = "";</span>
 &nbsp;
-  users.forEach(user =&gt; {
-    const role = user.role?.toLowerCase();
-    if (role !== 'admin' &amp;&amp; role !== 'staff') {
-      const row = document.createElement("tr");
+<span class="cstat-no" title="statement not covered" >  users.forEach(<span class="fstat-no" title="function not covered" >us</span>er =&gt; {</span>
+    const role = <span class="cstat-no" title="statement not covered" >user.role?.toLowerCase();</span>
+<span class="cstat-no" title="statement not covered" >    if (role !== 'admin' &amp;&amp; role !== 'staff') {</span>
+      const row = <span class="cstat-no" title="statement not covered" >document.createElement("tr");</span>
 &nbsp;
-      row.innerHTML = `
+<span class="cstat-no" title="statement not covered" >      row.innerHTML = `</span>
         &lt;td&gt;${user.username || "N/A"}&lt;/td&gt;
-        &lt;td&gt;${user.role || <span class="branch-1 cbranch-no" title="branch not covered" >"N/A"}</span>&lt;/td&gt;
+        &lt;td&gt;${user.role || "N/A"}&lt;/td&gt;
         &lt;td&gt;&lt;button class="deleteBtn" data-id="${user.id}"&gt;Revoke&lt;/button&gt;&lt;/td&gt;
       `;
 &nbsp;
-      tbody.appendChild(row);
+<span class="cstat-no" title="statement not covered" >      tbody.appendChild(row);</span>
     }
   });
 &nbsp;
-  attachDeleteListeners();
+<span class="cstat-no" title="statement not covered" >  attachDeleteListeners();</span>
 }
 &nbsp;
-function attachDeleteListeners() {
-  document.querySelectorAll('.deleteBtn').forEach(btn =&gt; {
-    btn.addEventListener('click', async (event) =&gt; {
-      const userId = event.target.getAttribute('data-id');
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (!confirm('Confirm to revoke access of this resident?')) <span class="cstat-no" title="statement not covered" >return;</span>
+function <span class="fstat-no" title="function not covered" >attachDeleteListeners(</span>) {
+<span class="cstat-no" title="statement not covered" >  document.querySelectorAll('.deleteBtn').forEach(<span class="fstat-no" title="function not covered" >bt</span>n =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    btn.addEventListener('click', <span class="fstat-no" title="function not covered" >as</span>ync (event) =&gt; {</span>
+      const userId = <span class="cstat-no" title="statement not covered" >event.target.getAttribute('data-id');</span>
+<span class="cstat-no" title="statement not covered" >      if (!confirm('Confirm to revoke access of this resident?')) <span class="cstat-no" title="statement not covered" >return;</span></span>
 &nbsp;
-      try {
-        await revokeUser(userId);
-        alert("User revoked successfully");
-        window.dispatchEvent(new Event("usersChanged"));
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        await revokeUser(userId);</span>
+<span class="cstat-no" title="statement not covered" >        alert("User revoked successfully");</span>
+<span class="cstat-no" title="statement not covered" >        window.dispatchEvent(new Event("usersChanged"));</span>
       } catch (err) {
 <span class="cstat-no" title="statement not covered" >        alert("Failed to revoke user");</span>
       }
@@ -190,7 +190,7 @@ function attachDeleteListeners() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-24T02:41:56.884Z
+                at 2025-05-24T16:50:56.148Z
             </div>
         <script src="prettify.js"></script>
         <script>

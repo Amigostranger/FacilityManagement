@@ -1,5 +1,7 @@
 
 // admin.js
+
+import { googleSignOut } from "./googleSignout.js";
 const managebtn=document.getElementById('usersBtn');
 
 managebtn.addEventListener('click',async(e)=>{
@@ -9,6 +11,11 @@ managebtn.addEventListener('click',async(e)=>{
 
 
 });
+document.getElementById("userImgBtn").addEventListener('click',() => {
+    googleSignOut();
+    window.location.href = "./login_page.html"; 
+  })
+  
 
 document.getElementById("reportBtn").addEventListener("click", () => {
     window.location.href = "./staff_admin_issues.html"; 

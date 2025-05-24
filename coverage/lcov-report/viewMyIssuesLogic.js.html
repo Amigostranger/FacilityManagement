@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/18</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/18</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -105,37 +105,37 @@
 <a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -143,38 +143,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// public/js/viewMyIssuesLogic.js
 &nbsp;
-export async function fetchIssues(user, tableBody, viewDescription, viewFeedback, viewModal) {
-  try {
-    const token = await user.getIdToken();
+export async function <span class="fstat-no" title="function not covered" >loadIssues(</span>user, tableBody, viewDescription, viewFeedback, viewModal) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const token = <span class="cstat-no" title="statement not covered" >await user.getIdToken();</span>
 &nbsp;
-    const res = await fetch("https://sports-management.azurewebsites.net/api/issues", {
+    const res = <span class="cstat-no" title="statement not covered" >await fetch("https://sports-management.azurewebsites.net/api/issues", {</span>
       headers: {
         "Authorization": `Bearer ${token}`
       }
     });
 &nbsp;
-    const { issues } = await res.json();
+    const { issues } = <span class="cstat-no" title="statement not covered" >await res.json();</span>
 &nbsp;
-    issues.forEach(issue =&gt; {
-      const row = document.createElement("tr");
+<span class="cstat-no" title="statement not covered" >    issues.forEach(<span class="fstat-no" title="function not covered" >is</span>sue =&gt; {</span>
+      const row = <span class="cstat-no" title="statement not covered" >document.createElement("tr");</span>
 &nbsp;
-      const viewBtn = document.createElement("button");
-      viewBtn.textContent = "View";
-      viewBtn.type = "button";
-      viewBtn.className = "actionBtn";
-      viewBtn.addEventListener("click", () =&gt; {
-        viewDescription.textContent = issue.description || "No description.";
-        viewFeedback.textContent = issue.feedback || "No feedback yet.";
-        viewModal.hidden = false;
+      const viewBtn = <span class="cstat-no" title="statement not covered" >document.createElement("button");</span>
+<span class="cstat-no" title="statement not covered" >      viewBtn.textContent = "View";</span>
+<span class="cstat-no" title="statement not covered" >      viewBtn.type = "button";</span>
+<span class="cstat-no" title="statement not covered" >      viewBtn.className = "actionBtn";</span>
+<span class="cstat-no" title="statement not covered" >      viewBtn.addEventListener("click", <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        viewDescription.textContent = issue.description || "No description.";</span>
+<span class="cstat-no" title="statement not covered" >        viewFeedback.textContent = issue.feedback || "No feedback yet.";</span>
+<span class="cstat-no" title="statement not covered" >        viewModal.hidden = false;</span>
       });
 &nbsp;
-      row.innerHTML = `
+<span class="cstat-no" title="statement not covered" >      row.innerHTML = `</span>
         &lt;td&gt;${issue.title}&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
         &lt;td&gt;${issue.status}&lt;/td&gt;`;
-      row.children[1].appendChild(viewBtn);
+<span class="cstat-no" title="statement not covered" >      row.children[1].appendChild(viewBtn);</span>
 &nbsp;
-      tableBody.appendChild(row);
+<span class="cstat-no" title="statement not covered" >      tableBody.appendChild(row);</span>
     });
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    console.error("Error loading issues:", err);</span>
@@ -187,7 +187,7 @@ export async function fetchIssues(user, tableBody, viewDescription, viewFeedback
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-24T02:41:56.884Z
+                at 2025-05-24T16:50:56.148Z
             </div>
         <script src="prettify.js"></script>
         <script>

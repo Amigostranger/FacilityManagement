@@ -1,6 +1,7 @@
 const reportBtn=document.getElementById('reportBtn');
 const notificationBtn = document.getElementById('notificationBtn');
 const notificationImg = document.getElementById("notify");
+import { googleSignOut } from "./googleSignout.js";
 import { loadWeather } from './weather.js';
 
 
@@ -8,6 +9,12 @@ reportBtn.addEventListener('click',async(e)=>{
     e.preventDefault();  
     window.location.href = "./resident_report_issue.html";
 });
+
+
+document.getElementById("userImgBtn").addEventListener('click',() => {
+    googleSignOut();
+    window.location.href = "./login_page.html"; 
+  })
 
 notificationBtn.addEventListener('click',async(e)=>{
     e.preventDefault();
