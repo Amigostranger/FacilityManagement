@@ -1,12 +1,7 @@
 
 import { auth } from '../../utils/firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-//import { onAuthStateChanged } from 'firebase/auth';
-
-
 document.addEventListener("DOMContentLoaded", () => {
-  
-
 const tableBody = document.querySelector("#notificationTable tbody");
 
 //Event details
@@ -65,9 +60,6 @@ async function loadnotifications(user) {
     });
     events.forEach(async (event) => {
       const row = document.createElement("tr");
-      // const resAdmin= await fetch(`http://localhost:3000/api/adminInfo/${event.id}`)
-      // const adminInfo=await resAdmin.json();
-
       
       const from =event.submittedByInfo.username;
       let recDate = "5/17/2025, 10:58:02 PM";
@@ -91,7 +83,7 @@ async function loadnotifications(user) {
       row.appendChild(fromCell);
       row.appendChild(eventCell);
       row.appendChild(receiveDate);
-      //row.innerHTML =`<td style="color: ${event.title ? 'blue' : 'gray'};">${event.title || "No Title"}</td>`;
+  
       tableBody.appendChild(row); 
       if(event.read=="true"){
         row.classList.add("clicked-row");
@@ -114,18 +106,7 @@ function updateVisibility(countRead) {
     counter.style.visibility = countRead === 0 ? "hidden" : "visible";
 }
 function updateFromcell(fromCell,from){
-    // Create the image element
-  const img = document.createElement('img');
-  img.src = 'img/users_icon.png'; // Set image source
-  img.alt = 'Avatar';            // Optional alt text
-  img.style.width = '24px';      // Optional: adjust size
-  img.style.height = '24px';
-  img.style.marginRight = '8px'; // Space between image and text
-  img.style.verticalAlign = 'middle'; // Align with text
-  // Create the text node
   const textNode = document.createTextNode(from);
-  // Append both image and text
-  // fromCell.appendChild(img);
   fromCell.appendChild(textNode);
 }
 async function readMore(event,row){
@@ -186,37 +167,11 @@ if(viewModal){
       viewModal.hidden = true;
     }
   });
-const modal = document.getElementById('viewModal');
-const article = modal.querySelector('article');
 
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
-
-article.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  const rect = article.getBoundingClientRect();
-  offsetX = e.clientX - rect.left;
-  offsetY = e.clientY - rect.top;
-  article.style.position = 'absolute';
-  article.style.zIndex = '1000';
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  article.style.left = (e.clientX - offsetX) + 'px';
-  article.style.top = (e.clientY - offsetY) + 'px';
-});
-
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-});
-  closeViewBtn.addEventListener("click", () => {
+closeViewBtn.addEventListener("click", () => {
     viewModal.hidden = true;
   });
-}
-})
-
+  
  document.getElementById("homeBtn").addEventListener("click", () => {
     window.location.href = "./resident_home.html"; 
   });
@@ -226,3 +181,6 @@ document.addEventListener('mouseup', () => {
   document.getElementById("issuesBtn").addEventListener("click", () => {
     window.location.href = "./resident_report_issue.html"; 
   });
+}
+})
+
