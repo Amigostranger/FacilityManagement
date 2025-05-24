@@ -96,10 +96,10 @@ function setupNavigation() {
 
 async function getuser(id) {
   console.log(id);
-  const response = await fetch(`https://sports-management.azurewebsites.net/api/get-users`);
+  const response = await fetch(`http://localhost:3000/api/get-users`);
   const data = await response.json();
   const spec = data.find(u => u.id === id);
-  return spec ? spec.username : "N/A";
+  return spec ? spec.username : "N/A";//
 }
 
 
@@ -110,7 +110,7 @@ async function loadBookings() {
 
   const bookings = await fetchBookings();
 
-  for (const book of bookings) {
+  for (const book of bookings) {//check what user does
     const user = await getUser(book.submittedBy);
     const row = document.createElement("tr");
     row.innerHTML = `

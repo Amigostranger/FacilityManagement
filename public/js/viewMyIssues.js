@@ -12,7 +12,7 @@ const viewModal = document.getElementById("viewModal");
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    console.log("User is signed in:", user.email);
+   
     await loadIssues(user, tableBody, viewDescription, viewFeedback, viewModal);
   } else {
     console.log("No user signed in");

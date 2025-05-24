@@ -10,7 +10,8 @@ export function renderUsers(users) {
       const row = document.createElement("tr");
 
       row.innerHTML = `
-        <td>${user.email || "N/A"}</td>
+        <td>${user.username || "N/A"}</td>
+        <td>${user.role || "N/A"}</td>
         <td><button class="deleteBtn" data-id="${user.id}">Revoke</button></td>
       `;
 

@@ -10,7 +10,7 @@ export async function fetchBookings() {
 
 export async function updateBookingStatus(bookId, newStatus) {
   try {
-    const response = await fetch(`https://sports-management.azurewebsites.net/booking-status/${bookId}`, {
+    const response = await fetch(`https://sports-management.azurewebsites.net/api/booking-status/${bookId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

@@ -12,7 +12,6 @@ export async function renderAdminUsers() {
       const row = document.createElement("tr");
 
       row.innerHTML = `
-        <td>${user.email || "N/A"}</td>
         <td>${user.username || "N/A"}</td>
         <td>${user.role || "None"}</td>
         <td>

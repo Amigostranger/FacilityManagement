@@ -50,20 +50,19 @@ const createUserRoutes = (db, admin) => {
 
   router.post("/api/save-user", verifyToken(admin.auth()), async (req, res) => {
 
-    const { email, username ,role,status} = req.body;
+    const { username ,role,status} = req.body;
     console.log("Decoded user:", req.user);
     
     // console.log("Decoded user:", req.user);
 
-    if (!email || !username) {
-      return res.status(400).json({ error: "Email and username are required" });
+    if (!username) {
+      return res.status(400).json({ error: "Username are required" });
     }
 
     try {
 
       const userRef = db.collection("users").doc(req.user.uid);
       await userRef.set({
-        email,
         username,
         role,
         status,
@@ -156,8 +155,8 @@ const createUserRoutes = (db, admin) => {
     
 
   try {
-    const {email}=req.body;
-    const getIt=await db.collection("users").where("email","==",email).get()//remember 
+    const {username}=req.body;
+    const getIt=await db.collection("users").where("username","==",username).get()//remember 
     if(getIt.empty){
       return res.status(200).json({ error: "user not available" });
     }
@@ -182,7 +181,7 @@ const createUserRoutes = (db, admin) => {
     try {
       
       const id=req.params.id;
-      const { role, username, email } = req.body;
+      const { role, username } = req.body;
       const getIt=  db.collection("users").doc(id);
 
 

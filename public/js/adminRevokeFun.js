@@ -1,6 +1,6 @@
 // adminRevokeFun.js
 const API_BASE = 'https://sports-management.azurewebsites.net';
-
+// const API_BASE='http://localhost:3000'
 export async function fetchAdminUsers() {
   try {
     const response = await fetch(`${API_BASE}/api/get-users`, {
