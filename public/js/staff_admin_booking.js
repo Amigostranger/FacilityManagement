@@ -22,11 +22,13 @@ let selectedBookingId = "";
 let currentUserRole = null;
 
 // Initialize the page
+// Initialize the page
 async function initializePage() {
   await checkAuthState();
-  setupNavigation();
-  loadBookings();
+  setupNavigation(); // <-- this should happen AFTER role is loaded
+  await loadBookings(); // <-- also wait for bookings to load
 }
+
 
 // Check authentication state and get user role
 async function checkAuthState() {
@@ -196,6 +198,10 @@ cancelBtn.addEventListener("click", () => {
 });
 
 // Load data on page load
-loadBookings();
+//loadBookings();
+
+// Load data on page load
+initializePage(); // <-- use this
+
 
 
