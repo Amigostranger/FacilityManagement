@@ -85,9 +85,10 @@ const createUserRoutes = (db, admin) => {
           description:booking.description,
           facility:booking.facility,
           submittedBy: booking.submittedBy,
-          start:booking.start,
-          end:booking.end,
-          read: "false"
+          start:booking.start.toString(),
+          end:booking.end.toString(),
+          read: "false",
+          createdAt: new Date(),
         });
         
       }
