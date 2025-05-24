@@ -35,7 +35,8 @@ const router = express.Router();
             submittedBy: uid,
             start,
             end,
-            read: "false"
+            read: "false",
+            createdAt: new Date(),
           });
         }
 
