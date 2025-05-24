@@ -11,21 +11,35 @@ export async function renderAdminUsers() {
     if (user.role?.toLowerCase() !== 'admin') {
       const row = document.createElement("tr");
 
-      row.innerHTML = `
-        <td>${user.username || "N/A"}</td>
-        <td>${user.role || "None"}</td>
-        <td>
-          <select data-id="${user.id}" class="roleSelector">
-            <option value="">-- Select --</option>
-            <option value="Resident">Resident</option>
-            <option value="Staff">Staff</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </td>
-        <td>
-          <button class="revokeBtn" data-id="${user.id}">Revoke</button>
-        </td>
-      `;
+row.innerHTML = `
+  <td>${user.username || "N/A"}</td>
+  <td>${user.role || "None"}</td>
+  <td>
+    <select data-id="${user.id}" class="roleSelector">
+      <option value="">-- Select --</option>
+      <option value="Resident">Resident</option>
+      <option value="Staff">Staff</option>
+      <option value="Admin">Admin</option>
+    </select>
+  </td>
+  <td>
+    <button class="revokeBtn" data-id="${user.id}" 
+      style="
+        font-size: 14px;
+        padding: 10px 20px;
+        background-color: rgba(126, 124, 124, 0.3);
+        color: white;
+        border: 2px solid;
+        border-radius: 12px;
+        cursor: pointer;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        font-weight: bold;
+      "
+    >Revoke</button>
+  </td>
+`;
 
       tbody.appendChild(row);
     }
