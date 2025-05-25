@@ -22,16 +22,57 @@ export async function handleView(e, modal, descriptionPara, statusSelect, feedba
 }
 
 // Load all issues into a table
+// export async function loadIssues(tableBody, handleViewWrapper) {
+//   try {
+//     const response = await fetch("https://sports-management.azurewebsites.net/api/issues/all");
+//     const data = await response.json();
+
+//     if (!data.success) throw new Error("Failed to fetch issues.");
+
+//     tableBody.innerHTML = "";
+
+//     data.issues.forEach(issue => {
+//       const tr = document.createElement("tr");
+
+//       const viewBtn = document.createElement("button");
+//       viewBtn.textContent = "View";
+//       viewBtn.type = "button";
+//       viewBtn.className = "viewBtn";
+//       viewBtn.dataset.id = issue.id;
+//       viewBtn.addEventListener("click", handleViewWrapper);
+
+//       tr.innerHTML = `
+//         <td>${issue.username || 'Unknown'}</td>
+//         <td>${issue.title}</td>
+//         <td>${issue.status}</td>
+//         <td></td>
+//       `;
+//       tr.children[3].appendChild(viewBtn);
+//       tableBody.appendChild(tr);
+//     });
+//   } catch (err) {
+//     console.error("Error loading issues:", err);
+//     alert("Could not load issues.");
+//   }
+// }
+
+
+
+
+
+
 export async function loadIssues(tableBody, handleViewWrapper) {
   try {
     const response = await fetch("https://sports-management.azurewebsites.net/api/issues/all");
     const data = await response.json();
-
+    
     if (!data.success) throw new Error("Failed to fetch issues.");
 
     tableBody.innerHTML = "";
 
     data.issues.forEach(issue => {
+      if (issue.status === "Solved") return; // 🚫 Skip solved issues
+
       const tr = document.createElement("tr");
 
       const viewBtn = document.createElement("button");
