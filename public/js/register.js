@@ -7,3 +7,5 @@ document.getElementById("btnGoLog").addEventListener("click",async(e)=>{
     e.preventDefault();
     window.location.href = "./login_page.html"; 
 });
+
+

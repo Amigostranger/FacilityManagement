@@ -1,12 +1,12 @@
 import { auth } from '../../utils/firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
+// onAuthStateChanged(auth, (user) => {
+//   if (!user) {
 
-    window.location.replace("/login_page.html");
-  }
-});
+//     window.location.replace("/login_page.html");
+//   }
+// });
 function mapDataToEvents(dataArray) {
   return dataArray.map(data => ({
     title: data.title,
