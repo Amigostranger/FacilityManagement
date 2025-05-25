@@ -15,10 +15,7 @@ import issuesRoutes from './routes/issues.js';
 dotenv.config();
 
 console.log('Server is starting');
-// const serviceAccountPath = path.resolve('../serviceAccountKey.json');
-//const serviceAccountPath = path.resolve('./serviceAccountKey.json');
-
-
+// const serviceAccountPath = path.resolve('./serviceAccountKey.json');
 
 // if (!fs.existsSync(serviceAccountPath)) {
 //   console.error(`serviceAccountKey.json not found at ${serviceAccountPath}`);

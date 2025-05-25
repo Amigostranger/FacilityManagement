@@ -15,21 +15,22 @@ export async function fetchUsers() {
   }
 }
 
-export async function revokeUser(userId) {
+export async function revokeUser(userId, status = "revoked") {
   try {
     const response = await fetch(`${API_BASE}/api/user-revoke/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ status: "revoked" })
+      body: JSON.stringify({ status })
     });
 
     const result = await response.json();
-    if (!response.ok) throw new Error(result.message || "Failed to revoke");
+    if (!response.ok) throw new Error(result.message || "Failed to update status");
     return result;
   } catch (err) {
-    console.error("Error revoking user:", err);
+    console.error("Error updating user status:", err);
     throw err;
   }
 }
+

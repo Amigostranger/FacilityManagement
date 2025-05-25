@@ -36,6 +36,23 @@ bookingsBtn.addEventListener('click',async(e)=>{
 });
 
 
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000); // toast visible for 3 seconds
+}
+
+contactBtn.addEventListener('click', async (e) => {
+  showToast("Contact us at: sportfacility3@gmail.com");
+});
+
+
+
+
 
 // Add the 'shake' class to trigger the animation
 notificationImg.classList.add("shake");

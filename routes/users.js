@@ -13,40 +13,35 @@ const createUserRoutes = (db, admin) => {
 
   const router = express.Router();
 
-  router.put('/api/user-revoke/:id',async (req,res)=>{
+router.put('/api/user-revoke/:id', async (req, res) => {
+  const userID = req.params.id;
+  const { status } = req.body;
 
-    const userID=req.params.id;
-    const {status}=req.body;
-    // const user=db.collection('users').doc(userID);
-    // if(!user.exists){
-    //   return res.status(404).json({ error: "user not found" });
-    // }
+  if (!status) {
+    return res.status(400).json({ error: "Status is required" });
+  }
 
-    // if(user.status!=status){
-    //   await doc(userID).update({status:"revoked"});
-    // }
+  try {
+    const userRef = db.collection('users').doc(userID);
+    const userSnap = await userRef.get();
 
-    try {
-      
-      const userRef = db.collection('users').doc(userID);
-      const userSnap = await userRef.get();
-      //const currentStatus = userSnap.data().status;
-      if (!userSnap.exists) {
-        return res.status(404).json({ error: "User not found" });
-      }
-      const currentStatus = userSnap.data().status;
-
-      if (currentStatus !== status) {
-        await userRef.update({ status: "revoked" });
-      }
-
-      return res.status(200).json({ message: "User status updated if needed" });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
+    if (!userSnap.exists) {
+      return res.status(404).json({ error: "User not found" });
     }
 
+    const currentStatus = userSnap.data().status;
 
-  });
+    if (currentStatus !== status) {
+      await userRef.update({ status }); // 👈 dynamic update
+    }
+
+    return res.status(200).json({ message: `User status updated to ${status}` });
+  } catch (error) {
+    console.error("Error updating user status:", error);
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 
   router.post("/api/save-user", verifyToken(admin.auth()), async (req, res) => {
 
@@ -233,6 +228,10 @@ const createUserRoutes = (db, admin) => {
       res.status(401).send({ error: "Unauthorized" });
     }
   });
+
+
+
+  
 
   router.get("/api/activeUsers",async (req,res) => {
     

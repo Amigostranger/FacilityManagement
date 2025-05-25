@@ -1,6 +1,6 @@
-// adminRevokeFun.js
 const API_BASE = 'https://sports-management.azurewebsites.net';
-// const API_BASE='http://localhost:3000'
+// const API_BASE = 'http://localhost:3000';
+
 export async function fetchAdminUsers() {
   try {
     const response = await fetch(`${API_BASE}/api/get-users`, {
@@ -9,19 +9,18 @@ export async function fetchAdminUsers() {
     });
     const allUsers = await response.json();
     return allUsers.filter(user => user.role?.toLowerCase() !== 'admin');
-; // only Staff/Admin
   } catch (err) {
     console.error("Failed to fetch admin users:", err);
     return [];
   }
 }
 
-export async function revokeAdminUser(userId) {
+export async function revokeAdminUser(userId, status) {
   try {
     const response = await fetch(`${API_BASE}/api/user-revoke/${userId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "revoked" })
+      body: JSON.stringify({ status })
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.message || "Failed to revoke");

@@ -1,4 +1,3 @@
-// adminRevokeDom.js
 import { fetchAdminUsers, revokeAdminUser, updateUserRole } from './adminRevokeFun.js';
 
 export async function renderAdminUsers() {
@@ -23,7 +22,12 @@ export async function renderAdminUsers() {
           </select>
         </td>
         <td>
-          <button class="revokeBtn" data-id="${user.id}">Revoke</button>
+          <button 
+            class="revokeBtn" 
+            data-id="${user.id}" 
+            data-status="${user.status}">
+            ${user.status === "revoked" ? "Unrevoke" : "Revoke"}
+          </button>
         </td>
       `;
 
@@ -38,14 +42,21 @@ function attachAdminListeners() {
   document.querySelectorAll('.revokeBtn').forEach(btn => {
     btn.addEventListener('click', async (event) => {
       const userId = event.target.getAttribute('data-id');
-      if (!confirm('Are you sure you want to revoke this user?')) return;
+      const currentStatus = event.target.getAttribute('data-status');
+      const newStatus = currentStatus === 'revoked' ? 'allowed' : 'revoked';
+
+      const confirmMsg = newStatus === 'revoked' 
+        ? 'Are you sure you want to revoke this user?' 
+        : 'Are you sure you want to un-revoke this user?';
+
+      if (!confirm(confirmMsg)) return;
 
       try {
-        await revokeAdminUser(userId);
-        alert("User revoked successfully");
-        renderAdminUsers(); // reload table
+        await revokeAdminUser(userId, newStatus);
+        alert(`User ${newStatus === 'revoked' ? 'revoked' : 'unrevoked'} successfully`);
+        renderAdminUsers(); // Refresh table
       } catch (err) {
-        alert("Failed to revoke user");
+        alert("Failed to update user status");
       }
     });
   });
