@@ -17,6 +17,8 @@ const counter = document.getElementById('counter');
 
 const closeViewBtn = document.getElementById("closeViewBtn");
 
+
+
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     if(counter){
@@ -30,9 +32,9 @@ onAuthStateChanged(auth, async (user) => {
     await loadnotifications(user);      
     }
     
-  } else {
-    console.log("No user signed in");
-    alert("You need to be signed in to view issues.");
+   } 
+  else {
+    window.location.replace("/login_page.html");
   }
 });
 

@@ -13,6 +13,8 @@
     <script type="module" src="js/googleSignout.js" defer></script>
 </head>
 <body>
+  <span id="loadingText">Checking authentication...</span>
+  <section id="app" style="display: none;"></section>
     <h1>Welcome, Admin</h1>
      <button id="userImgBtn">
         Sign Out
@@ -26,6 +28,7 @@
             <img src="img/report_icon.png" alt="Manage Reports Icon">
             Issues
         </button>
+        
         <button id="usersBtn">
             <img src="img/users_icon.png" alt="Manage Users Icon">
             Manage Users

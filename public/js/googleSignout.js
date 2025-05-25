@@ -4,7 +4,7 @@ import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.
 export const googleSignOut = async () => {
   try {
     await signOut(auth);
-    // Optionally, clear any app state or redirect to login page
+    sessionStorage.clear(); // Optional: clear app session
     console.log("User signed out successfully");
     return { success: true };
   } catch (error) {
@@ -12,3 +12,4 @@ export const googleSignOut = async () => {
     return { success: false, error };
   }
 };
+

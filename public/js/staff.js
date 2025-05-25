@@ -1,7 +1,15 @@
 
 import { googleSignOut } from "./googleSignout.js";
 
+import { auth } from '../../utils/firebase.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+
+    window.location.replace("/login_page.html");
+  }
+});
 document.getElementById("reportBtn").addEventListener("click", () => {
     window.location.href = "./staff_admin_issues.html";
   });

@@ -4,7 +4,15 @@ const notificationImg = document.getElementById("notify");
 import { googleSignOut } from "./googleSignout.js";
 import { loadWeather } from './weather.js';
 
+import { auth } from '../../utils/firebase.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+
+    window.location.replace("/login_page.html");
+  }
+});
 reportBtn.addEventListener('click',async(e)=>{
     e.preventDefault();  
     window.location.href = "./resident_report_issue.html";

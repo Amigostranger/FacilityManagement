@@ -20,9 +20,15 @@ const sec = document.getElementById('drop');
 
 let selectedBookingId = "";
 let currentUserRole = null;
+import { auth } from '../../utils/firebase.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-// Initialize the page
-// Initialize the page
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+
+    window.location.replace("/login_page.html");
+  }
+})
 async function initializePage() {
   await checkAuthState();
   setupNavigation(); // <-- this should happen AFTER role is loaded

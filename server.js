@@ -88,7 +88,10 @@ app.get('/login', (req, res) => {
 
 app.use(express.static(__dirname));
 
-
+app.use((req, res, next) => {
+  res.setHeader("Cache-Control", "no-store");
+  next();
+});
 //Error Handling--------------------------------------------------------------------------------------------
 
 process.on('uncaughtException', (err) => {

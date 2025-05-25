@@ -3,6 +3,14 @@ import { fetchBookings } from './viewBookings.js'
 import { submitBooking } from './submitBooking.js';
 
 
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+
+    window.location.replace("/login_page.html");
+  }
+})
 // Elements
 const addBookingBtn = document.getElementById('addBookingBtn');
 const viewBookingsBtn = document.getElementById('viewBookingsBtn');
