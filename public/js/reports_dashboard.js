@@ -7,8 +7,7 @@ import { totalUsers, getTotalUsers } from './tot_users.js';
 import { totalReports, no } from './issuesreport.js';
 import { getMonthlyIssueData } from './issuesBargraph.js';
 import { updateChart } from './barGraph.js';
-import { auth } from '../../utils/firebase.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
